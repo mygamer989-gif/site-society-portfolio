@@ -70,7 +70,7 @@ test('SITE SOCIETY end-to-end security, SEO, and portfolio workflow', async (t) 
       stdio: 'pipe',
     });
 
-    await t.test('Public site, SEO routes, /admin, and seeded VECTRA showcase', async () => {
+    await t.test('Public site, SEO routes, /admin, and empty portfolio', async () => {
       const home = await worker.fetch('/');
       assert.equal(home.status, 200);
       const html = await home.text();
@@ -94,13 +94,11 @@ test('SITE SOCIETY end-to-end security, SEO, and portfolio workflow', async (t) 
       assert.equal(sitemap.status, 200);
       const xml = await sitemap.text();
       assert.ok(xml.includes('https://site-society-test.workers.dev/'));
-      assert.ok(xml.includes('/showcase/vectra-pc/'));
 
       const projRes = await worker.fetch('/api/projects');
       assert.equal(projRes.status, 200);
       const projJson = await projRes.json();
-      assert.equal(projJson.projects.length, 1);
-      assert.equal(projJson.projects[0].title, 'VECTRA // PC HARDWARE');
+      assert.deepEqual(projJson.projects, []);
 
       const settingsRes = await worker.fetch('/api/settings');
       assert.equal(settingsRes.status, 200);
@@ -215,9 +213,9 @@ test('SITE SOCIETY end-to-end security, SEO, and portfolio workflow', async (t) 
       assert.equal(created.thumbnail_url, 'https://lh3.googleusercontent.com/d/1AbCdEfGhIjKlMnOpQrStUvWxYz');
       assert.equal(created.is_published, false);
 
-      // Should NOT appear publicly while unpublished (only seeded VECTRA remains)
+      // Should NOT appear publicly while unpublished
       const pubCheck1 = await (await worker.fetch('/api/projects')).json();
-      assert.equal(pubCheck1.projects.length, 1);
+      assert.equal(pubCheck1.projects.length, 0);
 
       // Publish it
       const pubRes = await worker.fetch(`/api/admin/projects/${created.id}/publish`, {
@@ -231,10 +229,10 @@ test('SITE SOCIETY end-to-end security, SEO, and portfolio workflow', async (t) 
       });
       assert.equal(pubRes.status, 200);
 
-      // Now it MUST appear publicly alongside VECTRA
+      // Now it MUST appear publicly
       const pubCheck2 = await (await worker.fetch('/api/projects')).json();
-      assert.equal(pubCheck2.projects.length, 2);
-      assert.ok(pubCheck2.projects.some((p) => p.title === 'Verified Studio Case'));
+      assert.equal(pubCheck2.projects.length, 1);
+      assert.equal(pubCheck2.projects[0].title, 'Verified Studio Case');
 
       // Contact form inquiry -> visible in Admin Inquiries
       const contactRes = await worker.fetch('/api/contact', {
