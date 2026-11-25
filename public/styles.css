@@ -541,6 +541,26 @@ html[lang="en"] .section-title em {
 }
 
 /* Portfolio */
+.portfolio-notice {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  padding: 16px 22px;
+  margin-bottom: 32px;
+  background: var(--bronze-soft);
+  border: 1px solid var(--bronze-border);
+  border-radius: var(--radius-md);
+  color: var(--ink-primary);
+  font-size: 0.94rem;
+  font-weight: 500;
+}
+
+.notice-badge {
+  color: var(--bronze-dark);
+  font-size: 1rem;
+  flex-shrink: 0;
+}
+
 .portfolio-grid {
   display: grid;
   grid-template-columns: repeat(2, minmax(0, 1fr));

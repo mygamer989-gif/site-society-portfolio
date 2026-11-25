@@ -20,6 +20,8 @@
       work_kicker: '01 / آثار منتخب',
       work_title: 'نمونه کارها',
       work_lead: 'پروژه‌های واقعی و منتشرشده که توسط SITE SOCIETY طراحی، مهندسی و مستقر شده‌اند.',
+      work_notice:
+        'بیشتر نمونه کارهای این بخش حالت نمایشی ساده برای آشنایی شما با سبک و ساختار کار ما دارند؛ وب‌سایت اختصاصی شما ۱۰۰٪ با کیفیت، جزئیات و استاندارد بسیار بالاتری تولید خواهد شد.',
       work_loading: 'در حال بارگذاری آثار منتخب...',
       work_empty_t: 'آثار منتخب',
       work_empty_d: 'نمونه کارهای پورتفولیو در حال آماده‌سازی هستند و پس از تأیید نهایی در این بخش منتشر می‌شوند.',
@@ -115,6 +117,8 @@
       work_kicker: '01 / SELECTED WORK',
       work_title: 'Portfolio',
       work_lead: 'Verified digital products and websites designed, engineered, and deployed by SITE SOCIETY.',
+      work_notice:
+        'Most showcased projects here are simplified demonstration builds to introduce our design direction and structure; your custom website will be engineered with 100% higher craft, depth, and production quality.',
       work_loading: 'Loading curated works...',
       work_empty_t: 'Selected Works',
       work_empty_d: 'Portfolio entries are currently being curated and will be published here once verified.',
