@@ -9,13 +9,13 @@
     "run_worker_first": ["/api/*", "/admin", "/admin/*", "/_studio_panel*", "/sitemap.xml", "/robots.txt"]
   },
   "vars": {
-    "CANONICAL_URL": "https://site-society-portfolio.workers.dev"
+    "CANONICAL_URL": "https://site-society-portfolio.mygamer989.workers.dev"
   },
   "d1_databases": [
     {
       "binding": "DB",
       "database_name": "site-society-db",
-      "database_id": "00000000-0000-0000-0000-000000000000",
+      "database_id": "1f9df00c-8214-45ed-b544-a216a4724fbb",
       "migrations_dir": "migrations"
     }
   ]

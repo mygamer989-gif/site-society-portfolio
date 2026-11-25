@@ -7,6 +7,7 @@ node_modules/
 !.env.example
 .dev.vars
 .dev.vars.*
+.admin-setup-secret.txt
 
 # Wrangler / Cloudflare local state
 .wrangler/
