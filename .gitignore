@@ -1,0 +1,29 @@
+# Dependencies
+node_modules/
+
+# Environment & Secrets (NEVER commit)
+.env
+.env.*
+!.env.example
+.dev.vars
+.dev.vars.*
+
+# Wrangler / Cloudflare local state
+.wrangler/
+.mf/
+
+# Build & Logs
+dist/
+*.log
+npm-debug.log*
+.tmp-test-d1-*/
+
+# OS & Editor
+.DS_Store
+Thumbs.db
+.vscode/
+.idea/
+
+# Private client project files (never expose publicly)
+private-projects/
+*.secret.*

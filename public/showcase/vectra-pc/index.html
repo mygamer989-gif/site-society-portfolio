@@ -1,0 +1,2336 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="dark" class="scroll-smooth">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>VECTRA // PC HARDWARE — SITE SOCIETY Portfolio Showcase</title>
+  <meta name="description" content="VECTRA is a flagship PC components and custom hardware e-commerce showcase created for SITE SOCIETY. Explore next-gen GPUs, CPUs, motherboards, and workstation gear." />
+  <meta name="theme-color" content="#10151F" />
+
+  <!-- Preconnect & Google Fonts: Space Grotesk (Headings), Inter (UI/Body), IBM Plex Mono (Specs/Prices) -->
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500;600;700&family=Inter:wght@300;400;500;600;700&family=Space+Grotesk:wght@500;600;700&display=swap" rel="stylesheet" />
+
+  <!-- Tailwind CSS CDN -->
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script>
+    tailwind.config = {
+      theme: {
+        extend: {
+          fontFamily: {
+            display: ['Space Grotesk', 'sans-serif'],
+            sans: ['Inter', 'sans-serif'],
+            mono: ['IBM Plex Mono', 'monospace']
+          }
+        }
+      }
+    };
+  </script>
+
+  <!-- Lucide Icons -->
+  <script src="https://unpkg.com/lucide@latest"></script>
+
+  <style>
+    /* =========================================================================
+       1. DUAL-THEME CSS DESIGN TOKENS (DARK PRIMARY / LIGHT SECONDARY)
+       ========================================================================= */
+    :root,
+    [data-theme="dark"] {
+      --bg-main: #10151F;
+      --bg-secondary: #151D2B;
+      --bg-card: #1C2636;
+      --bg-elevated: #222F44;
+      --accent-primary: #2563EB;
+      --accent-primary-hover: #3B82F6;
+      --accent-secondary: #22D3EE;
+      --text-primary: #F8FAFC;
+      --text-secondary: #94A3B8;
+      --border-color: rgba(255, 255, 255, 0.08);
+      --border-strong: rgba(255, 255, 255, 0.16);
+      --glass-bg: rgba(16, 21, 31, 0.80);
+      --card-shadow: 0 18px 40px -18px rgba(0, 0, 0, 0.65);
+      --card-hover-shadow: 0 24px 48px -14px rgba(0, 0, 0, 0.8), 0 0 0 1px rgba(37, 99, 235, 0.45);
+      --grid-line: rgba(148, 163, 184, 0.06);
+      --skeleton-base: #1C2636;
+      --skeleton-shine: #28364D;
+    }
+
+    [data-theme="light"] {
+      --bg-main: #F5F8FC;
+      --bg-secondary: #FFFFFF;
+      --bg-card: #FFFFFF;
+      --bg-elevated: #EEF3F9;
+      --accent-primary: #2563EB;
+      --accent-primary-hover: #1D4ED8;
+      --accent-secondary: #0891B2;
+      --text-primary: #172033;
+      --text-secondary: #64748B;
+      --border-color: #E2E8F0;
+      --border-strong: #CBD5E1;
+      --glass-bg: rgba(255, 255, 255, 0.84);
+      --card-shadow: 0 10px 30px -12px rgba(23, 32, 51, 0.08);
+      --card-hover-shadow: 0 20px 38px -12px rgba(37, 99, 235, 0.16), 0 0 0 1px rgba(37, 99, 235, 0.35);
+      --grid-line: rgba(23, 32, 51, 0.045);
+      --skeleton-base: #E2E8F0;
+      --skeleton-shine: #F1F5F9;
+    }
+
+    /* Global Base & Smooth Theme Transition */
+    *, *::before, *::after {
+      box-sizing: border-box;
+    }
+
+    body {
+      background-color: var(--bg-main);
+      color: var(--text-primary);
+      font-family: 'Inter', sans-serif;
+      overflow-x: hidden;
+      transition: background-color 0.3s ease, color 0.3s ease;
+    }
+
+    h1, h2, h3, h4, .font-display {
+      font-family: 'Space Grotesk', sans-serif;
+    }
+
+    .font-mono {
+      font-family: 'IBM Plex Mono', monospace;
+    }
+
+    /* Utility Classes Linked to Tokens */
+    .bg-main { background-color: var(--bg-main); }
+    .bg-secondary { background-color: var(--bg-secondary); }
+    .bg-card { background-color: var(--bg-card); }
+    .bg-elevated { background-color: var(--bg-elevated); }
+    .text-primary { color: var(--text-primary); }
+    .text-secondary { color: var(--text-secondary); }
+    .text-accent { color: var(--accent-primary); }
+    .text-cyan-accent { color: var(--accent-secondary); }
+    .border-token { border-color: var(--border-color); }
+    .border-token-strong { border-color: var(--border-strong); }
+
+    /* Custom Scrollbar */
+    ::-webkit-scrollbar { width: 8px; height: 8px; }
+    ::-webkit-scrollbar-track { background: var(--bg-main); }
+    ::-webkit-scrollbar-thumb { background: var(--border-strong); border-radius: 999px; }
+    ::-webkit-scrollbar-thumb:hover { background: var(--accent-primary); }
+
+    /* Sticky Glassmorphic Navbar */
+    .vectra-navbar {
+      background-color: var(--glass-bg);
+      backdrop-filter: blur(18px);
+      -webkit-backdrop-filter: blur(18px);
+      border-bottom: 1px solid var(--border-color);
+      transition: box-shadow 0.3s ease, background-color 0.3s ease, border-color 0.3s ease;
+    }
+    .vectra-navbar.scrolled {
+      box-shadow: 0 12px 32px -12px rgba(0, 0, 0, 0.35);
+    }
+
+    /* Animated Nav Underline */
+    .nav-link {
+      position: relative;
+      padding: 0.35rem 0;
+      color: var(--text-secondary);
+      transition: color 0.2s ease;
+    }
+    .nav-link::after {
+      content: '';
+      position: absolute;
+      left: 0;
+      bottom: -2px;
+      width: 100%;
+      height: 2px;
+      background: linear-gradient(90deg, var(--accent-primary), var(--accent-secondary));
+      transform: scaleX(0);
+      transform-origin: right;
+      transition: transform 0.28s cubic-bezier(0.22, 1, 0.36, 1);
+      border-radius: 2px;
+    }
+    .nav-link:hover,
+    .nav-link.active {
+      color: var(--text-primary);
+    }
+    .nav-link:hover::after,
+    .nav-link.active::after {
+      transform: scaleX(1);
+      transform-origin: left;
+    }
+
+    /* Buttons & Micro-Interactions */
+    .btn-primary {
+      background-color: var(--accent-primary);
+      color: #FFFFFF;
+      transition: background-color 0.2s ease, transform 0.16s ease, box-shadow 0.25s ease;
+    }
+    .btn-primary:hover {
+      background-color: var(--accent-primary-hover);
+      box-shadow: 0 10px 26px -6px rgba(37, 99, 235, 0.55);
+    }
+    .btn-primary:active {
+      transform: scale(0.97);
+    }
+
+    .btn-secondary {
+      background-color: var(--bg-card);
+      color: var(--text-primary);
+      border: 1px solid var(--border-strong);
+      transition: border-color 0.2s ease, background-color 0.2s ease, transform 0.16s ease;
+    }
+    .btn-secondary:hover {
+      border-color: var(--accent-primary);
+      background-color: var(--bg-elevated);
+    }
+    .btn-secondary:active {
+      transform: scale(0.97);
+    }
+
+    /* Cards & Hover Lift */
+    .vectra-card {
+      background-color: var(--bg-card);
+      border: 1px solid var(--border-color);
+      box-shadow: var(--card-shadow);
+      transition: transform 0.32s cubic-bezier(0.22, 1, 0.36, 1),
+                  box-shadow 0.32s ease,
+                  border-color 0.32s ease,
+                  background-color 0.3s ease;
+    }
+    .vectra-card:hover {
+      transform: translateY(-5px);
+      box-shadow: var(--card-hover-shadow);
+      border-color: rgba(37, 99, 235, 0.42);
+    }
+
+    /* Gentle Image Zoom */
+    .img-zoom {
+      transition: transform 0.55s cubic-bezier(0.22, 1, 0.36, 1);
+    }
+    .group:hover .img-zoom {
+      transform: scale(1.06);
+    }
+
+    /* Hero Ambient Mesh & Tech Grid */
+    .hero-grid-bg {
+      background-image:
+        linear-gradient(to right, var(--grid-line) 1px, transparent 1px),
+        linear-gradient(to bottom, var(--grid-line) 1px, transparent 1px);
+      background-size: 48px 48px;
+    }
+
+    @keyframes ambientFloat {
+      0%, 100% { transform: translate(0, 0) scale(1); opacity: 0.55; }
+      50% { transform: translate(18px, -16px) scale(1.07); opacity: 0.78; }
+    }
+    .ambient-orb {
+      animation: ambientFloat 12s ease-in-out infinite;
+    }
+    .ambient-orb-delayed {
+      animation: ambientFloat 15s ease-in-out infinite reverse;
+    }
+
+    /* Scroll Reveal & Staggered Card Entrance */
+    .reveal {
+      opacity: 0;
+      transform: translateY(20px);
+      transition: opacity 0.6s cubic-bezier(0.22, 1, 0.36, 1),
+                  transform 0.6s cubic-bezier(0.22, 1, 0.36, 1);
+    }
+    .reveal.is-visible {
+      opacity: 1;
+      transform: translateY(0);
+    }
+
+    @keyframes cardEnter {
+      from { opacity: 0; transform: translateY(18px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+    .stagger-card {
+      animation: cardEnter 0.5s cubic-bezier(0.22, 1, 0.36, 1) both;
+    }
+
+    /* View Fade Transition */
+    @keyframes viewFadeIn {
+      from { opacity: 0; transform: translateY(8px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+    .view-animate {
+      animation: viewFadeIn 0.35s cubic-bezier(0.22, 1, 0.36, 1) both;
+    }
+
+    /* Loading Skeleton Shimmer */
+    @keyframes shimmer {
+      0% { background-position: -200% 0; }
+      100% { background-position: 200% 0; }
+    }
+    .skeleton {
+      background: linear-gradient(90deg, var(--skeleton-base) 25%, var(--skeleton-shine) 50%, var(--skeleton-base) 75%);
+      background-size: 200% 100%;
+      animation: shimmer 1.3s infinite linear;
+    }
+
+    /* Accessible Focus Ring */
+    button:focus-visible, a:focus-visible, input:focus-visible, select:focus-visible {
+      outline: 2px solid var(--accent-secondary);
+      outline-offset: 2px;
+    }
+
+    /* Respect Reduced Motion Strictly */
+    @media (prefers-reduced-motion: reduce) {
+      *, *::before, *::after {
+        animation-duration: 0.01ms !important;
+        animation-iteration-count: 1 !important;
+        transition-duration: 0.01ms !important;
+        scroll-behavior: auto !important;
+      }
+      .reveal { opacity: 1 !important; transform: none !important; }
+    }
+  </style>
+
+  <link href="https://fonts.googleapis.com/css2?family=Vazirmatn:wght@400;500;600;700&display=swap" rel="stylesheet" />
+  <style>
+    html[lang="fa"] body { font-family: 'Vazirmatn', 'Inter', sans-serif; }
+    #vectra-scroll-bar { position: fixed; top: 0; left: 0; right: 0; height: 3px; background: linear-gradient(90deg, #2563EB, #22D3EE); transform-origin: left; transform: scaleX(0); z-index: 9999; pointer-events: none; }
+    .vectra-anim-up { opacity: 0; transform: translateY(24px) scale(0.985); transition: opacity 0.65s cubic-bezier(0.22,1,0.36,1), transform 0.65s cubic-bezier(0.22,1,0.36,1); }
+    .vectra-anim-up.is-in { opacity: 1; transform: translateY(0) scale(1); }
+    .ss-float-bar { position: fixed; bottom: 20px; left: 20px; z-index: 9998; display: flex; align-items: center; gap: 8px; padding: 8px 14px; border-radius: 999px; background: rgba(16, 21, 31, 0.9); backdrop-filter: blur(14px); border: 1px solid rgba(255,255,255,0.18); color: #F8FAFC; font-size: 12px; box-shadow: 0 12px 30px rgba(0,0,0,0.35); }
+    .ss-float-bar a { color: #22D3EE; text-decoration: none; font-weight: 600; }
+    .ss-float-bar button { background: rgba(255,255,255,0.1); border: 1px solid rgba(255,255,255,0.16); color: #fff; border-radius: 999px; padding: 3px 9px; cursor: pointer; font-weight: 600; }
+    .ss-float-bar button.active { background: #2563EB; border-color: #2563EB; }
+    @media (prefers-reduced-motion: reduce) { .vectra-anim-up { opacity: 1; transform: none; transition: none; } }
+  </style>
+
+</head>
+<body class="min-h-screen flex flex-col antialiased selection:bg-[#2563EB] selection:text-white">
+
+  <!-- ==================== 1. PORTFOLIO TRANSPARENCY STRIP ==================== -->
+  <div class="bg-secondary border-b border-token text-[11px] sm:text-xs py-2 px-4 relative z-50">
+    <div class="max-w-7xl mx-auto flex flex-col sm:flex-row items-center justify-between gap-1.5 text-center sm:text-left">
+      <div class="flex items-center gap-2 text-secondary">
+        <span class="inline-flex h-2 w-2 rounded-full bg-[#22D3EE] shrink-0"></span>
+        <span class="font-mono tracking-tight">
+          <strong class="text-primary font-semibold">SITE SOCIETY PORTFOLIO SHOWCASE</strong> — Demo catalog with fictional sample pricing. Checkout is simulated.
+        </span>
+      </div>
+      <div class="flex items-center gap-4 shrink-0 font-mono text-[11px]">
+        <button onclick="navigate('about')" class="text-cyan-accent hover:underline cursor-pointer">Case Study Info</button>
+        <span class="text-secondary hidden md:inline">Promo Code: <strong class="text-primary">VECTRA10</strong></span>
+      </div>
+    </div>
+  </div>
+
+  <!-- ==================== 2. STICKY GLASSMORPHIC NAVIGATION BAR ==================== -->
+  <header id="mainNavbar" class="vectra-navbar sticky top-0 z-40">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 h-18 py-3.5 flex items-center justify-between gap-4">
+      <!-- Left: Custom Geometric SVG Logo + VECTRA Wordmark -->
+      <a href="#home" onclick="event.preventDefault(); navigate('home')" class="flex items-center gap-3 group shrink-0" aria-label="VECTRA Home">
+        <div class="w-9 h-9 rounded-xl bg-gradient-to-br from-[#2563EB] to-[#22D3EE] p-[1.5px] shadow-lg shadow-blue-600/20">
+          <div class="w-full h-full rounded-[10px] bg-main flex items-center justify-center">
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" aria-hidden="true">
+              <path d="M4 5L12 19L20 5" stroke="#2563EB" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round"/>
+              <path d="M8.5 5L12 11.5L15.5 5" stroke="#22D3EE" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"/>
+            </svg>
+          </div>
+        </div>
+        <div class="flex flex-col">
+          <span class="font-display font-bold text-lg tracking-[0.18em] leading-none text-primary">VECTRA</span>
+          <span class="font-mono text-[9px] tracking-[0.22em] text-cyan-accent mt-1">PC HARDWARE</span>
+        </div>
+      </a>
+
+      <!-- Center: Desktop Nav Links -->
+      <nav class="hidden lg:flex items-center gap-7 text-sm font-medium" aria-label="Primary Navigation">
+        <button data-nav="home" onclick="navigate('home')" class="nav-link active cursor-pointer">Home</button>
+        <button data-nav="products" onclick="navigate('products')" class="nav-link cursor-pointer">Products</button>
+        <button data-nav="categories" onclick="navigateToCategories()" class="nav-link cursor-pointer">Categories</button>
+        <button data-nav="deals" onclick="navigate('deals')" class="nav-link cursor-pointer">Deals</button>
+        <button data-nav="about" onclick="navigate('about')" class="nav-link cursor-pointer">About</button>
+      </nav>
+
+      <!-- Right: Action Controls -->
+      <div class="flex items-center gap-1.5 sm:gap-2">
+        <!-- Search Modal Trigger -->
+        <button onclick="openSearchModal()" class="flex items-center gap-2 px-2.5 sm:px-3.5 py-2 rounded-xl bg-card border border-token hover:border-[#2563EB] text-secondary hover:text-primary transition-colors cursor-pointer" aria-label="Search hardware">
+          <i data-lucide="search" class="w-4 h-4"></i>
+          <span class="hidden xl:inline text-xs">Search...</span>
+          <kbd class="hidden xl:inline-block font-mono text-[10px] px-1.5 py-0.5 rounded bg-elevated border border-token text-secondary">⌘K</kbd>
+        </button>
+
+        <!-- Account Modal Trigger -->
+        <button onclick="openAccountModal()" class="w-9 h-9 sm:w-10 sm:h-10 rounded-xl bg-card border border-token hover:border-[#2563EB] flex items-center justify-center text-secondary hover:text-primary transition-colors cursor-pointer" aria-label="Demo Account">
+          <i data-lucide="user" class="w-4 h-4"></i>
+        </button>
+
+        <!-- Wishlist Drawer Trigger -->
+        <button onclick="toggleWishlistDrawer(true)" class="relative w-9 h-9 sm:w-10 sm:h-10 rounded-xl bg-card border border-token hover:border-[#2563EB] flex items-center justify-center text-secondary hover:text-primary transition-colors cursor-pointer" aria-label="Wishlist">
+          <i data-lucide="heart" class="w-4 h-4"></i>
+          <span id="wishlistBadge" class="hidden absolute -top-1.5 -right-1.5 min-w-[18px] h-[18px] px-1 rounded-full bg-[#22D3EE] text-[#10151F] font-mono text-[10px] font-bold flex items-center justify-center">0</span>
+        </button>
+
+        <!-- Cart Drawer Trigger -->
+        <button onclick="toggleCartDrawer(true)" class="relative w-9 h-9 sm:w-10 sm:h-10 rounded-xl bg-card border border-token hover:border-[#2563EB] flex items-center justify-center text-secondary hover:text-primary transition-colors cursor-pointer" aria-label="Shopping Cart">
+          <i data-lucide="shopping-bag" class="w-4 h-4"></i>
+          <span id="cartBadge" class="absolute -top-1.5 -right-1.5 min-w-[18px] h-[18px] px-1 rounded-full bg-[#2563EB] text-white font-mono text-[10px] font-bold flex items-center justify-center">0</span>
+        </button>
+
+        <!-- Theme Toggle -->
+        <button id="themeToggleBtn" onclick="toggleTheme()" class="w-9 h-9 sm:w-10 sm:h-10 rounded-xl bg-card border border-token hover:border-[#22D3EE] flex items-center justify-center text-secondary hover:text-primary transition-colors cursor-pointer" aria-label="Toggle Light/Dark Theme">
+          <i id="themeIcon" data-lucide="sun" class="w-4 h-4"></i>
+        </button>
+
+        <!-- Mobile Menu Button -->
+        <button onclick="toggleMobileMenu(true)" class="lg:hidden w-9 h-9 sm:w-10 sm:h-10 rounded-xl bg-card border border-token flex items-center justify-center text-primary cursor-pointer" aria-label="Open Navigation Menu">
+          <i data-lucide="menu" class="w-5 h-5"></i>
+        </button>
+      </div>
+    </div>
+  </header>
+
+  <!-- ==================== 3. MAIN DYNAMIC VIEW CONTAINER ==================== -->
+  <main id="appMain" class="flex-1"></main>
+
+  <!-- ==================== 4. NEWSLETTER & PROFESSIONAL FOOTER ==================== -->
+  <section class="border-t border-token bg-secondary mt-20">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-14">
+      <div class="vectra-card rounded-3xl p-8 sm:p-10 lg:p-12 relative overflow-hidden">
+        <div class="absolute -top-24 -right-24 w-72 h-72 rounded-full bg-[#2563EB]/15 blur-3xl pointer-events-none"></div>
+        <div class="absolute -bottom-24 -left-24 w-64 h-64 rounded-full bg-[#22D3EE]/10 blur-3xl pointer-events-none"></div>
+        <div class="relative z-10 flex flex-col lg:flex-row lg:items-center justify-between gap-8">
+          <div class="max-w-xl">
+            <span class="font-mono text-xs uppercase tracking-[0.2em] text-cyan-accent">VECTRA DISPATCH</span>
+            <h2 class="font-display text-2xl sm:text-3xl font-bold text-primary mt-2">Stay Ahead of Next-Gen Silicon</h2>
+            <p class="text-sm text-secondary mt-2 leading-relaxed">
+              Receive engineering launch briefings, benchmark teardowns, and demo showcase updates from the VECTRA hardware lab.
+            </p>
+          </div>
+          <form onsubmit="handleNewsletterSubmit(event)" class="flex flex-col sm:flex-row gap-3 w-full lg:w-auto lg:min-w-[420px]">
+            <label for="newsletterEmail" class="sr-only">Email address</label>
+            <input id="newsletterEmail" type="email" required placeholder="engineer@domain.com" class="flex-1 bg-main border border-token-strong focus:border-[#2563EB] rounded-xl px-4 py-3 text-sm text-primary placeholder:text-secondary outline-none" />
+            <button type="submit" class="btn-primary px-6 py-3 rounded-xl font-semibold text-sm shrink-0 cursor-pointer">Subscribe</button>
+          </form>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <footer class="bg-secondary border-t border-token pt-14 pb-10">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+      <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-5 gap-10 pb-12 border-b border-token">
+        <!-- Brand Column -->
+        <div class="lg:col-span-2">
+          <div class="flex items-center gap-3 mb-4">
+            <div class="w-8 h-8 rounded-lg bg-gradient-to-br from-[#2563EB] to-[#22D3EE] p-[1.5px]">
+              <div class="w-full h-full rounded-[7px] bg-main flex items-center justify-center">
+                <svg width="16" height="16" viewBox="0 0 24 24" fill="none">
+                  <path d="M4 5L12 19L20 5" stroke="#2563EB" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round"/>
+                  <path d="M8.5 5L12 11.5L15.5 5" stroke="#22D3EE" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"/>
+                </svg>
+              </div>
+            </div>
+            <span class="font-display font-bold text-lg tracking-[0.18em] text-primary">VECTRA</span>
+          </div>
+          <p class="text-sm text-secondary leading-relaxed max-w-sm mb-5">
+            Precision-engineered computer hardware, flagship GPUs, and workstation components curated for creators, engineers, and enthusiasts.
+          </p>
+          <div class="inline-flex items-center gap-2 px-3 py-1.5 rounded-lg bg-card border border-token font-mono text-[11px] text-secondary">
+            <span class="w-1.5 h-1.5 rounded-full bg-[#22D3EE]"></span>
+            PORTFOLIO SHOWCASE FOR SITE SOCIETY
+          </div>
+        </div>
+
+        <!-- Shop Categories -->
+        <div>
+          <h3 class="font-display text-sm font-bold text-primary uppercase tracking-wider mb-4">Shop Hardware</h3>
+          <ul class="space-y-2.5 text-sm text-secondary">
+            <li><button onclick="openCategory('Graphics Cards')" class="hover:text-primary transition-colors cursor-pointer">Graphics Cards</button></li>
+            <li><button onclick="openCategory('Processors')" class="hover:text-primary transition-colors cursor-pointer">Processors</button></li>
+            <li><button onclick="openCategory('Motherboards')" class="hover:text-primary transition-colors cursor-pointer">Motherboards</button></li>
+            <li><button onclick="openCategory('RAM')" class="hover:text-primary transition-colors cursor-pointer">Memory (RAM)</button></li>
+            <li><button onclick="openCategory('SSD & Storage')" class="hover:text-primary transition-colors cursor-pointer">SSD &amp; Storage</button></li>
+          </ul>
+        </div>
+
+        <!-- Support & Experience -->
+        <div>
+          <h3 class="font-display text-sm font-bold text-primary uppercase tracking-wider mb-4">Experience</h3>
+          <ul class="space-y-2.5 text-sm text-secondary">
+            <li><button onclick="navigate('products')" class="hover:text-primary transition-colors cursor-pointer">Full Catalog</button></li>
+            <li><button onclick="navigate('deals')" class="hover:text-primary transition-colors cursor-pointer">Special Deals</button></li>
+            <li><button onclick="toggleWishlistDrawer(true)" class="hover:text-primary transition-colors cursor-pointer">Saved Wishlist</button></li>
+            <li><button onclick="toggleCartDrawer(true)" class="hover:text-primary transition-colors cursor-pointer">Shopping Cart</button></li>
+            <li><button onclick="openAccountModal()" class="hover:text-primary transition-colors cursor-pointer">Demo Account</button></li>
+          </ul>
+        </div>
+
+        <!-- Company & Case Study -->
+        <div>
+          <h3 class="font-display text-sm font-bold text-primary uppercase tracking-wider mb-4">SITE SOCIETY</h3>
+          <ul class="space-y-2.5 text-sm text-secondary">
+            <li><button onclick="navigate('about')" class="hover:text-primary transition-colors cursor-pointer">About VECTRA</button></li>
+            <li><button onclick="navigate('about')" class="hover:text-primary transition-colors cursor-pointer">Hardware Testing Lab</button></li>
+            <li><button onclick="openSearchModal()" class="hover:text-primary transition-colors cursor-pointer">Quick Search (⌘K)</button></li>
+            <li><button onclick="toggleTheme()" class="hover:text-primary transition-colors cursor-pointer">Switch Color Theme</button></li>
+          </ul>
+        </div>
+      </div>
+
+      <div class="pt-8 flex flex-col sm:flex-row items-center justify-between gap-4 text-xs text-secondary">
+        <p>© 2026 VECTRA // PC HARDWARE — Portfolio Showcase for SITE SOCIETY. All prices and stock statuses are fictional demo data.</p>
+        <p class="font-mono text-[11px] text-cyan-accent">DESIGN SYSTEM v3.0 • DUAL THEME</p>
+      </div>
+    </div>
+  </footer>
+
+  <!-- ==================== 5. MOBILE NAVIGATION DRAWER ==================== -->
+  <div id="mobileMenuDrawer" class="fixed inset-0 z-50 hidden" role="dialog" aria-modal="true" aria-label="Mobile Navigation">
+    <div onclick="toggleMobileMenu(false)" class="absolute inset-0 bg-black/70 backdrop-blur-sm"></div>
+    <div class="absolute top-0 bottom-0 left-0 w-72 max-w-[85vw] bg-secondary border-r border-token p-6 flex flex-col justify-between shadow-2xl">
+      <div>
+        <div class="flex items-center justify-between pb-5 border-b border-token">
+          <span class="font-display font-bold tracking-[0.18em] text-lg text-primary">VECTRA</span>
+          <button onclick="toggleMobileMenu(false)" class="p-2 rounded-xl bg-card border border-token text-secondary hover:text-primary cursor-pointer" aria-label="Close Menu">
+            <i data-lucide="x" class="w-4 h-4"></i>
+          </button>
+        </div>
+        <nav class="mt-6 flex flex-col gap-2 text-sm font-medium">
+          <button onclick="toggleMobileMenu(false); navigate('home')" class="flex items-center gap-3 p-3 rounded-xl hover:bg-card text-primary text-left cursor-pointer"><i data-lucide="home" class="w-4 h-4 text-cyan-accent"></i> Home</button>
+          <button onclick="toggleMobileMenu(false); navigate('products')" class="flex items-center gap-3 p-3 rounded-xl hover:bg-card text-primary text-left cursor-pointer"><i data-lucide="cpu" class="w-4 h-4 text-cyan-accent"></i> Products</button>
+          <button onclick="toggleMobileMenu(false); navigateToCategories()" class="flex items-center gap-3 p-3 rounded-xl hover:bg-card text-primary text-left cursor-pointer"><i data-lucide="grid" class="w-4 h-4 text-cyan-accent"></i> Categories</button>
+          <button onclick="toggleMobileMenu(false); navigate('deals')" class="flex items-center gap-3 p-3 rounded-xl hover:bg-card text-primary text-left cursor-pointer"><i data-lucide="tag" class="w-4 h-4 text-cyan-accent"></i> Deals</button>
+          <button onclick="toggleMobileMenu(false); navigate('about')" class="flex items-center gap-3 p-3 rounded-xl hover:bg-card text-primary text-left cursor-pointer"><i data-lucide="info" class="w-4 h-4 text-cyan-accent"></i> About</button>
+        </nav>
+      </div>
+      <div class="pt-5 border-t border-token space-y-2.5">
+        <button onclick="toggleMobileMenu(false); openAccountModal()" class="w-full py-2.5 rounded-xl bg-card border border-token text-xs font-medium text-primary cursor-pointer">Demo Account &amp; Orders</button>
+        <button onclick="toggleTheme()" class="w-full py-2.5 rounded-xl btn-primary text-xs font-semibold cursor-pointer">Toggle Light / Dark Theme</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- ==================== 6. SHOPPING CART SLIDE-OVER DRAWER ==================== -->
+  <div id="cartDrawer" class="fixed inset-0 z-50 hidden" role="dialog" aria-modal="true" aria-label="Shopping Cart">
+    <div onclick="toggleCartDrawer(false)" class="absolute inset-0 bg-black/70 backdrop-blur-sm"></div>
+    <aside class="absolute top-0 bottom-0 right-0 w-full max-w-md bg-secondary border-l border-token flex flex-col shadow-2xl">
+      <div class="p-6 border-b border-token flex items-center justify-between">
+        <div class="flex items-center gap-2.5">
+          <i data-lucide="shopping-bag" class="w-5 h-5 text-accent"></i>
+          <h2 class="font-display text-lg font-bold text-primary">Shopping Cart</h2>
+        </div>
+        <button onclick="toggleCartDrawer(false)" class="p-2 rounded-xl bg-card border border-token text-secondary hover:text-primary cursor-pointer" aria-label="Close Cart">
+          <i data-lucide="x" class="w-4 h-4"></i>
+        </button>
+      </div>
+
+      <div id="cartItemsContainer" class="flex-1 overflow-y-auto p-6 space-y-4"></div>
+
+      <div class="p-6 border-t border-token bg-main/60 space-y-4">
+        <div class="flex gap-2">
+          <input id="cartPromoInput" type="text" placeholder="Demo code: VECTRA10" class="flex-1 bg-card border border-token-strong focus:border-[#2563EB] rounded-xl px-3.5 py-2 text-xs font-mono text-primary uppercase outline-none" />
+          <button onclick="applyPromoCode()" class="px-4 py-2 rounded-xl btn-secondary text-xs font-semibold cursor-pointer">Apply</button>
+        </div>
+
+        <div class="space-y-1.5 text-sm">
+          <div class="flex justify-between text-secondary">
+            <span>Subtotal</span>
+            <span id="cartSubtotal" class="font-mono text-primary">$0.00</span>
+          </div>
+          <div id="cartDiscountRow" class="hidden justify-between text-cyan-accent">
+            <span>Promo (VECTRA10 -10%)</span>
+            <span id="cartDiscount" class="font-mono">-$0.00</span>
+          </div>
+          <div class="flex justify-between text-secondary">
+            <span>Estimated Shipping</span>
+            <span id="cartShipping" class="font-mono text-primary">FREE</span>
+          </div>
+          <div class="flex justify-between text-base font-bold text-primary pt-2.5 border-t border-token">
+            <span>Demo Total</span>
+            <span id="cartTotal" class="font-mono text-accent">$0.00</span>
+          </div>
+        </div>
+
+        <button onclick="proceedToCheckout()" class="w-full py-3.5 rounded-xl btn-primary font-semibold text-sm flex items-center justify-center gap-2 cursor-pointer">
+          <i data-lucide="shield-check" class="w-4 h-4"></i>
+          <span>Proceed to Demo Checkout</span>
+        </button>
+      </div>
+    </aside>
+  </div>
+
+  <!-- ==================== 7. WISHLIST SLIDE-OVER DRAWER ==================== -->
+  <div id="wishlistDrawer" class="fixed inset-0 z-50 hidden" role="dialog" aria-modal="true" aria-label="Wishlist">
+    <div onclick="toggleWishlistDrawer(false)" class="absolute inset-0 bg-black/70 backdrop-blur-sm"></div>
+    <aside class="absolute top-0 bottom-0 right-0 w-full max-w-md bg-secondary border-l border-token flex flex-col shadow-2xl">
+      <div class="p-6 border-b border-token flex items-center justify-between">
+        <div class="flex items-center gap-2.5">
+          <i data-lucide="heart" class="w-5 h-5 text-cyan-accent"></i>
+          <h2 class="font-display text-lg font-bold text-primary">Saved Wishlist</h2>
+        </div>
+        <button onclick="toggleWishlistDrawer(false)" class="p-2 rounded-xl bg-card border border-token text-secondary hover:text-primary cursor-pointer" aria-label="Close Wishlist">
+          <i data-lucide="x" class="w-4 h-4"></i>
+        </button>
+      </div>
+      <div id="wishlistItemsContainer" class="flex-1 overflow-y-auto p-6 space-y-4"></div>
+    </aside>
+  </div>
+
+  <!-- ==================== 8. INTERACTIVE COMMAND / SEARCH MODAL ==================== -->
+  <div id="searchModal" class="fixed inset-0 z-50 hidden items-start justify-center pt-16 sm:pt-24 p-4" role="dialog" aria-modal="true" aria-label="Search Hardware">
+    <div onclick="closeSearchModal()" class="absolute inset-0 bg-black/75 backdrop-blur-sm"></div>
+    <div class="relative z-10 w-full max-w-2xl bg-secondary border border-token-strong rounded-2xl overflow-hidden shadow-2xl">
+      <div class="flex items-center gap-3 px-5 py-4 border-b border-token">
+        <i data-lucide="search" class="w-5 h-5 text-cyan-accent shrink-0"></i>
+        <input id="globalSearchInput" type="text" oninput="renderSearchResults()" placeholder="Search GPUs, Ryzen, DDR5, NVMe, Lian Li..." class="w-full bg-transparent text-sm sm:text-base text-primary placeholder:text-secondary outline-none" />
+        <button onclick="closeSearchModal()" class="px-2 py-1 rounded-lg bg-card border border-token font-mono text-[10px] text-secondary hover:text-primary cursor-pointer">ESC</button>
+      </div>
+      <div id="globalSearchResults" class="max-h-[60vh] overflow-y-auto p-4 space-y-2"></div>
+    </div>
+  </div>
+
+  <!-- ==================== 9. DEMO ACCOUNT MODAL ==================== -->
+  <div id="accountModal" class="fixed inset-0 z-50 hidden items-center justify-center p-4" role="dialog" aria-modal="true" aria-label="Demo Account">
+    <div onclick="closeAccountModal()" class="absolute inset-0 bg-black/75 backdrop-blur-sm"></div>
+    <div class="relative z-10 w-full max-w-xl bg-secondary border border-token-strong rounded-3xl overflow-hidden shadow-2xl max-h-[90vh] overflow-y-auto">
+      <div class="p-6 border-b border-token flex items-center justify-between">
+        <div class="flex items-center gap-3">
+          <div class="w-11 h-11 rounded-2xl bg-[#2563EB]/15 border border-[#2563EB]/40 flex items-center justify-center font-display font-bold text-accent">AS</div>
+          <div>
+            <h2 class="font-display text-lg font-bold text-primary">Alex Mercer (Demo Profile)</h2>
+            <p class="font-mono text-xs text-secondary">SITE SOCIETY REVIEWER • TIER: ARCHITECT</p>
+          </div>
+        </div>
+        <button onclick="closeAccountModal()" class="p-2 rounded-xl bg-card border border-token text-secondary hover:text-primary cursor-pointer" aria-label="Close Account Modal">
+          <i data-lucide="x" class="w-4 h-4"></i>
+        </button>
+      </div>
+      <div id="accountModalBody" class="p-6 space-y-5"></div>
+    </div>
+  </div>
+
+  <!-- ==================== 10. TOAST NOTIFICATION STACK ==================== -->
+  <div id="toastStack" class="fixed bottom-5 right-5 z-[60] flex flex-col gap-2.5 max-w-sm w-[calc(100vw-2.5rem)] pointer-events-none"></div>
+
+  <!-- ==================== 11. APPLICATION ENGINE ==================== -->
+  <script>
+    /* =========================================================================
+       DATA CATALOG: 9 CATEGORIES + 12 REALISTIC DEMO PC HARDWARE PRODUCTS
+       ========================================================================= */
+    const FALLBACK_IMG = "data:image/svg+xml;charset=UTF-8,%3Csvg xmlns='http://www.w3.org/2000/svg' width='800' height='600' viewBox='0 0 800 600'%3E%3Cdefs%3E%3ClinearGradient id='g' x1='0' y1='0' x2='1' y2='1'%3E%3Cstop offset='0%25' stop-color='%2310151F'/%3E%3Cstop offset='100%25' stop-color='%231C2636'/%3E%3C/linearGradient%3E%3C/defs%3E%3Crect width='800' height='600' fill='url(%23g)'/%3E%3Ctext x='400' y='305' text-anchor='middle' fill='%2322D3EE' font-family='monospace' font-size='22' letter-spacing='6'%3EVECTRA // HARDWARE%3C/text%3E%3C/svg%3E";
+
+    const CATEGORIES = [
+      { name: 'Graphics Cards', slug: 'Graphics Cards', image: 'https://images.unsplash.com/photo-1591488320449-011701bb6704?auto=format&fit=crop&w=900&q=80', desc: 'Flagship ray-tracing & AI compute GPUs' },
+      { name: 'Processors', slug: 'Processors', image: 'https://images.unsplash.com/photo-1591799264318-7e6ef8ddb7ea?auto=format&fit=crop&w=900&q=80', desc: 'Multi-core desktop & workstation CPUs' },
+      { name: 'Motherboards', slug: 'Motherboards', image: 'https://images.unsplash.com/photo-1518770660439-4636190af475?auto=format&fit=crop&w=900&q=80', desc: 'PCIe 5.0 & high-phase VRM platforms' },
+      { name: 'RAM', slug: 'RAM', image: 'https://images.unsplash.com/photo-1562976540-1502c2145186?auto=format&fit=crop&w=900&q=80', desc: 'Extreme-speed DDR5 memory kits' },
+      { name: 'SSD & Storage', slug: 'SSD & Storage', image: 'https://images.unsplash.com/photo-1563770660941-20978e870e26?auto=format&fit=crop&w=900&q=80', desc: 'Gen5 NVMe solid-state drives' },
+      { name: 'Power Supplies', slug: 'Power Supplies', image: 'https://images.unsplash.com/photo-1555680202-c86f0e12f086?auto=format&fit=crop&w=900&q=80', desc: 'ATX 3.1 Titanium modular PSUs' },
+      { name: 'PC Cases', slug: 'PC Cases', image: 'https://images.unsplash.com/photo-1587202372775-e229f172b9d7?auto=format&fit=crop&w=900&q=80', desc: 'Precision airflow & tempered glass chassis' },
+      { name: 'Cooling Systems', slug: 'Cooling Systems', image: 'https://images.unsplash.com/photo-1587202372634-32705e3bf49c?auto=format&fit=crop&w=900&q=80', desc: 'AIO liquid coolers & acoustic fans' },
+      { name: 'Gaming Accessories', slug: 'Gaming Accessories', image: 'https://images.unsplash.com/photo-1595225476474-87563907a212?auto=format&fit=crop&w=900&q=80', desc: 'Hall-effect keyboards & esports mice' }
+    ];
+
+    const PRODUCTS = [
+      {
+        id: 'vectra-rtx-5090',
+        name: 'VECTRA RTX 5090 Phantom OC 32GB',
+        brand: 'VECTRA',
+        category: 'Graphics Cards',
+        price: 2199,
+        originalPrice: 2499,
+        rating: 4.9,
+        reviews: 184,
+        inStock: true,
+        featured: true,
+        image: 'https://images.unsplash.com/photo-1591488320449-011701bb6704?auto=format&fit=crop&w=900&q=80',
+        gallery: [
+          'https://images.unsplash.com/photo-1591488320449-011701bb6704?auto=format&fit=crop&w=1000&q=85',
+          'https://images.unsplash.com/photo-1587202372775-e229f172b9d7?auto=format&fit=crop&w=1000&q=85',
+          'https://images.unsplash.com/photo-1518770660439-4636190af475?auto=format&fit=crop&w=1000&q=85'
+        ],
+        description: 'Engineered with a CNC-milled anodized aluminum shroud and triple-axis vapor chamber, the RTX 5090 Phantom OC delivers sustained 4K 240Hz gaming and local AI workstation throughput with whisper-quiet acoustics.',
+        specs: {
+          'Architecture': 'Next-Gen Blackwell Flagship',
+          'Video Memory': '32GB GDDR7 (512-bit)',
+          'Boost Clock': '2,685 MHz (OC Mode)',
+          'Interface': 'PCIe 5.0 x16',
+          'Thermal Design': 'Vapor Chamber + Triple 100mm Fans',
+          'TDP / PSU Rec.': '575W / 1000W ATX 3.1',
+          'Demo Warranty': '3-Year VECTRA Sample Care'
+        }
+      },
+      {
+        id: 'amd-ryzen-9950x3d',
+        name: 'AMD Ryzen 9 9950X3D 16-Core Processor',
+        brand: 'AMD',
+        category: 'Processors',
+        price: 699,
+        originalPrice: 749,
+        rating: 4.9,
+        reviews: 242,
+        inStock: true,
+        featured: true,
+        image: 'https://images.unsplash.com/photo-1591799264318-7e6ef8ddb7ea?auto=format&fit=crop&w=900&q=80',
+        gallery: [
+          'https://images.unsplash.com/photo-1591799264318-7e6ef8ddb7ea?auto=format&fit=crop&w=1000&q=85',
+          'https://images.unsplash.com/photo-1518770660439-4636190af475?auto=format&fit=crop&w=1000&q=85',
+          'https://images.unsplash.com/photo-1563770660941-20978e870e26?auto=format&fit=crop&w=1000&q=85'
+        ],
+        description: 'Combining 16 Zen 5 cores with 2nd-generation 3D V-Cache technology, the Ryzen 9 9950X3D dominates both competitive frame rates and heavy multi-threaded 3D rendering workloads.',
+        specs: {
+          'Architecture': 'Zen 5 with 3D V-Cache',
+          'Cores / Threads': '16 Cores / 32 Threads',
+          'Max Boost Clock': 'Up to 5.7 GHz',
+          'Total Cache': '144MB (L2 + L3)',
+          'Socket': 'AM5 (PCIe 5.0 + DDR5)',
+          'TDP': '170W',
+          'Demo Warranty': '3-Year Limited Sample'
+        }
+      },
+      {
+        id: 'rog-crosshair-x870e',
+        name: 'ROG Crosshair X870E Hero Motherboard',
+        brand: 'ASUS',
+        category: 'Motherboards',
+        price: 649,
+        originalPrice: null,
+        rating: 4.8,
+        reviews: 97,
+        inStock: true,
+        featured: true,
+        image: 'https://images.unsplash.com/photo-1518770660439-4636190af475?auto=format&fit=crop&w=900&q=80',
+        gallery: [
+          'https://images.unsplash.com/photo-1518770660439-4636190af475?auto=format&fit=crop&w=1000&q=85',
+          'https://images.unsplash.com/photo-1591799264318-7e6ef8ddb7ea?auto=format&fit=crop&w=1000&q=85'
+        ],
+        description: 'Built for extreme AM5 builds with an 18+2+2 teamed power stage design, dual USB4 ports, Wi-Fi 7, and five M.2 slots with tool-free forged heatsinks.',
+        specs: {
+          'Chipset / Socket': 'AMD X870E / AM5',
+          'Power Stages': '18+2+2 (110A) Teamed VRM',
+          'Memory Support': '4x DDR5 up to 8200+ MT/s',
+          'Storage': '5x M.2 (3x PCIe 5.0)',
+          'Networking': 'Wi-Fi 7 + 5GbE & 2.5GbE LAN',
+          'Form Factor': 'ATX'
+        }
+      },
+      {
+        id: 'corsair-dominator-64gb',
+        name: 'Corsair Dominator Titanium 64GB DDR5-7200',
+        brand: 'Corsair',
+        category: 'RAM',
+        price: 289,
+        originalPrice: 329,
+        rating: 4.8,
+        reviews: 131,
+        inStock: true,
+        featured: true,
+        image: 'https://images.unsplash.com/photo-1562976540-1502c2145186?auto=format&fit=crop&w=900&q=80',
+        gallery: [
+          'https://images.unsplash.com/photo-1562976540-1502c2145186?auto=format&fit=crop&w=1000&q=85',
+          'https://images.unsplash.com/photo-1518770660439-4636190af475?auto=format&fit=crop&w=1000&q=85'
+        ],
+        description: 'Forged aluminum DHX cooling meets hand-screened high-frequency DDR5 silicon with swappable top bars and ultra-low CL34 timings.',
+        specs: {
+          'Capacity': '64GB (2 x 32GB)',
+          'Speed Rating': 'DDR5-7200 MT/s',
+          'Tested Latency': 'CL34-44-44-96',
+          'Voltage': '1.40V',
+          'Profiles': 'Intel XMP 3.0 & AMD EXPO',
+          'Cooling': 'Patented DHX Forged Aluminum'
+        }
+      },
+      {
+        id: 'samsung-9100-pro-4tb',
+        name: 'Samsung 9100 PRO 4TB PCIe 5.0 NVMe SSD',
+        brand: 'Samsung',
+        category: 'SSD & Storage',
+        price: 429,
+        originalPrice: 489,
+        rating: 4.9,
+        reviews: 164,
+        inStock: true,
+        featured: true,
+        image: 'https://images.unsplash.com/photo-1563770660941-20978e870e26?auto=format&fit=crop&w=900&q=80',
+        gallery: [
+          'https://images.unsplash.com/photo-1563770660941-20978e870e26?auto=format&fit=crop&w=1000&q=85',
+          'https://images.unsplash.com/photo-1518770660439-4636190af475?auto=format&fit=crop&w=1000&q=85'
+        ],
+        description: 'Unleash blistering 14,800 MB/s sequential reads for instantaneous 8K video timelines, massive LLM model loading, and zero-stutter DirectStorage gaming.',
+        specs: {
+          'Capacity': '4TB (M.2 2280)',
+          'Interface': 'PCIe Gen 5.0 x4, NVMe 2.0',
+          'Sequential Read': 'Up to 14,800 MB/s',
+          'Sequential Write': 'Up to 13,400 MB/s',
+          'Endurance': '2,400 TBW',
+          'Encryption': 'AES 256-bit Hardware'
+        }
+      },
+      {
+        id: 'seasonic-prime-tx-1300',
+        name: 'Seasonic Prime TX-1300W 80+ Titanium PSU',
+        brand: 'Seasonic',
+        category: 'Power Supplies',
+        price: 379,
+        originalPrice: null,
+        rating: 4.9,
+        reviews: 88,
+        inStock: true,
+        featured: true,
+        image: 'https://images.unsplash.com/photo-1555680202-c86f0e12f086?auto=format&fit=crop&w=900&q=80',
+        gallery: [
+          'https://images.unsplash.com/photo-1555680202-c86f0e12f086?auto=format&fit=crop&w=1000&q=85',
+          'https://images.unsplash.com/photo-1587202372775-e229f172b9d7?auto=format&fit=crop&w=1000&q=85'
+        ],
+        description: 'Reference-grade ATX 3.1 power delivery with dual native 12V-2x6 connectors, micro-tolerance load regulation, and silent hybrid fan control.',
+        specs: {
+          'Wattage': '1300W Continuous',
+          'Efficiency': '80 PLUS Titanium (94%+)',
+          'Standard': 'ATX 3.1 / PCIe 5.1 Ready',
+          'Cabling': 'Fully Modular Braided',
+          'Fan': '135mm Fluid Dynamic Bearing',
+          'Demo Warranty': '12-Year Sample Reference'
+        }
+      },
+      {
+        id: 'lian-li-o11-vision',
+        name: 'Lian Li O11 Vision Compact Chassis',
+        brand: 'Lian Li',
+        category: 'PC Cases',
+        price: 159,
+        originalPrice: 179,
+        rating: 4.8,
+        reviews: 210,
+        inStock: true,
+        featured: true,
+        image: 'https://images.unsplash.com/photo-1587202372775-e229f172b9d7?auto=format&fit=crop&w=900&q=80',
+        gallery: [
+          'https://images.unsplash.com/photo-1587202372775-e229f172b9d7?auto=format&fit=crop&w=1000&q=85',
+          'https://images.unsplash.com/photo-1587202372634-32705e3bf49c?auto=format&fit=crop&w=1000&q=85'
+        ],
+        description: 'Three-sided pillarless tempered glass showcase engineered in collaboration with enthusiasts for unobstructed hardware views and dual-chamber cable routing.',
+        specs: {
+          'Form Factor': 'Mid-Tower Dual Chamber',
+          'Materials': '4mm Tempered Glass & Brushed Steel',
+          'Radiator Support': 'Up to 360mm (Side/Bottom/Top)',
+          'Max GPU Length': '408 mm',
+          'Back-Connect Support': 'Yes (BTF / Project Zero)'
+        }
+      },
+      {
+        id: 'nzxt-kraken-elite-360',
+        name: 'NZXT Kraken Elite 360 RGB LCD Cooler',
+        brand: 'NZXT',
+        category: 'Cooling Systems',
+        price: 299,
+        originalPrice: 339,
+        rating: 4.7,
+        reviews: 149,
+        inStock: true,
+        featured: true,
+        image: 'https://images.unsplash.com/photo-1587202372634-32705e3bf49c?auto=format&fit=crop&w=900&q=80',
+        gallery: [
+          'https://images.unsplash.com/photo-1587202372634-32705e3bf49c?auto=format&fit=crop&w=1000&q=85',
+          'https://images.unsplash.com/photo-1587202372775-e229f172b9d7?auto=format&fit=crop&w=1000&q=85'
+        ],
+        description: 'Custom-designed turbine pump paired with a crisp 2.72-inch 60Hz IPS display for real-time CPU/GPU telemetry and minimalist single-cable routing.',
+        specs: {
+          'Radiator Size': '360mm Aluminum',
+          'Display': '2.72" 640x640 60Hz IPS LCD',
+          'Pump Speed': '1,200 – 2,800 RPM',
+          'Fans': '3x 120mm High-Static Pressure',
+          'Socket Support': 'AM5, AM4, LGA 1851, LGA 1700'
+        }
+      },
+      {
+        id: 'wooting-80he-keyboard',
+        name: 'Wooting 80HE Rapid Trigger Keyboard',
+        brand: 'Wooting',
+        category: 'Gaming Accessories',
+        price: 219,
+        originalPrice: null,
+        rating: 4.9,
+        reviews: 312,
+        inStock: true,
+        featured: false,
+        image: 'https://images.unsplash.com/photo-1595225476474-87563907a212?auto=format&fit=crop&w=900&q=80',
+        gallery: [
+          'https://images.unsplash.com/photo-1595225476474-87563907a212?auto=format&fit=crop&w=1000&q=85',
+          'https://images.unsplash.com/photo-1527814050087-3793815479db?auto=format&fit=crop&w=1000&q=85'
+        ],
+        description: 'True 8000Hz polling with Lekker V2 Hall-effect magnetic switches, 0.1mm adjustable actuation, and gasket-mounted zinc alloy acoustic dampening.',
+        specs: {
+          'Switches': 'Lekker V2 Magnetic Hall-Effect',
+          'Polling Rate': 'True 8,000 Hz (0.125ms)',
+          'Actuation Range': '0.1mm – 4.0mm Adjustable',
+          'Chassis': 'Zinc Alloy / Gasket Mount',
+          'Software': 'Wootility Web-Based'
+        }
+      },
+      {
+        id: 'logitech-superlight-2-dex',
+        name: 'Logitech G Pro X Superlight 2 DEX',
+        brand: 'Logitech',
+        category: 'Gaming Accessories',
+        price: 159,
+        originalPrice: 179,
+        rating: 4.8,
+        reviews: 196,
+        inStock: true,
+        featured: false,
+        image: 'https://images.unsplash.com/photo-1527814050087-3793815479db?auto=format&fit=crop&w=900&q=80',
+        gallery: [
+          'https://images.unsplash.com/photo-1527814050087-3793815479db?auto=format&fit=crop&w=1000&q=85',
+          'https://images.unsplash.com/photo-1595225476474-87563907a212?auto=format&fit=crop&w=1000&q=85'
+        ],
+        description: 'Asymmetrical 60g esports ergonomics powered by the HERO 2 44K sensor and LIGHTFORCE optical-mechanical hybrid switches.',
+        specs: {
+          'Weight': '60 Grams Ultra-Light',
+          'Sensor': 'HERO 2 (44,000 DPI / 888 IPS)',
+          'Wireless': 'LIGHTSPEED 8K Hz Polling',
+          'Battery Life': 'Up to 95 Hours',
+          'Switches': 'LIGHTFORCE Hybrid Optical'
+        }
+      },
+      {
+        id: 'intel-core-ultra-9-285k',
+        name: 'Intel Core Ultra 9 285K 24-Core CPU',
+        brand: 'Intel',
+        category: 'Processors',
+        price: 589,
+        originalPrice: 629,
+        rating: 4.6,
+        reviews: 74,
+        inStock: true,
+        featured: false,
+        image: 'https://images.unsplash.com/photo-1591799264318-7e6ef8ddb7ea?auto=format&fit=crop&w=900&q=80',
+        gallery: [
+          'https://images.unsplash.com/photo-1591799264318-7e6ef8ddb7ea?auto=format&fit=crop&w=1000&q=85',
+          'https://images.unsplash.com/photo-1518770660439-4636190af475?auto=format&fit=crop&w=1000&q=85'
+        ],
+        description: 'Next-generation Arrow Lake architecture with integrated NPU AI acceleration, dramatically improved thermal efficiency, and Thunderbolt 4 platform support.',
+        specs: {
+          'Cores': '24 Cores (8P + 16E)',
+          'Max Turbo': '5.7 GHz',
+          'Socket': 'LGA 1851',
+          'AI Engine': 'Integrated 13 TOPS NPU',
+          'Memory': 'DDR5-6400 Native Support'
+        }
+      },
+      {
+        id: 'asus-proart-rtx-5080',
+        name: 'ASUS ProArt RTX 5080 16GB Studio Edition',
+        brand: 'ASUS',
+        category: 'Graphics Cards',
+        price: 1199,
+        originalPrice: 1299,
+        rating: 4.8,
+        reviews: 63,
+        inStock: false,
+        featured: false,
+        image: 'https://images.unsplash.com/photo-1527443224154-c4a3942d3acf?auto=format&fit=crop&w=900&q=80',
+        gallery: [
+          'https://images.unsplash.com/photo-1527443224154-c4a3942d3acf?auto=format&fit=crop&w=1000&q=85',
+          'https://images.unsplash.com/photo-1591488320449-011701bb6704?auto=format&fit=crop&w=1000&q=85'
+        ],
+        description: 'Compact 2.5-slot matte-black studio GPU tailored for SFF creator workstations, featuring whisper-quiet Axial-tech acoustics and dual AV1 encoders.',
+        specs: {
+          'Video Memory': '16GB GDDR7 (256-bit)',
+          'Form Factor': '2.5-Slot Compact SFF',
+          'Encoders': 'Dual 9th-Gen NVENC AV1',
+          'Interface': 'PCIe 5.0 x16',
+          'TDP': '360W'
+        }
+      }
+    ];
+
+    /* =========================================================================
+       APPLICATION STATE & LOCALSTORAGE PERSISTENCE
+       ========================================================================= */
+    const STORAGE_KEY = 'vectra_sitesociety_state_v1';
+
+    function loadPersistedState() {
+      try {
+        const raw = localStorage.getItem(STORAGE_KEY);
+        if (raw) return JSON.parse(raw);
+      } catch (e) {}
+      return {
+        theme: 'dark',
+        cart: [{ id: 'vectra-rtx-5090', qty: 1 }],
+        wishlist: ['amd-ryzen-9950x3d', 'wooting-80he-keyboard'],
+        promoApplied: false,
+        demoOrders: [
+          {
+            id: 'VCT-2026-8419',
+            date: 'Nov 18, 2026',
+            total: 988.00,
+            status: 'Simulated — Delivered',
+            items: ['AMD Ryzen 9 9950X3D (×1)', 'Corsair Dominator Titanium 64GB (×1)']
+          }
+        ]
+      };
+    }
+
+    const appState = {
+      ...loadPersistedState(),
+      view: 'home', // 'home' | 'products' | 'pdp' | 'deals' | 'about' | 'checkout'
+      selectedProductId: null,
+      pdpActiveImgIdx: 0,
+      pdpQty: 1,
+      filters: {
+        category: 'All',
+        brand: 'All',
+        inStockOnly: false,
+        sort: 'featured',
+        query: ''
+      }
+    };
+
+    function persistState() {
+      try {
+        localStorage.setItem(STORAGE_KEY, JSON.stringify({
+          theme: appState.theme,
+          cart: appState.cart,
+          wishlist: appState.wishlist,
+          promoApplied: appState.promoApplied,
+          demoOrders: appState.demoOrders
+        }));
+      } catch (e) {}
+    }
+
+    /* =========================================================================
+       THEME ENGINE (DARK PRIMARY <-> LIGHT SECONDARY)
+       ========================================================================= */
+    function applyTheme(theme) {
+      appState.theme = theme;
+      document.documentElement.setAttribute('data-theme', theme);
+      const icon = document.getElementById('themeIcon');
+      if (icon) {
+        icon.setAttribute('data-lucide', theme === 'dark' ? 'sun' : 'moon');
+        lucide.createIcons();
+      }
+      persistState();
+    }
+
+    function toggleTheme() {
+      const next = appState.theme === 'dark' ? 'light' : 'dark';
+      applyTheme(next);
+      showToast(`Switched to ${next === 'dark' ? 'Dark Cyber' : 'Clean Light'} theme`, 'info');
+    }
+
+    /* =========================================================================
+       TOAST NOTIFICATIONS & UTILITIES
+       ========================================================================= */
+    function formatCurrency(val) {
+      return '$' + Number(val).toLocaleString('en-US', { minimumFractionDigits: 2, maximumFractionDigits: 2 });
+    }
+
+    function showToast(message, type = 'info') {
+      const stack = document.getElementById('toastStack');
+      const el = document.createElement('div');
+      const icon = type === 'success' ? 'check-circle-2' : type === 'error' ? 'alert-circle' : 'sparkles';
+      const accent = type === 'success' ? 'text-emerald-400' : type === 'error' ? 'text-rose-400' : 'text-[#22D3EE]';
+      el.className = 'pointer-events-auto flex items-center gap-3 px-4 py-3.5 rounded-2xl bg-card border border-token-strong shadow-2xl text-xs sm:text-sm text-primary transition-all duration-300';
+      el.innerHTML = `<i data-lucide="${icon}" class="w-4 h-4 shrink-0 ${accent}"></i><span>${message}</span>`;
+      stack.appendChild(el);
+      lucide.createIcons();
+      setTimeout(() => {
+        el.style.opacity = '0';
+        el.style.transform = 'translateY(8px)';
+        setTimeout(() => el.remove(), 300);
+      }, 3200);
+    }
+
+    function renderStars(rating) {
+      const full = Math.floor(rating);
+      let html = '';
+      for (let i = 0; i < 5; i++) {
+        html += `<i data-lucide="star" class="w-3.5 h-3.5 ${i < full ? 'fill-[#22D3EE] text-[#22D3EE]' : 'text-secondary opacity-40'}"></i>`;
+      }
+      return `<div class="inline-flex items-center gap-0.5">${html}</div>`;
+    }
+
+    function getDiscountPercent(p) {
+      if (!p.originalPrice || p.originalPrice <= p.price) return 0;
+      return Math.round(((p.originalPrice - p.price) / p.originalPrice) * 100);
+    }
+
+    /* =========================================================================
+       NAVIGATION & BRIEF LOADING SKELETON TRANSITION
+       ========================================================================= */
+    function updateActiveNav() {
+      document.querySelectorAll('[data-nav]').forEach(btn => {
+        const target = btn.getAttribute('data-nav');
+        const active = (target === appState.view) || (target === 'products' && appState.view === 'pdp');
+        btn.classList.toggle('active', active);
+      });
+    }
+
+    function renderSkeletonScreen() {
+      const main = document.getElementById('appMain');
+      main.innerHTML = `
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12 space-y-8">
+          <div class="h-10 w-64 rounded-xl skeleton"></div>
+          <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
+            ${Array(4).fill('').map(() => `
+              <div class="rounded-2xl border border-token bg-card p-4 space-y-4">
+                <div class="aspect-[4/3] rounded-xl skeleton"></div>
+                <div class="h-4 w-1/3 rounded skeleton"></div>
+                <div class="h-5 w-4/5 rounded skeleton"></div>
+                <div class="h-9 w-full rounded-xl skeleton"></div>
+              </div>
+            `).join('')}
+          </div>
+        </div>
+      `;
+    }
+
+    function navigate(view, options = {}) {
+      appState.view = view;
+      if (options.productId) {
+        appState.selectedProductId = options.productId;
+        appState.pdpActiveImgIdx = 0;
+        appState.pdpQty = 1;
+      }
+      updateActiveNav();
+      window.scrollTo({ top: 0, behavior: 'smooth' });
+
+      if (options.instant) {
+        renderCurrentView();
+      } else {
+        renderSkeletonScreen();
+        setTimeout(() => renderCurrentView(), 160);
+      }
+    }
+
+    function navigateToCategories() {
+      if (appState.view !== 'home') {
+        navigate('home', { instant: true });
+      }
+      setTimeout(() => {
+        const el = document.getElementById('categoriesSection');
+        if (el) el.scrollIntoView({ behavior: 'smooth' });
+      }, 60);
+    }
+
+    function openCategory(categoryName) {
+      appState.filters.category = categoryName;
+      appState.filters.brand = 'All';
+      appState.filters.query = '';
+      navigate('products');
+    }
+
+    function openProductDetail(productId) {
+      navigate('pdp', { productId });
+    }
+
+    /* =========================================================================
+       REUSABLE PRODUCT CARD COMPONENT
+       ========================================================================= */
+    function renderProductCard(p, index = 0) {
+      const discount = getDiscountPercent(p);
+      const isWished = appState.wishlist.includes(p.id);
+      const delay = Math.min(index * 55, 380);
+
+      return `
+        <article class="vectra-card stagger-card rounded-2xl overflow-hidden flex flex-col justify-between group" style="animation-delay: ${delay}ms">
+          <div>
+            <!-- 4:3 Image Frame -->
+            <div class="relative aspect-[4/3] overflow-hidden bg-main cursor-pointer" onclick="openProductDetail('${p.id}')">
+              <img
+                src="${p.image}"
+                alt="${p.name}"
+                loading="lazy"
+                decoding="async"
+                onerror="this.src='${FALLBACK_IMG}'"
+                class="w-full h-full object-cover img-zoom"
+              />
+              <div class="absolute inset-0 bg-gradient-to-t from-black/55 via-transparent to-transparent opacity-70"></div>
+
+              <!-- Discount Badge -->
+              ${discount > 0 ? `
+                <span class="absolute top-3 left-3 px-2.5 py-1 rounded-lg bg-[#2563EB] text-white font-mono text-[11px] font-bold shadow-lg">
+                  -${discount}%
+                </span>
+              ` : ''}
+
+              <!-- Wishlist Button -->
+              <button
+                onclick="event.stopPropagation(); toggleWishlist('${p.id}')"
+                class="absolute top-3 right-3 w-9 h-9 rounded-xl bg-black/55 backdrop-blur-md border border-white/15 flex items-center justify-center transition-colors hover:border-[#22D3EE] cursor-pointer"
+                aria-label="Toggle wishlist for ${p.name}"
+              >
+                <i data-lucide="heart" class="w-4 h-4 ${isWished ? 'fill-[#22D3EE] text-[#22D3EE]' : 'text-white'}"></i>
+              </button>
+
+              <!-- Availability Badge -->
+              <span class="absolute bottom-3 left-3 px-2.5 py-0.5 rounded-md font-mono text-[10px] uppercase tracking-wider backdrop-blur-md border ${
+                p.inStock
+                  ? 'bg-emerald-500/20 border-emerald-400/35 text-emerald-300'
+                  : 'bg-amber-500/20 border-amber-400/35 text-amber-200'
+              }">
+                ${p.inStock ? 'Demo: In Stock' : 'Demo: Backorder'}
+              </span>
+            </div>
+
+            <!-- Card Body -->
+            <div class="p-5">
+              <div class="flex items-center justify-between gap-2 mb-1.5">
+                <span class="font-mono text-[11px] uppercase tracking-wider text-cyan-accent font-medium">${p.brand}</span>
+                <div class="flex items-center gap-1 text-xs text-secondary font-mono">
+                  <i data-lucide="star" class="w-3.5 h-3.5 fill-[#22D3EE] text-[#22D3EE]"></i>
+                  <span>${p.rating.toFixed(1)}</span>
+                </div>
+              </div>
+              <h3 onclick="openProductDetail('${p.id}')" class="font-display text-base font-bold text-primary leading-snug mb-3 line-clamp-2 min-h-[44px] hover:text-accent transition-colors cursor-pointer">
+                ${p.name}
+              </h3>
+              <div class="flex items-baseline gap-2.5">
+                <span class="font-mono text-lg font-bold text-primary">${formatCurrency(p.price)}</span>
+                ${p.originalPrice ? `<span class="font-mono text-xs text-secondary line-through">${formatCurrency(p.originalPrice)}</span>` : ''}
+              </div>
+            </div>
+          </div>
+
+          <!-- Card Footer Action -->
+          <div class="px-5 pb-5 pt-1">
+            <button
+              id="addBtn-${p.id}"
+              onclick="addToCart('${p.id}', 1, this)"
+              ${!p.inStock ? 'disabled' : ''}
+              class="w-full py-2.5 px-4 rounded-xl btn-primary font-semibold text-xs sm:text-sm flex items-center justify-center gap-2 disabled:opacity-45 disabled:cursor-not-allowed cursor-pointer"
+            >
+              <i data-lucide="shopping-cart" class="w-4 h-4"></i>
+              <span>${p.inStock ? 'Add to Cart' : 'Demo Out of Stock'}</span>
+            </button>
+          </div>
+        </article>
+      `;
+    }
+
+    /* =========================================================================
+       VIEW 1: HOMEPAGE
+       ========================================================================= */
+    function renderHomeView() {
+      const featured = PRODUCTS.slice(0, 8);
+      return `
+        <div class="view-animate">
+          <!-- HERO SECTION -->
+          <section class="relative overflow-hidden border-b border-token hero-grid-bg">
+            <!-- Subtle Ambient Gradient Orbs -->
+            <div class="ambient-orb absolute -top-28 left-1/4 w-[460px] h-[460px] rounded-full bg-[#2563EB]/20 blur-[130px] pointer-events-none"></div>
+            <div class="ambient-orb-delayed absolute -bottom-24 right-1/4 w-[420px] h-[420px] rounded-full bg-[#22D3EE]/15 blur-[130px] pointer-events-none"></div>
+
+            <div class="relative z-10 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-14 lg:py-24">
+              <div class="grid grid-cols-1 lg:grid-cols-12 gap-12 items-center">
+                <!-- Left Copy -->
+                <div class="lg:col-span-6 space-y-6">
+                  <div class="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-card border border-token-strong font-mono text-xs text-cyan-accent">
+                    <span class="w-2 h-2 rounded-full bg-[#22D3EE]"></span>
+                    NEXT-GEN ARCHITECTURE // 2026 SERIES
+                  </div>
+
+                  <h1 class="font-display text-5xl sm:text-6xl xl:text-[68px] font-bold tracking-tight leading-[1.03] text-primary">
+                    BUILD <span class="text-transparent bg-clip-text bg-gradient-to-r from-[#2563EB] to-[#22D3EE]">BEYOND</span> LIMITS.
+                  </h1>
+
+                  <p class="text-base sm:text-lg text-secondary leading-relaxed max-w-xl">
+                    Precision-engineered PC components, flagship ray-tracing GPUs, and acoustic workstation hardware curated for architects, creators, and competitive players.
+                  </p>
+
+                  <div class="flex flex-wrap items-center gap-4 pt-2">
+                    <button onclick="navigate('products')" class="btn-primary px-7 py-3.5 rounded-xl font-semibold text-sm sm:text-base inline-flex items-center gap-2.5 cursor-pointer">
+                      <span>Explore Products</span>
+                      <i data-lucide="arrow-right" class="w-4 h-4"></i>
+                    </button>
+                    <button onclick="navigate('deals')" class="btn-secondary px-7 py-3.5 rounded-xl font-semibold text-sm sm:text-base inline-flex items-center gap-2.5 cursor-pointer">
+                      <i data-lucide="zap" class="w-4 h-4 text-cyan-accent"></i>
+                      <span>Discover Deals</span>
+                    </button>
+                  </div>
+
+                  <!-- Key Metrics Row -->
+                  <div class="grid grid-cols-3 gap-4 pt-6 border-t border-token max-w-md">
+                    <div>
+                      <div class="font-mono text-xl sm:text-2xl font-bold text-primary">14.8<span class="text-cyan-accent text-sm">GB/s</span></div>
+                      <div class="text-xs text-secondary mt-0.5">PCIe 5.0 Storage</div>
+                    </div>
+                    <div>
+                      <div class="font-mono text-xl sm:text-2xl font-bold text-primary">99.9<span class="text-cyan-accent text-sm">%</span></div>
+                      <div class="text-xs text-secondary mt-0.5">QA Bench Tested</div>
+                    </div>
+                    <div>
+                      <div class="font-mono text-xl sm:text-2xl font-bold text-primary">24<span class="text-cyan-accent text-sm">/7</span></div>
+                      <div class="text-xs text-secondary mt-0.5">Hardware Experts</div>
+                    </div>
+                  </div>
+                </div>
+
+                <!-- Right Cinematic Hardware Visual -->
+                <div class="lg:col-span-6 relative">
+                  <div class="relative rounded-3xl overflow-hidden border border-token-strong bg-card shadow-2xl">
+                    <img
+                      src="https://images.unsplash.com/photo-1587202372775-e229f172b9d7?auto=format&fit=crop&w=1200&q=85"
+                      alt="VECTRA Flagship Custom Liquid-Cooled PC Setup"
+                      onerror="this.src='${FALLBACK_IMG}'"
+                      class="w-full aspect-[4/3] object-cover"
+                    />
+                    <div class="absolute inset-0 bg-gradient-to-tr from-[#10151F]/80 via-transparent to-[#2563EB]/15"></div>
+
+                    <!-- Floating Spec Callout Pills -->
+                    <div class="absolute top-4 left-4 px-3.5 py-2 rounded-xl bg-[#10151F]/80 backdrop-blur-md border border-white/15 flex items-center gap-2">
+                      <span class="w-2 h-2 rounded-full bg-[#22D3EE]"></span>
+                      <span class="font-mono text-[11px] font-semibold text-white tracking-wider">PCIe 5.0 READY</span>
+                    </div>
+
+                    <div class="absolute bottom-4 right-4 left-4 sm:left-auto px-4 py-3 rounded-2xl bg-[#10151F]/85 backdrop-blur-md border border-white/15 flex items-center justify-between sm:justify-start gap-4">
+                      <div>
+                        <div class="font-mono text-[10px] text-[#22D3EE] uppercase tracking-widest">THERMAL ARCHITECTURE</div>
+                        <div class="font-display text-sm font-bold text-white mt-0.5">RTX 5090 Phantom OC Rig</div>
+                      </div>
+                      <button onclick="openProductDetail('vectra-rtx-5090')" class="px-3 py-1.5 rounded-lg bg-[#2563EB] hover:bg-[#3B82F6] text-white font-mono text-xs font-semibold cursor-pointer">
+                        Inspect
+                      </button>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </section>
+
+          <!-- PRODUCT CATEGORIES (9 CATEGORIES) -->
+          <section id="categoriesSection" class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-16 lg:py-22">
+            <div class="flex flex-col sm:flex-row sm:items-end justify-between gap-4 mb-10 reveal">
+              <div>
+                <span class="font-mono text-xs uppercase tracking-[0.2em] text-cyan-accent">HARDWARE ARCHITECTURE</span>
+                <h2 class="font-display text-3xl sm:text-4xl font-bold text-primary mt-2">Shop by Category</h2>
+              </div>
+              <button onclick="navigate('products')" class="inline-flex items-center gap-2 text-sm font-semibold text-accent hover:underline cursor-pointer">
+                <span>View Full Catalog</span>
+                <i data-lucide="arrow-right" class="w-4 h-4"></i>
+              </button>
+            </div>
+
+            <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-5">
+              ${CATEGORIES.map((cat, idx) => {
+                const count = PRODUCTS.filter(p => p.category === cat.slug).length;
+                return `
+                  <button onclick="openCategory('${cat.slug}')" class="vectra-card reveal rounded-2xl overflow-hidden text-left group cursor-pointer flex items-center gap-4 p-3.5" style="transition-delay: ${Math.min(idx * 40, 240)}ms">
+                    <div class="w-24 h-20 rounded-xl overflow-hidden bg-main shrink-0">
+                      <img src="${cat.image}" alt="${cat.name}" loading="lazy" onerror="this.src='${FALLBACK_IMG}'" class="w-full h-full object-cover img-zoom" />
+                    </div>
+                    <div class="flex-1 min-w-0 pr-2">
+                      <div class="flex items-center justify-between gap-2">
+                        <h3 class="font-display text-base font-bold text-primary group-hover:text-accent transition-colors truncate">${cat.name}</h3>
+                        <span class="font-mono text-[11px] px-2 py-0.5 rounded-md bg-elevated text-cyan-accent border border-token shrink-0">${count} ${count === 1 ? 'item' : 'items'}</span>
+                      </div>
+                      <p class="text-xs text-secondary mt-1 line-clamp-2">${cat.desc}</p>
+                    </div>
+                  </button>
+                `;
+              }).join('')}
+            </div>
+          </section>
+
+          <!-- FEATURED PRODUCTS GRID -->
+          <section class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8 lg:py-14">
+            <div class="flex flex-col sm:flex-row sm:items-end justify-between gap-4 mb-10 reveal">
+              <div>
+                <span class="font-mono text-xs uppercase tracking-[0.2em] text-cyan-accent">CURATED PERFORMANCE</span>
+                <h2 class="font-display text-3xl sm:text-4xl font-bold text-primary mt-2">Featured Hardware</h2>
+              </div>
+              <button onclick="navigate('products')" class="btn-secondary px-5 py-2.5 rounded-xl text-xs sm:text-sm font-semibold inline-flex items-center gap-2 cursor-pointer">
+                <span>Browse All 12 Components</span>
+                <i data-lucide="sliders-horizontal" class="w-4 h-4"></i>
+              </button>
+            </div>
+
+            <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
+              ${featured.map((p, i) => renderProductCard(p, i)).join('')}
+            </div>
+          </section>
+
+          <!-- SPECIAL OFFERS SECTION (SHOWCASE PROMO PREVIEW) -->
+          <section class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-14 reveal">
+            <div class="rounded-3xl overflow-hidden relative bg-[#151D2B] border border-[#2563EB]/40 shadow-2xl">
+              <div class="absolute inset-0 bg-gradient-to-r from-[#10151F] via-[#151D2B]/95 to-[#2563EB]/25"></div>
+              <div class="relative z-10 p-8 sm:p-12 lg:p-16 grid grid-cols-1 lg:grid-cols-12 gap-8 items-center">
+                <div class="lg:col-span-7 space-y-5">
+                  <div class="inline-flex items-center gap-2 px-3 py-1 rounded-lg bg-[#22D3EE]/15 border border-[#22D3EE]/35 font-mono text-[11px] font-semibold text-[#22D3EE] uppercase tracking-wider">
+                    <i data-lucide="sparkles" class="w-3.5 h-3.5"></i>
+                    SHOWCASE PROMO PREVIEW (DEMO TIMER)
+                  </div>
+                  <h2 class="font-display text-3xl sm:text-4xl lg:text-5xl font-bold text-white leading-tight">
+                    Flagship Workstation &amp; Gaming Drops — Up to <span class="text-[#22D3EE]">15% Off</span>
+                  </h2>
+                  <p class="text-sm sm:text-base text-[#94A3B8] max-w-xl leading-relaxed">
+                    Explore discounted demo components including the RTX 5090 Phantom OC, Samsung 9100 PRO 4TB, and Kraken Elite 360. Apply demo code <strong class="font-mono text-white">VECTRA10</strong> in cart for an extra 10% simulated savings.
+                  </p>
+                  <div class="pt-2">
+                    <button onclick="navigate('deals')" class="btn-primary px-7 py-3.5 rounded-xl font-semibold text-sm inline-flex items-center gap-2 cursor-pointer">
+                      <span>Explore Special Deals</span>
+                      <i data-lucide="arrow-right" class="w-4 h-4"></i>
+                    </button>
+                  </div>
+                </div>
+
+                <!-- Sleek Demo Countdown Visual -->
+                <div class="lg:col-span-5 flex flex-col items-start lg:items-end justify-center">
+                  <div class="p-6 rounded-2xl bg-[#10151F]/90 border border-white/10 w-full max-w-sm">
+                    <div class="font-mono text-[10px] uppercase tracking-[0.2em] text-[#94A3B8] mb-4 flex items-center justify-between">
+                      <span>DEMO CYCLE PREVIEW</span>
+                      <span class="text-[#22D3EE]">SIMULATED</span>
+                    </div>
+                    <div class="grid grid-cols-4 gap-2.5 text-center">
+                      <div class="p-3 rounded-xl bg-[#1C2636] border border-white/10">
+                        <div id="demoDays" class="font-mono text-2xl font-bold text-white">02</div>
+                        <div class="font-mono text-[10px] text-[#94A3B8] mt-1">DAYS</div>
+                      </div>
+                      <div class="p-3 rounded-xl bg-[#1C2636] border border-white/10">
+                        <div id="demoHours" class="font-mono text-2xl font-bold text-white">14</div>
+                        <div class="font-mono text-[10px] text-[#94A3B8] mt-1">HRS</div>
+                      </div>
+                      <div class="p-3 rounded-xl bg-[#1C2636] border border-white/10">
+                        <div id="demoMins" class="font-mono text-2xl font-bold text-[#22D3EE]">38</div>
+                        <div class="font-mono text-[10px] text-[#94A3B8] mt-1">MIN</div>
+                      </div>
+                      <div class="p-3 rounded-xl bg-[#1C2636] border border-white/10">
+                        <div id="demoSecs" class="font-mono text-2xl font-bold text-[#22D3EE]">45</div>
+                        <div class="font-mono text-[10px] text-[#94A3B8] mt-1">SEC</div>
+                      </div>
+                    </div>
+                    <p class="font-mono text-[10px] text-[#94A3B8] mt-3.5 text-center">
+                      Visual UI demonstration only — no real deadline.
+                    </p>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </section>
+
+          <!-- WHY CHOOSE US -->
+          <section class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12 reveal">
+            <div class="text-center max-w-2xl mx-auto mb-12">
+              <span class="font-mono text-xs uppercase tracking-[0.2em] text-cyan-accent">THE VECTRA STANDARD</span>
+              <h2 class="font-display text-3xl sm:text-4xl font-bold text-primary mt-2">Engineered for Confidence</h2>
+            </div>
+
+            <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-5">
+              ${[
+                { icon: 'badge-check', title: 'Genuine Products', desc: '100% factory-sealed, serialized components sourced directly from flagship silicon partners.' },
+                { icon: 'shield-check', title: 'Secure Shopping', desc: 'End-to-end encrypted storefront architecture and transparent order verification.' },
+                { icon: 'truck', title: 'Fast Delivery', desc: 'Shock-isolated ESD packaging with priority express dispatch across international hubs.' },
+                { icon: 'headphones', title: 'Technical Support', desc: 'Direct access to PC hardware engineers for BIOS, thermal, and compatibility guidance.' }
+              ].map(item => `
+                <div class="vectra-card rounded-2xl p-6">
+                  <div class="w-11 h-11 rounded-xl bg-[#2563EB]/15 border border-[#2563EB]/30 flex items-center justify-center mb-4">
+                    <i data-lucide="${item.icon}" class="w-5 h-5 text-cyan-accent"></i>
+                  </div>
+                  <h3 class="font-display text-lg font-bold text-primary mb-2">${item.title}</h3>
+                  <p class="text-sm text-secondary leading-relaxed">${item.desc}</p>
+                </div>
+              `).join('')}
+            </div>
+          </section>
+        </div>
+      `;
+    }
+
+    /* =========================================================================
+       VIEW 2: PRODUCTS LISTING PAGE (FILTERING, SORTING, SEARCH)
+       ========================================================================= */
+    function getFilteredProducts() {
+      const f = appState.filters;
+      let list = PRODUCTS.filter(p => {
+        if (f.category !== 'All' && p.category !== f.category) return false;
+        if (f.brand !== 'All' && p.brand !== f.brand) return false;
+        if (f.inStockOnly && !p.inStock) return false;
+        if (f.query.trim()) {
+          const q = f.query.toLowerCase();
+          const match = p.name.toLowerCase().includes(q) || p.brand.toLowerCase().includes(q) || p.category.toLowerCase().includes(q);
+          if (!match) return false;
+        }
+        return true;
+      });
+
+      if (f.sort === 'price-asc') list.sort((a, b) => a.price - b.price);
+      else if (f.sort === 'price-desc') list.sort((a, b) => b.price - a.price);
+      else if (f.sort === 'rating') list.sort((a, b) => b.rating - a.rating);
+      return list;
+    }
+
+    function renderProductsView() {
+      const filtered = getFilteredProducts();
+      const brands = ['All', ...Array.from(new Set(PRODUCTS.map(p => p.brand)))];
+      const f = appState.filters;
+      const hasActiveFilters = f.category !== 'All' || f.brand !== 'All' || f.inStockOnly || f.query.trim() !== '';
+
+      return `
+        <div class="view-animate max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-10 lg:py-14">
+          <!-- Header -->
+          <div class="flex flex-col md:flex-row md:items-end justify-between gap-4 mb-8">
+            <div>
+              <div class="font-mono text-xs text-cyan-accent uppercase tracking-[0.2em]">VECTRA CATALOG</div>
+              <h1 class="font-display text-3xl sm:text-4xl font-bold text-primary mt-1.5">
+                ${f.category === 'All' ? 'All PC Components' : f.category}
+              </h1>
+            </div>
+            <p class="font-mono text-xs text-secondary">Showing <strong class="text-primary">${filtered.length}</strong> of ${PRODUCTS.length} demo items</p>
+          </div>
+
+          <!-- Top Controls Bar -->
+          <div class="vectra-card rounded-2xl p-4 sm:p-5 mb-6 space-y-4">
+            <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-3">
+              <!-- Live Search -->
+              <div class="relative">
+                <i data-lucide="search" class="w-4 h-4 text-secondary absolute left-3.5 top-1/2 -translate-y-1/2 pointer-events-none"></i>
+                <input
+                  type="text"
+                  value="${f.query}"
+                  oninput="updateFilter('query', this.value)"
+                  placeholder="Filter by model or brand..."
+                  class="w-full bg-main border border-token-strong focus:border-[#2563EB] rounded-xl pl-10 pr-4 py-2.5 text-sm text-primary placeholder:text-secondary outline-none"
+                />
+              </div>
+
+              <!-- Brand Select -->
+              <select onchange="updateFilter('brand', this.value)" class="bg-main border border-token-strong focus:border-[#2563EB] rounded-xl px-4 py-2.5 text-sm text-primary outline-none cursor-pointer">
+                ${brands.map(b => `<option value="${b}" ${f.brand === b ? 'selected' : ''}>Brand: ${b}</option>`).join('')}
+              </select>
+
+              <!-- Sort Select -->
+              <select onchange="updateFilter('sort', this.value)" class="bg-main border border-token-strong focus:border-[#2563EB] rounded-xl px-4 py-2.5 text-sm text-primary outline-none cursor-pointer">
+                <option value="featured" ${f.sort === 'featured' ? 'selected' : ''}>Sort: Featured</option>
+                <option value="price-asc" ${f.sort === 'price-asc' ? 'selected' : ''}>Price: Low to High</option>
+                <option value="price-desc" ${f.sort === 'price-desc' ? 'selected' : ''}>Price: High to Low</option>
+                <option value="rating" ${f.sort === 'rating' ? 'selected' : ''}>Top Rated</option>
+              </select>
+
+              <!-- In Stock Toggle -->
+              <label class="flex items-center justify-between px-4 py-2.5 rounded-xl bg-main border border-token-strong cursor-pointer select-none">
+                <span class="text-sm text-primary">In Stock Only</span>
+                <input type="checkbox" ${f.inStockOnly ? 'checked' : ''} onchange="updateFilter('inStockOnly', this.checked)" class="w-4 h-4 accent-[#2563EB] cursor-pointer" />
+              </label>
+            </div>
+
+            <!-- Category Pills -->
+            <div class="flex items-center gap-2 overflow-x-auto pb-1">
+              <button onclick="updateFilter('category', 'All')" class="shrink-0 px-3.5 py-1.5 rounded-lg text-xs font-semibold transition-colors cursor-pointer ${
+                f.category === 'All' ? 'btn-primary' : 'bg-main border border-token text-secondary hover:text-primary'
+              }">All Categories</button>
+              ${CATEGORIES.map(c => `
+                <button onclick="updateFilter('category', '${c.slug}')" class="shrink-0 px-3.5 py-1.5 rounded-lg text-xs font-semibold transition-colors cursor-pointer ${
+                  f.category === c.slug ? 'btn-primary' : 'bg-main border border-token text-secondary hover:text-primary'
+                }">${c.name}</button>
+              `).join('')}
+            </div>
+
+            <!-- Active Filter Chips -->
+            ${hasActiveFilters ? `
+              <div class="flex flex-wrap items-center gap-2 pt-3 border-t border-token text-xs">
+                <span class="text-secondary font-mono">Active Filters:</span>
+                ${f.category !== 'All' ? `<span class="px-2.5 py-1 rounded-md bg-[#2563EB]/15 text-accent font-mono">${f.category}</span>` : ''}
+                ${f.brand !== 'All' ? `<span class="px-2.5 py-1 rounded-md bg-[#2563EB]/15 text-accent font-mono">${f.brand}</span>` : ''}
+                ${f.inStockOnly ? `<span class="px-2.5 py-1 rounded-md bg-emerald-500/15 text-emerald-400 font-mono">In Stock</span>` : ''}
+                ${f.query.trim() ? `<span class="px-2.5 py-1 rounded-md bg-elevated text-primary font-mono">"${f.query}"</span>` : ''}
+                <button onclick="clearAllFilters()" class="ml-auto text-cyan-accent hover:underline font-mono cursor-pointer">Clear All</button>
+              </div>
+            ` : ''}
+          </div>
+
+          <!-- Product Grid -->
+          ${filtered.length === 0 ? `
+            <div class="vectra-card rounded-3xl p-16 text-center space-y-4">
+              <i data-lucide="cpu" class="w-12 h-12 mx-auto text-secondary opacity-40"></i>
+              <h3 class="font-display text-xl font-bold text-primary">No matching components found</h3>
+              <p class="text-sm text-secondary">Try adjusting your category, brand, or search query.</p>
+              <button onclick="clearAllFilters()" class="btn-primary px-6 py-2.5 rounded-xl text-sm font-semibold cursor-pointer">Reset Filters</button>
+            </div>
+          ` : `
+            <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
+              ${filtered.map((p, i) => renderProductCard(p, i)).join('')}
+            </div>
+          `}
+        </div>
+      `;
+    }
+
+    function updateFilter(key, value) {
+      appState.filters[key] = value;
+      renderCurrentView();
+    }
+
+    function clearAllFilters() {
+      appState.filters = { category: 'All', brand: 'All', inStockOnly: false, sort: 'featured', query: '' };
+      renderCurrentView();
+    }
+
+    /* =========================================================================
+       VIEW 3: PRODUCT DETAIL PAGE (PDP)
+       ========================================================================= */
+    function renderPDPView() {
+      const p = PRODUCTS.find(x => x.id === appState.selectedProductId) || PRODUCTS[0];
+      const discount = getDiscountPercent(p);
+      const isWished = appState.wishlist.includes(p.id);
+      const related = PRODUCTS.filter(x => x.id !== p.id && (x.category === p.category || x.featured)).slice(0, 4);
+      const activeImg = p.gallery[appState.pdpActiveImgIdx] || p.image;
+
+      return `
+        <div class="view-animate max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-10 lg:py-14">
+          <!-- Breadcrumb -->
+          <nav class="flex items-center gap-2 text-xs font-mono text-secondary mb-8 flex-wrap" aria-label="Breadcrumb">
+            <button onclick="navigate('home')" class="hover:text-primary cursor-pointer">Home</button>
+            <span>/</span>
+            <button onclick="openCategory('${p.category}')" class="hover:text-primary cursor-pointer">${p.category}</button>
+            <span>/</span>
+            <span class="text-primary">${p.name}</span>
+          </nav>
+
+          <div class="grid grid-cols-1 lg:grid-cols-12 gap-10 lg:gap-12 mb-16">
+            <!-- Left: Interactive Image Gallery -->
+            <div class="lg:col-span-6 space-y-4">
+              <div class="rounded-3xl overflow-hidden bg-card border border-token aspect-[4/3] relative">
+                <img src="${activeImg}" alt="${p.name}" onerror="this.src='${FALLBACK_IMG}'" class="w-full h-full object-cover" />
+                ${discount > 0 ? `<span class="absolute top-4 left-4 px-3 py-1 rounded-lg bg-[#2563EB] text-white font-mono text-xs font-bold">SAVE ${discount}%</span>` : ''}
+              </div>
+              <div class="flex items-center gap-3 overflow-x-auto pb-1">
+                ${p.gallery.map((imgUrl, idx) => `
+                  <button onclick="setPdpImage(${idx})" class="w-24 h-18 rounded-xl overflow-hidden border-2 transition-all shrink-0 cursor-pointer ${
+                    idx === appState.pdpActiveImgIdx ? 'border-[#2563EB] scale-[1.02]' : 'border-token opacity-70 hover:opacity-100'
+                  }">
+                    <img src="${imgUrl}" alt="Thumbnail ${idx + 1}" onerror="this.src='${FALLBACK_IMG}'" class="w-full h-full object-cover" />
+                  </button>
+                `).join('')}
+              </div>
+            </div>
+
+            <!-- Right: Product Info & Actions -->
+            <div class="lg:col-span-6 flex flex-col justify-between space-y-6">
+              <div class="space-y-4">
+                <div class="flex items-center justify-between">
+                  <span class="font-mono text-xs uppercase tracking-[0.2em] text-cyan-accent font-semibold">${p.brand} // ${p.category}</span>
+                  <span class="px-2.5 py-1 rounded-lg font-mono text-[11px] border ${
+                    p.inStock ? 'bg-emerald-500/15 border-emerald-500/30 text-emerald-400' : 'bg-amber-500/15 border-amber-500/30 text-amber-300'
+                  }">
+                    ${p.inStock ? 'Demo Status: Available' : 'Demo Status: Backorder'}
+                  </span>
+                </div>
+
+                <h1 class="font-display text-3xl sm:text-4xl font-bold text-primary leading-tight">${p.name}</h1>
+
+                <div class="flex items-center gap-3">
+                  ${renderStars(p.rating)}
+                  <span class="font-mono text-xs text-secondary">${p.rating.toFixed(1)} (${p.reviews} sample reviews)</span>
+                </div>
+
+                <div class="flex items-baseline gap-3 pt-2">
+                  <span class="font-mono text-3xl font-bold text-primary">${formatCurrency(p.price)}</span>
+                  ${p.originalPrice ? `<span class="font-mono text-base text-secondary line-through">${formatCurrency(p.originalPrice)}</span>` : ''}
+                  <span class="font-mono text-[11px] text-secondary">(Fictional Demo Price)</span>
+                </div>
+
+                <p class="text-sm sm:text-base text-secondary leading-relaxed pt-2">${p.description}</p>
+              </div>
+
+              <!-- Quantity + Add to Cart + Wishlist -->
+              <div class="p-5 rounded-2xl bg-card border border-token space-y-4">
+                <div class="flex flex-wrap items-center gap-3">
+                  <div class="flex items-center rounded-xl bg-main border border-token-strong">
+                    <button onclick="changePdpQty(-1)" class="w-10 h-11 flex items-center justify-center text-primary hover:text-accent cursor-pointer" aria-label="Decrease quantity">-</button>
+                    <span class="w-10 text-center font-mono text-sm font-bold text-primary">${appState.pdpQty}</span>
+                    <button onclick="changePdpQty(1)" class="w-10 h-11 flex items-center justify-center text-primary hover:text-accent cursor-pointer" aria-label="Increase quantity">+</button>
+                  </div>
+
+                  <button
+                    onclick="addToCart('${p.id}', appState.pdpQty, this)"
+                    ${!p.inStock ? 'disabled' : ''}
+                    class="flex-1 min-w-[180px] h-11 px-6 rounded-xl btn-primary font-semibold text-sm flex items-center justify-center gap-2 disabled:opacity-45 cursor-pointer"
+                  >
+                    <i data-lucide="shopping-cart" class="w-4 h-4"></i>
+                    <span>${p.inStock ? 'Add to Cart' : 'Currently Unavailable'}</span>
+                  </button>
+
+                  <button
+                    onclick="toggleWishlist('${p.id}')"
+                    class="h-11 px-4 rounded-xl btn-secondary flex items-center justify-center gap-2 text-sm font-medium cursor-pointer"
+                    aria-label="Save to wishlist"
+                  >
+                    <i data-lucide="heart" class="w-4 h-4 ${isWished ? 'fill-[#22D3EE] text-[#22D3EE]' : ''}"></i>
+                    <span class="hidden sm:inline">${isWished ? 'Saved' : 'Wishlist'}</span>
+                  </button>
+                </div>
+
+                <div class="grid grid-cols-2 gap-3 pt-3 border-t border-token text-xs text-secondary font-mono">
+                  <div class="flex items-center gap-2"><i data-lucide="truck" class="w-4 h-4 text-cyan-accent"></i> Free ESD Express</div>
+                  <div class="flex items-center gap-2"><i data-lucide="shield" class="w-4 h-4 text-cyan-accent"></i> Simulated Demo Item</div>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <!-- Technical Specifications Table -->
+          <section class="mb-16">
+            <h2 class="font-display text-2xl font-bold text-primary mb-5">Technical Specifications</h2>
+            <div class="rounded-2xl overflow-hidden border border-token bg-card">
+              <div class="divide-y divide-[var(--border-color)]">
+                ${Object.entries(p.specs).map(([k, v]) => `
+                  <div class="grid grid-cols-1 sm:grid-cols-3 p-4 text-sm">
+                    <div class="font-mono text-xs uppercase tracking-wider text-secondary">${k}</div>
+                    <div class="sm:col-span-2 font-mono text-primary font-medium mt-1 sm:mt-0">${v}</div>
+                  </div>
+                `).join('')}
+              </div>
+            </div>
+          </section>
+
+          <!-- Related Products -->
+          <section>
+            <div class="flex items-center justify-between mb-6">
+              <h2 class="font-display text-2xl font-bold text-primary">Related Components</h2>
+              <button onclick="navigate('products')" class="text-sm font-semibold text-accent hover:underline cursor-pointer">View All</button>
+            </div>
+            <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
+              ${related.map((rp, i) => renderProductCard(rp, i)).join('')}
+            </div>
+          </section>
+        </div>
+      `;
+    }
+
+    function setPdpImage(idx) {
+      appState.pdpActiveImgIdx = idx;
+      renderCurrentView();
+    }
+
+    function changePdpQty(delta) {
+      appState.pdpQty = Math.max(1, Math.min(10, appState.pdpQty + delta));
+      renderCurrentView();
+    }
+
+    /* =========================================================================
+       VIEW 4: DEALS VIEW
+       ========================================================================= */
+    function renderDealsView() {
+      const deals = PRODUCTS.filter(p => p.originalPrice && p.originalPrice > p.price);
+      return `
+        <div class="view-animate max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-10 lg:py-14 space-y-10">
+          <div class="rounded-3xl p-8 sm:p-12 bg-card border border-[#2563EB]/35 relative overflow-hidden">
+            <div class="absolute -top-20 -right-20 w-72 h-72 rounded-full bg-[#2563EB]/20 blur-3xl pointer-events-none"></div>
+            <div class="relative z-10 max-w-2xl space-y-4">
+              <span class="font-mono text-xs uppercase tracking-[0.2em] text-cyan-accent">SHOWCASE PROMOTIONS</span>
+              <h1 class="font-display text-3xl sm:text-5xl font-bold text-primary">Special Hardware Deals</h1>
+              <p class="text-sm sm:text-base text-secondary leading-relaxed">
+                Curated demo discounts on flagship silicon, cooling, and esports peripherals. Use sample code <strong class="font-mono text-primary">VECTRA10</strong> inside the shopping cart for an extra 10% demo discount.
+              </p>
+            </div>
+          </div>
+
+          <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
+            ${deals.map((p, i) => renderProductCard(p, i)).join('')}
+          </div>
+        </div>
+      `;
+    }
+
+    /* =========================================================================
+       VIEW 5: ABOUT / SITE SOCIETY CASE STUDY VIEW
+       ========================================================================= */
+    function renderAboutView() {
+      return `
+        <div class="view-animate max-w-5xl mx-auto px-4 sm:px-6 lg:px-8 py-12 lg:py-16 space-y-12">
+          <div class="space-y-4">
+            <span class="font-mono text-xs uppercase tracking-[0.2em] text-cyan-accent">SITE SOCIETY // PORTFOLIO CASE STUDY</span>
+            <h1 class="font-display text-4xl sm:text-5xl font-bold text-primary leading-tight">Engineering the Future of Hardware Retail.</h1>
+            <p class="text-base sm:text-lg text-secondary leading-relaxed">
+              VECTRA is an international-grade PC hardware e-commerce concept designed and engineered as a flagship portfolio project for <strong class="text-primary">SITE SOCIETY</strong>. Every interaction—from dual-theme token architecture to instant catalog filtering and simulated checkout—was crafted to reflect modern high-end technology retail.
+            </p>
+          </div>
+
+          <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
+            <div class="vectra-card rounded-2xl p-6 space-y-2">
+              <div class="font-mono text-xs text-cyan-accent">01 // DESIGN SYSTEM</div>
+              <h3 class="font-display text-lg font-bold text-primary">Dual-Theme Precision</h3>
+              <p class="text-sm text-secondary leading-relaxed">Full Dark Cyber &amp; Clean Light CSS variable tokens with Electric Blue primary actions and restrained Neon Cyan accents.</p>
+            </div>
+            <div class="vectra-card rounded-2xl p-6 space-y-2">
+              <div class="font-mono text-xs text-cyan-accent">02 // EXPERIENCE</div>
+              <h3 class="font-display text-lg font-bold text-primary">Fluid Multi-View UX</h3>
+              <p class="text-sm text-secondary leading-relaxed">Instant command search (⌘K), interactive PDP galleries, persistent cart &amp; wishlist state, and reduced-motion accessibility.</p>
+            </div>
+            <div class="vectra-card rounded-2xl p-6 space-y-2">
+              <div class="font-mono text-xs text-cyan-accent">03 // TRANSPARENCY</div>
+              <h3 class="font-display text-lg font-bold text-primary">100% Client Demo</h3>
+              <p class="text-sm text-secondary leading-relaxed">All hardware pricing, inventory levels, and checkout confirmations are fictional demonstrations with no real payment processing.</p>
+            </div>
+          </div>
+
+          <div class="vectra-card rounded-3xl p-8 flex flex-col sm:flex-row items-center justify-between gap-6">
+            <div>
+              <h2 class="font-display text-2xl font-bold text-primary">Ready to explore the hardware catalog?</h2>
+              <p class="text-sm text-secondary mt-1">Test category filters, wishlist persistence, and demo promo code VECTRA10.</p>
+            </div>
+            <button onclick="navigate('products')" class="btn-primary px-6 py-3 rounded-xl font-semibold text-sm shrink-0 cursor-pointer">Browse Catalog</button>
+          </div>
+        </div>
+      `;
+    }
+
+    /* =========================================================================
+       VIEW 6: INTERACTIVE DEMO CHECKOUT UI
+       ========================================================================= */
+    function renderCheckoutView() {
+      const totals = computeCartTotals();
+      if (appState.cart.length === 0) {
+        return `
+          <div class="view-animate max-w-2xl mx-auto px-4 py-20 text-center space-y-5">
+            <i data-lucide="shopping-bag" class="w-14 h-14 mx-auto text-secondary opacity-40"></i>
+            <h1 class="font-display text-3xl font-bold text-primary">Your Demo Cart is Empty</h1>
+            <p class="text-sm text-secondary">Add PC components to test the simulated checkout workflow.</p>
+            <button onclick="navigate('products')" class="btn-primary px-7 py-3 rounded-xl font-semibold text-sm cursor-pointer">Explore Hardware</button>
+          </div>
+        `;
+      }
+
+      return `
+        <div class="view-animate max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 py-10 lg:py-14">
+          <!-- Mandatory Demo Banner -->
+          <div class="mb-8 p-4 rounded-2xl bg-[#2563EB]/12 border border-[#2563EB]/40 flex items-center gap-3 text-xs sm:text-sm text-primary">
+            <i data-lucide="info" class="w-5 h-5 text-cyan-accent shrink-0"></i>
+            <span class="font-mono"><strong>INTERACTIVE DEMO CHECKOUT</strong> — No real payment or order is processed. Enter any sample data to preview confirmation.</span>
+          </div>
+
+          <div id="checkoutGrid" class="grid grid-cols-1 lg:grid-cols-12 gap-8">
+            <!-- Left Form -->
+            <form onsubmit="submitDemoOrder(event)" class="lg:col-span-7 space-y-6">
+              <div class="vectra-card rounded-2xl p-6 space-y-4">
+                <h2 class="font-display text-xl font-bold text-primary">1. Shipping Information (Demo)</h2>
+                <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                  <div>
+                    <label class="block text-xs text-secondary mb-1.5">Full Name *</label>
+                    <input id="coName" required value="Alex Mercer" class="w-full bg-main border border-token-strong focus:border-[#2563EB] rounded-xl px-4 py-2.5 text-sm text-primary outline-none" />
+                  </div>
+                  <div>
+                    <label class="block text-xs text-secondary mb-1.5">Email Address *</label>
+                    <input id="coEmail" type="email" required value="alex@sitesociety.demo" class="w-full bg-main border border-token-strong focus:border-[#2563EB] rounded-xl px-4 py-2.5 text-sm text-primary outline-none" />
+                  </div>
+                  <div class="sm:col-span-2">
+                    <label class="block text-xs text-secondary mb-1.5">Street Address *</label>
+                    <input id="coAddress" required value="742 Silicon Way, Suite 400" class="w-full bg-main border border-token-strong focus:border-[#2563EB] rounded-xl px-4 py-2.5 text-sm text-primary outline-none" />
+                  </div>
+                  <div>
+                    <label class="block text-xs text-secondary mb-1.5">City *</label>
+                    <input id="coCity" required value="San Francisco" class="w-full bg-main border border-token-strong focus:border-[#2563EB] rounded-xl px-4 py-2.5 text-sm text-primary outline-none" />
+                  </div>
+                  <div>
+                    <label class="block text-xs text-secondary mb-1.5">Postal Code *</label>
+                    <input id="coZip" required value="94107" class="w-full bg-main border border-token-strong focus:border-[#2563EB] rounded-xl px-4 py-2.5 text-sm font-mono text-primary outline-none" />
+                  </div>
+                </div>
+              </div>
+
+              <div class="vectra-card rounded-2xl p-6 space-y-4">
+                <h2 class="font-display text-xl font-bold text-primary">2. Simulated Payment Method</h2>
+                <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                  <div class="sm:col-span-2">
+                    <label class="block text-xs text-secondary mb-1.5">Demo Card Number *</label>
+                    <input required value="4242 •••• •••• 4242" class="w-full bg-main border border-token-strong focus:border-[#2563EB] rounded-xl px-4 py-2.5 text-sm font-mono text-primary outline-none" />
+                  </div>
+                  <div>
+                    <label class="block text-xs text-secondary mb-1.5">Expiry *</label>
+                    <input required value="12 / 29" class="w-full bg-main border border-token-strong focus:border-[#2563EB] rounded-xl px-4 py-2.5 text-sm font-mono text-primary outline-none" />
+                  </div>
+                  <div>
+                    <label class="block text-xs text-secondary mb-1.5">CVC *</label>
+                    <input required value="999" class="w-full bg-main border border-token-strong focus:border-[#2563EB] rounded-xl px-4 py-2.5 text-sm font-mono text-primary outline-none" />
+                  </div>
+                </div>
+              </div>
+
+              <button type="submit" class="w-full py-4 rounded-xl btn-primary font-bold text-sm sm:text-base flex items-center justify-center gap-2 cursor-pointer">
+                <i data-lucide="lock" class="w-4 h-4"></i>
+                <span>Complete Simulated Order (${formatCurrency(totals.total)})</span>
+              </button>
+            </form>
+
+            <!-- Right Order Summary -->
+            <div class="lg:col-span-5">
+              <div class="vectra-card rounded-2xl p-6 space-y-5 sticky top-24">
+                <h2 class="font-display text-xl font-bold text-primary">Order Summary</h2>
+                <div class="space-y-3 max-h-72 overflow-y-auto pr-1">
+                  ${appState.cart.map(item => {
+                    const p = PRODUCTS.find(x => x.id === item.id);
+                    if (!p) return '';
+                    return `
+                      <div class="flex items-center gap-3">
+                        <img src="${p.image}" alt="${p.name}" onerror="this.src='${FALLBACK_IMG}'" class="w-14 h-12 rounded-lg object-cover shrink-0" />
+                        <div class="flex-1 min-w-0">
+                          <div class="text-xs font-semibold text-primary truncate">${p.name}</div>
+                          <div class="font-mono text-[11px] text-secondary">Qty: ${item.qty}</div>
+                        </div>
+                        <div class="font-mono text-xs font-semibold text-primary">${formatCurrency(p.price * item.qty)}</div>
+                      </div>
+                    `;
+                  }).join('')}
+                </div>
+                <div class="space-y-2 pt-4 border-t border-token text-sm">
+                  <div class="flex justify-between text-secondary"><span>Subtotal</span><span class="font-mono text-primary">${formatCurrency(totals.subtotal)}</span></div>
+                  ${totals.discount > 0 ? `<div class="flex justify-between text-cyan-accent"><span>Promo (VECTRA10)</span><span class="font-mono">-${formatCurrency(totals.discount)}</span></div>` : ''}
+                  <div class="flex justify-between text-secondary"><span>ESD Express Shipping</span><span class="font-mono text-emerald-400">FREE</span></div>
+                  <div class="flex justify-between text-base font-bold text-primary pt-2 border-t border-token">
+                    <span>Demo Total</span>
+                    <span class="font-mono text-accent">${formatCurrency(totals.total)}</span>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      `;
+    }
+
+    function submitDemoOrder(e) {
+      e.preventDefault();
+      const totals = computeCartTotals();
+      const orderId = 'VCT-2026-' + Math.floor(1000 + Math.random() * 9000);
+      const itemSummary = appState.cart.map(i => {
+        const p = PRODUCTS.find(x => x.id === i.id);
+        return p ? `${p.name} (×${i.qty})` : '';
+      }).filter(Boolean);
+
+      appState.demoOrders.unshift({
+        id: orderId,
+        date: new Date().toLocaleDateString('en-US', { month: 'short', day: 'numeric', year: 'numeric' }),
+        total: totals.total,
+        status: 'Simulated — Confirmed',
+        items: itemSummary
+      });
+
+      appState.cart = [];
+      appState.promoApplied = false;
+      persistState();
+      updateHeaderBadges();
+
+      const grid = document.getElementById('checkoutGrid');
+      if (grid) {
+        grid.innerHTML = `
+          <div class="lg:col-span-12 vectra-card rounded-3xl p-10 sm:p-14 text-center max-w-2xl mx-auto space-y-5 view-animate">
+            <div class="w-16 h-16 rounded-2xl bg-emerald-500/15 border border-emerald-500/35 flex items-center justify-center mx-auto">
+              <i data-lucide="check-circle-2" class="w-8 h-8 text-emerald-400"></i>
+            </div>
+            <div class="font-mono text-xs uppercase tracking-[0.2em] text-cyan-accent">SIMULATED ORDER CONFIRMED</div>
+            <h2 class="font-display text-3xl font-bold text-primary">Thank You for Testing VECTRA</h2>
+            <p class="text-sm text-secondary leading-relaxed">
+              Your sample order <strong class="font-mono text-primary">${orderId}</strong> has been logged to your Demo Account history. No real charge was made.
+            </p>
+            <div class="flex flex-wrap justify-center gap-3 pt-4">
+              <button onclick="openAccountModal()" class="btn-secondary px-6 py-3 rounded-xl text-sm font-semibold cursor-pointer">View in Demo Account</button>
+              <button onclick="navigate('home')" class="btn-primary px-6 py-3 rounded-xl text-sm font-semibold cursor-pointer">Return to Storefront</button>
+            </div>
+          </div>
+        `;
+        lucide.createIcons();
+      }
+      showToast(`Demo Order ${orderId} created!`, 'success');
+    }
+
+    /* =========================================================================
+       CART & WISHLIST INTERACTIONS
+       ========================================================================= */
+    function computeCartTotals() {
+      const subtotal = appState.cart.reduce((sum, item) => {
+        const p = PRODUCTS.find(x => x.id === item.id);
+        return sum + (p ? p.price * item.qty : 0);
+      }, 0);
+      const discount = appState.promoApplied ? subtotal * 0.10 : 0;
+      const total = Math.max(0, subtotal - discount);
+      return { subtotal, discount, total };
+    }
+
+    function updateHeaderBadges() {
+      const cartCount = appState.cart.reduce((s, i) => s + i.qty, 0);
+      const wishCount = appState.wishlist.length;
+      document.getElementById('cartBadge').textContent = cartCount;
+      const wBadge = document.getElementById('wishlistBadge');
+      wBadge.textContent = wishCount;
+      wBadge.classList.toggle('hidden', wishCount === 0);
+    }
+
+    function addToCart(productId, qty = 1, btnEl = null) {
+      const p = PRODUCTS.find(x => x.id === productId);
+      if (!p || !p.inStock) return;
+      const existing = appState.cart.find(i => i.id === productId);
+      if (existing) existing.qty += qty;
+      else appState.cart.push({ id: productId, qty });
+
+      persistState();
+      updateHeaderBadges();
+      renderCartDrawer();
+      showToast(`Added ${p.name} to cart`, 'success');
+
+      // Animated "Added ✓" button micro-feedback
+      if (btnEl) {
+        const original = btnEl.innerHTML;
+        btnEl.innerHTML = `<i data-lucide="check" class="w-4 h-4"></i><span>Added ✓</span>`;
+        btnEl.style.backgroundColor = '#059669';
+        lucide.createIcons();
+        setTimeout(() => {
+          btnEl.innerHTML = original;
+          btnEl.style.backgroundColor = '';
+          lucide.createIcons();
+        }, 1200);
+      }
+    }
+
+    function updateCartQty(productId, delta) {
+      const idx = appState.cart.findIndex(i => i.id === productId);
+      if (idx === -1) return;
+      appState.cart[idx].qty += delta;
+      if (appState.cart[idx].qty <= 0) appState.cart.splice(idx, 1);
+      persistState();
+      updateHeaderBadges();
+      renderCartDrawer();
+      if (appState.view === 'checkout') renderCurrentView();
+    }
+
+    function applyPromoCode() {
+      const val = (document.getElementById('cartPromoInput').value || '').trim().toUpperCase();
+      if (val === 'VECTRA10') {
+        appState.promoApplied = true;
+        persistState();
+        renderCartDrawer();
+        showToast('Demo promo VECTRA10 (-10%) applied!', 'success');
+      } else {
+        showToast('Invalid code. Try demo code: VECTRA10', 'error');
+      }
+    }
+
+    function renderCartDrawer() {
+      const container = document.getElementById('cartItemsContainer');
+      if (appState.cart.length === 0) {
+        container.innerHTML = `
+          <div class="text-center py-16 space-y-3 text-secondary">
+            <i data-lucide="shopping-bag" class="w-12 h-12 mx-auto opacity-30"></i>
+            <p class="text-sm">Your shopping cart is empty.</p>
+          </div>
+        `;
+      } else {
+        container.innerHTML = appState.cart.map(item => {
+          const p = PRODUCTS.find(x => x.id === item.id);
+          if (!p) return '';
+          return `
+            <div class="flex gap-3.5 p-3.5 rounded-2xl bg-card border border-token">
+              <img src="${p.image}" alt="${p.name}" onerror="this.src='${FALLBACK_IMG}'" class="w-16 h-16 rounded-xl object-cover shrink-0 cursor-pointer" onclick="toggleCartDrawer(false); openProductDetail('${p.id}')" />
+              <div class="flex-1 min-w-0">
+                <div class="flex items-start justify-between gap-2">
+                  <h4 class="font-display text-xs sm:text-sm font-bold text-primary truncate">${p.name}</h4>
+                  <button onclick="updateCartQty('${p.id}', -${item.qty})" class="text-secondary hover:text-rose-400 cursor-pointer" aria-label="Remove item"><i data-lucide="trash-2" class="w-3.5 h-3.5"></i></button>
+                </div>
+                <div class="font-mono text-xs text-cyan-accent mt-1">${formatCurrency(p.price * item.qty)}</div>
+                <div class="flex items-center gap-2 mt-2.5">
+                  <button onclick="updateCartQty('${p.id}', -1)" class="w-7 h-7 rounded-lg bg-main border border-token-strong text-primary hover:border-[#2563EB] cursor-pointer">-</button>
+                  <span class="font-mono text-xs w-5 text-center text-primary">${item.qty}</span>
+                  <button onclick="updateCartQty('${p.id}', 1)" class="w-7 h-7 rounded-lg bg-main border border-token-strong text-primary hover:border-[#2563EB] cursor-pointer">+</button>
+                </div>
+              </div>
+            </div>
+          `;
+        }).join('');
+      }
+
+      const totals = computeCartTotals();
+      document.getElementById('cartSubtotal').textContent = formatCurrency(totals.subtotal);
+      document.getElementById('cartDiscount').textContent = '-' + formatCurrency(totals.discount);
+      const discRow = document.getElementById('cartDiscountRow');
+      discRow.classList.toggle('hidden', totals.discount === 0);
+      discRow.classList.toggle('flex', totals.discount > 0);
+      document.getElementById('cartTotal').textContent = formatCurrency(totals.total);
+      lucide.createIcons();
+    }
+
+    function proceedToCheckout() {
+      toggleCartDrawer(false);
+      navigate('checkout');
+    }
+
+    function toggleWishlist(productId) {
+      const idx = appState.wishlist.indexOf(productId);
+      const p = PRODUCTS.find(x => x.id === productId);
+      if (idx > -1) {
+        appState.wishlist.splice(idx, 1);
+        showToast(`Removed ${p ? p.name : 'item'} from wishlist`, 'info');
+      } else {
+        appState.wishlist.push(productId);
+        showToast(`Saved ${p ? p.name : 'item'} to wishlist`, 'success');
+      }
+      persistState();
+      updateHeaderBadges();
+      renderWishlistDrawer();
+      renderCurrentView();
+    }
+
+    function renderWishlistDrawer() {
+      const container = document.getElementById('wishlistItemsContainer');
+      if (appState.wishlist.length === 0) {
+        container.innerHTML = `
+          <div class="text-center py-16 space-y-3 text-secondary">
+            <i data-lucide="heart" class="w-12 h-12 mx-auto opacity-30"></i>
+            <p class="text-sm">No saved hardware in your wishlist yet.</p>
+          </div>
+        `;
+      } else {
+        container.innerHTML = appState.wishlist.map(id => {
+          const p = PRODUCTS.find(x => x.id === id);
+          if (!p) return '';
+          return `
+            <div class="flex gap-3.5 p-3.5 rounded-2xl bg-card border border-token">
+              <img src="${p.image}" alt="${p.name}" onerror="this.src='${FALLBACK_IMG}'" class="w-16 h-16 rounded-xl object-cover shrink-0 cursor-pointer" onclick="toggleWishlistDrawer(false); openProductDetail('${p.id}')" />
+              <div class="flex-1 min-w-0">
+                <h4 class="font-display text-xs sm:text-sm font-bold text-primary truncate">${p.name}</h4>
+                <div class="font-mono text-xs text-primary mt-1">${formatCurrency(p.price)}</div>
+                <div class="flex items-center gap-2 mt-2.5">
+                  <button onclick="addToCart('${p.id}', 1)" ${!p.inStock ? 'disabled' : ''} class="px-3 py-1.5 rounded-lg btn-primary text-[11px] font-semibold disabled:opacity-40 cursor-pointer">Move to Cart</button>
+                  <button onclick="toggleWishlist('${p.id}')" class="px-2.5 py-1.5 rounded-lg bg-main border border-token text-[11px] text-secondary hover:text-rose-400 cursor-pointer">Remove</button>
+                </div>
+              </div>
+            </div>
+          `;
+        }).join('');
+      }
+      lucide.createIcons();
+    }
+
+    /* =========================================================================
+       MODALS & DRAWERS (SEARCH, ACCOUNT, CART, WISHLIST, MOBILE MENU)
+       ========================================================================= */
+    function toggleMobileMenu(show) {
+      document.getElementById('mobileMenuDrawer').classList.toggle('hidden', !show);
+    }
+    function toggleCartDrawer(show) {
+      document.getElementById('cartDrawer').classList.toggle('hidden', !show);
+      if (show) renderCartDrawer();
+    }
+    function toggleWishlistDrawer(show) {
+      document.getElementById('wishlistDrawer').classList.toggle('hidden', !show);
+      if (show) renderWishlistDrawer();
+    }
+
+    function openSearchModal() {
+      const m = document.getElementById('searchModal');
+      m.classList.remove('hidden');
+      m.classList.add('flex');
+      const input = document.getElementById('globalSearchInput');
+      input.value = '';
+      renderSearchResults();
+      setTimeout(() => input.focus(), 40);
+    }
+    function closeSearchModal() {
+      const m = document.getElementById('searchModal');
+      m.classList.add('hidden');
+      m.classList.remove('flex');
+    }
+    function renderSearchResults() {
+      const q = (document.getElementById('globalSearchInput').value || '').toLowerCase().trim();
+      const matches = PRODUCTS.filter(p =>
+        !q || p.name.toLowerCase().includes(q) || p.brand.toLowerCase().includes(q) || p.category.toLowerCase().includes(q)
+      ).slice(0, 6);
+
+      const container = document.getElementById('globalSearchResults');
+      if (matches.length === 0) {
+        container.innerHTML = `<div class="p-8 text-center text-sm text-secondary">No hardware matching "${q}".</div>`;
+        return;
+      }
+      container.innerHTML = matches.map(p => `
+        <button onclick="closeSearchModal(); openProductDetail('${p.id}')" class="w-full flex items-center gap-3.5 p-3 rounded-xl hover:bg-card border border-transparent hover:border-token text-left transition-colors cursor-pointer">
+          <img src="${p.image}" alt="${p.name}" onerror="this.src='${FALLBACK_IMG}'" class="w-12 h-10 rounded-lg object-cover shrink-0" />
+          <div class="flex-1 min-w-0">
+            <div class="font-display text-sm font-bold text-primary truncate">${p.name}</div>
+            <div class="font-mono text-[11px] text-secondary">${p.brand} • ${p.category}</div>
+          </div>
+          <div class="font-mono text-sm font-bold text-cyan-accent">${formatCurrency(p.price)}</div>
+        </button>
+      `).join('');
+    }
+
+    function openAccountModal() {
+      const m = document.getElementById('accountModal');
+      m.classList.remove('hidden');
+      m.classList.add('flex');
+      document.getElementById('accountModalBody').innerHTML = `
+        <div class="p-4 rounded-2xl bg-card border border-token text-xs text-secondary font-mono">
+          Demo reviewer account for SITE SOCIETY showcase. Completed simulated orders appear below.
+        </div>
+        <div>
+          <h3 class="font-display text-sm font-bold text-primary uppercase tracking-wider mb-3">Simulated Order History</h3>
+          <div class="space-y-3">
+            ${appState.demoOrders.map(o => `
+              <div class="p-4 rounded-2xl bg-card border border-token space-y-2">
+                <div class="flex items-center justify-between text-xs font-mono">
+                  <span class="text-cyan-accent font-bold">${o.id}</span>
+                  <span class="text-secondary">${o.date}</span>
+                </div>
+                <div class="text-xs text-primary">${o.items.join(', ')}</div>
+                <div class="flex items-center justify-between pt-2 border-t border-token text-xs font-mono">
+                  <span class="text-emerald-400">${o.status}</span>
+                  <span class="text-primary font-bold">${formatCurrency(o.total)}</span>
+                </div>
+              </div>
+            `).join('')}
+          </div>
+        </div>
+      `;
+    }
+    function closeAccountModal() {
+      const m = document.getElementById('accountModal');
+      m.classList.add('hidden');
+      m.classList.remove('flex');
+    }
+
+    function handleNewsletterSubmit(e) {
+      e.preventDefault();
+      const input = document.getElementById('newsletterEmail');
+      if (input && input.value.trim()) {
+        showToast(`Subscribed ${input.value.trim()} to VECTRA Dispatch (Demo)`, 'success');
+        input.value = '';
+      }
+    }
+
+    /* =========================================================================
+       MAIN RENDERER, SCROLL REVEAL, DEMO CLOCK & KEYBOARD SHORTCUTS
+       ========================================================================= */
+    function renderCurrentView() {
+      const main = document.getElementById('appMain');
+      if (appState.view === 'home') main.innerHTML = renderHomeView();
+      else if (appState.view === 'products') main.innerHTML = renderProductsView();
+      else if (appState.view === 'pdp') main.innerHTML = renderPDPView();
+      else if (appState.view === 'deals') main.innerHTML = renderDealsView();
+      else if (appState.view === 'about') main.innerHTML = renderAboutView();
+      else if (appState.view === 'checkout') main.innerHTML = renderCheckoutView();
+
+      lucide.createIcons();
+      initScrollReveal();
+    }
+
+    function initScrollReveal() {
+      const els = document.querySelectorAll('.reveal');
+      if (!('IntersectionObserver' in window)) {
+        els.forEach(el => el.classList.add('is-visible'));
+        return;
+      }
+      const obs = new IntersectionObserver((entries) => {
+        entries.forEach(entry => {
+          if (entry.isIntersecting) {
+            entry.target.classList.add('is-visible');
+            obs.unobserve(entry.target);
+          }
+        });
+      }, { threshold: 0.1 });
+      els.forEach(el => obs.observe(el));
+    }
+
+    // Subtle visual-only demo timer ticker (does not claim a real deadline)
+    let demoSecondsRemaining = 2 * 86400 + 14 * 3600 + 38 * 60 + 45;
+    setInterval(() => {
+      demoSecondsRemaining = demoSecondsRemaining > 0 ? demoSecondsRemaining - 1 : 2 * 86400;
+      const dEl = document.getElementById('demoDays');
+      if (!dEl) return;
+      const d = Math.floor(demoSecondsRemaining / 86400);
+      const h = Math.floor((demoSecondsRemaining % 86400) / 3600);
+      const m = Math.floor((demoSecondsRemaining % 3600) / 60);
+      const s = demoSecondsRemaining % 60;
+      dEl.textContent = String(d).padStart(2, '0');
+      document.getElementById('demoHours').textContent = String(h).padStart(2, '0');
+      document.getElementById('demoMins').textContent = String(m).padStart(2, '0');
+      document.getElementById('demoSecs').textContent = String(s).padStart(2, '0');
+    }, 1000);
+
+    // Navbar scroll elevation
+    window.addEventListener('scroll', () => {
+      const nav = document.getElementById('mainNavbar');
+      if (nav) nav.classList.toggle('scrolled', window.scrollY > 12);
+    }, { passive: true });
+
+    // Global keyboard shortcuts (Cmd/Ctrl+K for search, Escape to close overlays)
+    window.addEventListener('keydown', (e) => {
+      if ((e.metaKey || e.ctrlKey) && e.key.toLowerCase() === 'k') {
+        e.preventDefault();
+        openSearchModal();
+      } else if (e.key === 'Escape') {
+        closeSearchModal();
+        closeAccountModal();
+        toggleCartDrawer(false);
+        toggleWishlistDrawer(false);
+        toggleMobileMenu(false);
+      }
+    });
+
+    // Bootstrap App
+    window.addEventListener('DOMContentLoaded', () => {
+      applyTheme(appState.theme);
+      updateHeaderBadges();
+      renderCurrentView();
+    });
+  </script>
+
+  <div id="vectra-scroll-bar"></div>
+  <div class="ss-float-bar" dir="ltr">
+    <a href="/" id="ss-back-link">← SITE SOCIETY</a>
+    <span>|</span>
+    <button type="button" data-vlang="fa">FA</button>
+    <button type="button" data-vlang="en" class="active">EN</button>
+  </div>
+  <script>
+    (function(){
+      var bar = document.getElementById('vectra-scroll-bar');
+      window.addEventListener('scroll', function(){
+        var d = document.documentElement, m = d.scrollHeight - d.clientHeight;
+        if(bar && m > 0) bar.style.transform = 'scaleX(' + Math.min(1, Math.max(0, window.scrollY / m)) + ')';
+      }, { passive: true });
+
+      var io = new IntersectionObserver(function(entries){
+        entries.forEach(function(e, i){
+          if(e.isIntersecting){
+            e.target.style.transitionDelay = Math.min(i * 45, 220) + 'ms';
+            e.target.classList.add('is-in');
+            io.unobserve(e.target);
+          }
+        });
+      }, { threshold: 0.08 });
+
+      function attachScrollAnims(){
+        document.querySelectorAll('section, .product-card, article, .reveal').forEach(function(el){
+          if(!el.classList.contains('vectra-anim-up')){
+            el.classList.add('vectra-anim-up');
+            io.observe(el);
+          }
+        });
+      }
+      setTimeout(attachScrollAnims, 120);
+      setInterval(attachScrollAnims, 1200);
+
+      var faMap = {
+        'Home': 'خانه', 'Catalog': 'کاتالوگ', 'PC Builder': 'سیستم‌ساز', 'Deals': 'پیشنهادها',
+        'Support': 'پشتیبانی', 'Explore Catalog': 'مشاهده کاتالوگ', 'Build Custom PC': 'اسمبل اختصاصی',
+        'Add to Cart': 'افزودن به سبد', 'View Specs': 'مشخصات فنی'
+      };
+      var originalTexts = new WeakMap();
+      function setLang(lang){
+        document.documentElement.lang = lang;
+        document.documentElement.dir = lang === 'fa' ? 'rtl' : 'ltr';
+        document.querySelectorAll('[data-vlang]').forEach(function(b){ b.classList.toggle('active', b.dataset.vlang === lang); });
+        var back = document.getElementById('ss-back-link');
+        if(back) back.textContent = lang === 'fa' ? '← بازگشت به SITE SOCIETY' : '← SITE SOCIETY';
+        document.querySelectorAll('a, button, h1, h2, h3, span').forEach(function(el){
+          if(el.closest('.ss-float-bar') || el.children.length > 0) return;
+          var txt = el.textContent.trim();
+          if(!originalTexts.has(el)) originalTexts.set(el, txt);
+          var orig = originalTexts.get(el);
+          if(lang === 'fa' && faMap[orig]) el.textContent = faMap[orig];
+          else if(lang === 'en') el.textContent = orig;
+        });
+      }
+      document.querySelectorAll('[data-vlang]').forEach(function(b){
+        b.addEventListener('click', function(){ setLang(b.dataset.vlang); });
+      });
+      var saved = localStorage.getItem('ss_lang');
+      if(saved === 'fa') setTimeout(function(){ setLang('fa'); }, 200);
+    })();
+  </script>
+
+</body>
+</html>

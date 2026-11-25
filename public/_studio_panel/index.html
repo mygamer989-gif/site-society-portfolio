@@ -1,0 +1,275 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="robots" content="noindex, nofollow" />
+  <title>SITE SOCIETY — Studio Admin</title>
+  <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@400;500;600&family=JetBrains+Mono:wght@400;500&family=Plus+Jakarta+Sans:wght@300;400;500;600&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="/styles.css" />
+  <style>
+    html { font-family: var(--font-sans); }
+    .admin-shell { max-width: 1180px; margin: 0 auto; padding: 40px 24px 80px; position: relative; z-index: 1; }
+    .admin-topbar { display: flex; align-items: center; justify-content: space-between; gap: 16px; padding-bottom: 24px; border-bottom: 1px solid var(--border-hairline); margin-bottom: 36px; flex-wrap: wrap; }
+    .admin-card { background: var(--bg-surface); border: 1px solid var(--border-hairline); border-radius: var(--radius-lg); padding: 32px; margin-bottom: 28px; box-shadow: var(--shadow-soft); }
+    .auth-box { max-width: 480px; margin: 60px auto; }
+    .admin-tabs { display: flex; gap: 10px; flex-wrap: wrap; margin-bottom: 28px; }
+    .tab-btn { padding: 10px 18px; border-radius: 999px; background: var(--bg-surface); border: 1px solid var(--border-hairline); color: var(--ink-secondary); cursor: pointer; font-size: 0.85rem; }
+    .tab-btn.active { background: var(--ink-primary); border-color: var(--ink-primary); color: #faf8f5; }
+    .admin-grid { display: grid; grid-template-columns: 1fr 1.2fr; gap: 28px; align-items: start; }
+    .project-row { display: flex; flex-direction: column; gap: 12px; padding: 20px; background: var(--bg-page); border: 1px solid var(--border-hairline); border-radius: var(--radius-md); margin-bottom: 14px; }
+    .project-row-head { display: flex; align-items: center; justify-content: space-between; gap: 12px; flex-wrap: wrap; }
+    .badge { font-family: var(--font-mono); font-size: 0.7rem; padding: 3px 10px; border-radius: 999px; border: 1px solid var(--border-hairline); }
+    .badge-live { color: #1e7e45; border-color: rgba(30, 126, 69, 0.35); background: rgba(30, 126, 69, 0.08); }
+    .badge-draft { color: var(--ink-secondary); }
+    .row-actions { display: flex; gap: 8px; flex-wrap: wrap; }
+    .btn-danger { background: rgba(197, 57, 41, 0.08); color: #c53929; border: 1px solid rgba(197, 57, 41, 0.3); }
+    .preview-box { margin-top: 10px; border: 1px solid var(--border-hairline); border-radius: var(--radius-sm); overflow: hidden; aspect-ratio: 16/10; background: var(--bg-linen); display: flex; align-items: center; justify-content: center; color: var(--ink-muted); font-size: 0.8rem; }
+    .preview-box img { width: 100%; height: 100%; object-fit: cover; }
+    .secret-box { padding: 14px; background: var(--bg-page); border: 1px solid var(--bronze-border); border-radius: var(--radius-sm); font-family: var(--font-mono); font-size: 0.82rem; word-break: break-all; margin: 12px 0; }
+    .recovery-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 8px; margin: 12px 0; font-family: var(--font-mono); font-size: 0.82rem; }
+    .recovery-item { padding: 8px 10px; background: var(--bg-page); border: 1px solid var(--border-hairline); border-radius: 4px; text-align: center; }
+    .modal-backdrop { position: fixed; inset: 0; background: rgba(20, 20, 19, 0.55); backdrop-filter: blur(8px); display: flex; align-items: center; justify-content: center; padding: 24px; z-index: 100; }
+    .modal-backdrop[hidden] { display: none; }
+    .modal-content { max-width: 620px; width: 100%; background: var(--bg-surface); border: 1px solid var(--bronze-border); border-radius: var(--radius-lg); padding: 28px; max-height: 90vh; overflow-y: auto; box-shadow: var(--shadow-hover); }
+    @media (max-width: 900px) { .admin-grid { grid-template-columns: 1fr; } }
+  </style>
+</head>
+<body>
+  <div class="ambient-grid" aria-hidden="true"></div>
+
+  <div class="admin-shell">
+    <header class="admin-topbar">
+      <div class="brand">
+        <span class="brand-mark" aria-hidden="true"></span>
+        <span class="brand-text">SITE SOCIETY // ADMIN</span>
+      </div>
+      <div class="header-actions">
+        <a href="/" class="btn btn-ghost btn-sm" target="_blank" rel="noopener noreferrer">View Public Site &#8599;</a>
+        <button id="logout-btn" class="btn btn-gold-outline btn-sm" type="button" hidden>Sign Out</button>
+      </div>
+    </header>
+
+    <div id="admin-loading" class="admin-card">Checking security status...</div>
+
+    <!-- Initial Setup View -->
+    <section id="setup-view" class="admin-card auth-box" hidden>
+      <span class="section-kicker">INITIAL SECURITY SETUP</span>
+      <h1 class="section-title" style="font-size: 2rem; margin-bottom: 12px;">Create Owner Account</h1>
+      <p style="color: var(--silver); font-size: 0.9rem; margin-bottom: 22px;">
+        No administrator exists yet. Enter your one-time setup token from server secrets to initialize your account and mandatory 2FA.
+      </p>
+      <form id="setup-form">
+        <div class="field">
+          <label for="s-token">Setup Token</label>
+          <input id="s-token" type="password" required autocomplete="off" />
+        </div>
+        <div class="field">
+          <label for="s-username">Username</label>
+          <input id="s-username" type="text" required minlength="3" maxlength="32" placeholder="owner" />
+        </div>
+        <div class="field">
+          <label for="s-password">Password (min 12 chars)</label>
+          <input id="s-password" type="password" required minlength="12" maxlength="128" />
+        </div>
+        <button class="btn btn-gold-solid" type="submit" style="width: 100%;">Initialize Admin &amp; Generate 2FA</button>
+        <p id="setup-status" class="form-status" style="margin-top: 12px;"></p>
+      </form>
+
+      <div id="setup-result" hidden style="margin-top: 24px;">
+        <h2 style="font-size: 1.15rem; color: var(--gold); margin-bottom: 8px;">Save Your 2FA Secret &amp; Recovery Codes</h2>
+        <p style="font-size: 0.85rem; color: var(--silver);">
+          Add this key to Google Authenticator or any TOTP app (no third-party QR server is ever contacted):
+        </p>
+        <div id="totp-secret-display" class="secret-box"></div>
+        <p style="font-size: 0.85rem; color: var(--silver); margin-top: 12px;">One-Time Recovery Codes (shown once):</p>
+        <div id="recovery-codes-display" class="recovery-grid"></div>
+        <button id="go-login-btn" class="btn btn-gold-solid" type="button" style="width: 100%; margin-top: 12px;">I Saved These — Proceed to Sign In</button>
+      </div>
+    </section>
+
+    <!-- Login View -->
+    <section id="login-view" class="admin-card auth-box" hidden>
+      <span class="section-kicker">PRIVATE ACCESS</span>
+      <h1 class="section-title" style="font-size: 2rem; margin-bottom: 18px;">Administrator Sign In</h1>
+
+      <form id="login-step1">
+        <div class="field">
+          <label for="l-username">Username</label>
+          <input id="l-username" type="text" required autocomplete="username" />
+        </div>
+        <div class="field">
+          <label for="l-password">Password</label>
+          <input id="l-password" type="password" required autocomplete="current-password" />
+        </div>
+        <button class="btn btn-gold-solid" type="submit" style="width: 100%;">Continue to 2FA</button>
+      </form>
+
+      <form id="login-step2" hidden>
+        <p style="color: var(--silver); font-size: 0.88rem; margin-bottom: 16px;">
+          Enter the 6-digit code from your authenticator app, or use a one-time recovery code.
+        </p>
+        <div class="field" id="totp-input-wrap">
+          <label for="l-totp">Authenticator Code (6 digits)</label>
+          <input id="l-totp" type="text" inputmode="numeric" pattern="[0-9]{6}" maxlength="6" placeholder="000000" />
+        </div>
+        <div class="field" id="recovery-input-wrap" hidden>
+          <label for="l-recovery">One-Time Recovery Code</label>
+          <input id="l-recovery" type="text" placeholder="XXXXX-XXXXX" />
+        </div>
+        <button class="btn btn-gold-solid" type="submit" style="width: 100%;">Verify &amp; Enter Studio</button>
+        <button id="toggle-recovery-btn" class="btn btn-ghost btn-sm" type="button" style="width: 100%; margin-top: 10px;">
+          Use Recovery Code Instead
+        </button>
+      </form>
+
+      <p id="login-status" class="form-status" style="margin-top: 14px;"></p>
+    </section>
+
+    <!-- Main Dashboard -->
+    <main id="dashboard-view" hidden>
+      <div class="admin-tabs">
+        <button class="tab-btn active" data-tab="projects" type="button">Portfolio Projects</button>
+        <button class="tab-btn" data-tab="settings" type="button">Contact &amp; SEO Settings</button>
+        <button class="tab-btn" data-tab="inquiries" type="button">Inquiries</button>
+        <button class="tab-btn" data-tab="logs" type="button">Security Logs</button>
+      </div>
+
+      <!-- Projects Tab -->
+      <section id="tab-projects" class="admin-grid">
+        <div class="admin-card">
+          <h2 id="form-heading" style="font-family: var(--font-serif); font-size: 1.8rem; font-weight: 400; margin-bottom: 18px;">
+            Add Portfolio Project
+          </h2>
+          <form id="project-form">
+            <input type="hidden" id="p-id" />
+            <div class="field">
+              <label for="p-title">Project Title</label>
+              <input id="p-title" type="text" required minlength="2" maxlength="120" />
+            </div>
+            <div class="form-row">
+              <div class="field">
+                <label for="p-category">Category</label>
+                <input id="p-category" type="text" required minlength="2" maxlength="80" placeholder="e.g. Business Website" />
+              </div>
+              <div class="field">
+                <label for="p-order">Display Order</label>
+                <input id="p-order" type="number" value="0" />
+              </div>
+            </div>
+            <div class="field">
+              <label for="p-desc">Verified Description</label>
+              <textarea id="p-desc" rows="4" required minlength="10" maxlength="1000"></textarea>
+            </div>
+            <div class="field">
+              <label for="p-techs">Technologies (comma-separated)</label>
+              <input id="p-techs" type="text" placeholder="TypeScript, Cloudflare Workers, CSS" />
+            </div>
+            <div class="field">
+              <label for="p-image">Thumbnail Image URL (HTTPS or Google Drive Share Link)</label>
+              <input id="p-image" type="url" placeholder="https://drive.google.com/file/d/.../view or https://..." />
+              <div id="p-image-preview" class="preview-box">Image preview appears here</div>
+            </div>
+            <div class="field">
+              <label for="p-live">Live Website URL</label>
+              <input id="p-live" type="url" placeholder="https://..." />
+            </div>
+            <div class="field" style="flex-direction: row; align-items: center; gap: 10px;">
+              <input id="p-published" type="checkbox" style="width: auto;" />
+              <label for="p-published" style="margin: 0;">Publish on public website</label>
+            </div>
+            <div class="form-actions">
+              <button class="btn btn-gold-solid btn-sm" type="submit">Save Project</button>
+              <button id="preview-btn" class="btn btn-ghost btn-sm" type="button">Preview Card</button>
+              <button id="reset-project-btn" class="btn btn-ghost btn-sm" type="button" hidden>Cancel Edit</button>
+            </div>
+            <p id="project-status" class="form-status" style="margin-top: 12px;"></p>
+          </form>
+        </div>
+
+        <div class="admin-card">
+          <h2 style="font-family: var(--font-serif); font-size: 1.8rem; font-weight: 400; margin-bottom: 18px;">
+            Manage Projects
+          </h2>
+          <div id="admin-projects-list"></div>
+        </div>
+      </section>
+
+      <!-- Settings Tab -->
+      <section id="tab-settings" class="admin-card" hidden>
+        <h2 style="font-family: var(--font-serif); font-size: 1.8rem; font-weight: 400; margin-bottom: 18px;">
+          Confirmed Contact &amp; Canonical Settings
+        </h2>
+        <form id="settings-form" style="max-width: 640px;">
+          <div class="field">
+            <label for="set-email">Confirmed Contact Email</label>
+            <input id="set-email" type="email" placeholder="Leave blank to keep unpublished" />
+          </div>
+          <div class="field">
+            <label for="set-phone">Confirmed Phone Number</label>
+            <input id="set-phone" type="text" placeholder="+98 9929498144" />
+          </div>
+          <div class="field">
+            <label for="set-telegram">Telegram URL</label>
+            <input id="set-telegram" type="url" placeholder="https://t.me/..." />
+          </div>
+          <div class="field">
+            <label for="set-canonical">Canonical Domain URL</label>
+            <input id="set-canonical" type="url" placeholder="https://site-society-portfolio.workers.dev" />
+          </div>
+          <div class="field">
+            <label for="set-github">GitHub URL</label>
+            <input id="set-github" type="url" placeholder="https://github.com/..." />
+          </div>
+          <div class="field">
+            <label for="set-x">X (Twitter) URL</label>
+            <input id="set-x" type="url" placeholder="https://x.com/..." />
+          </div>
+          <div class="field">
+            <label for="set-linkedin">LinkedIn URL</label>
+            <input id="set-linkedin" type="url" placeholder="https://linkedin.com/..." />
+          </div>
+          <div class="field">
+            <label for="set-instagram">Instagram URL</label>
+            <input id="set-instagram" type="url" placeholder="https://instagram.com/..." />
+          </div>
+          <button class="btn btn-gold-solid btn-sm" type="submit">Save Settings</button>
+          <span id="settings-status" class="form-status" style="margin-left: 12px;"></span>
+        </form>
+      </section>
+
+      <!-- Inquiries Tab -->
+      <section id="tab-inquiries" class="admin-card" hidden>
+        <h2 style="font-family: var(--font-serif); font-size: 1.8rem; font-weight: 400; margin-bottom: 18px;">
+          Client Inquiries
+        </h2>
+        <div id="inquiries-list"></div>
+      </section>
+
+      <!-- Security Logs Tab -->
+      <section id="tab-logs" class="admin-card" hidden>
+        <h2 style="font-family: var(--font-serif); font-size: 1.8rem; font-weight: 400; margin-bottom: 18px;">
+          Security Event Log
+        </h2>
+        <div id="logs-list"></div>
+      </section>
+    </main>
+  </div>
+
+  <!-- Preview Modal -->
+  <div id="preview-modal" class="modal-backdrop" hidden>
+    <div class="modal-content">
+      <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 18px;">
+        <span class="section-kicker" style="margin: 0;">CARD PREVIEW</span>
+        <button id="close-preview-btn" class="btn btn-ghost btn-sm" type="button">Close</button>
+      </div>
+      <div id="preview-card-mount"></div>
+    </div>
+  </div>
+
+  <script src="/admin.js" defer></script>
+</body>
+</html>
