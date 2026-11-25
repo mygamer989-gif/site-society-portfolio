@@ -80,7 +80,7 @@ test('SITE SOCIETY end-to-end security, SEO, and portfolio workflow', async (t) 
       const adminPage = await worker.fetch('/admin');
       assert.equal(adminPage.status, 200);
       const adminHtml = await adminPage.text();
-      assert.ok(adminHtml.includes('SITE SOCIETY // ADMIN'));
+      assert.ok(adminHtml.includes('SITE SOCIETY // مدیریت'));
 
       const directPanel = await worker.fetch('/_studio_panel/');
       assert.equal(directPanel.status, 404);
