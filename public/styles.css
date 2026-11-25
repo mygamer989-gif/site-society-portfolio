@@ -116,7 +116,7 @@ a {
   height: 6px;
   border-radius: 50%;
   background: #1e7e45;
-  box-shadow: 0 0 0 3px rgba(30, 126, 69, 0.16);
+  animation: pulseRing 2.4s infinite;
 }
 
 /* Architectural Corner Ticks on Cards */
@@ -155,9 +155,26 @@ a {
   transform: translateX(-50%);
   width: 980px;
   height: 540px;
-  background: radial-gradient(circle, rgba(154, 116, 66, 0.11) 0%, transparent 70%);
+  background: radial-gradient(circle, rgba(154, 116, 66, 0.13) 0%, transparent 70%);
   pointer-events: none;
   z-index: 0;
+  animation: ambientFloat 14s ease-in-out infinite alternate;
+}
+
+@keyframes ambientFloat {
+  0% { transform: translateX(-50%) translateY(0px) scale(1); opacity: 0.85; }
+  100% { transform: translateX(-46%) translateY(28px) scale(1.06); opacity: 1; }
+}
+
+@keyframes pulseRing {
+  0% { box-shadow: 0 0 0 0 rgba(30, 126, 69, 0.4); }
+  70% { box-shadow: 0 0 0 7px rgba(30, 126, 69, 0); }
+  100% { box-shadow: 0 0 0 0 rgba(30, 126, 69, 0); }
+}
+
+@keyframes scrollLinePulse {
+  0%, 100% { transform: scaleY(1); opacity: 0.7; }
+  50% { transform: scaleY(1.25); opacity: 1; }
 }
 
 .container {
@@ -465,6 +482,8 @@ html[lang="en"] .hero-title em {
   width: 1px;
   height: 36px;
   background: linear-gradient(to bottom, var(--bronze), transparent);
+  transform-origin: top;
+  animation: scrollLinePulse 2.4s ease-in-out infinite;
 }
 
 .scroll-label {
@@ -692,6 +711,13 @@ html[lang="en"] .project-title {
   border: 1px solid var(--border-hairline);
   border-radius: var(--radius-md);
   box-shadow: var(--shadow-soft);
+  transition: transform var(--transition), box-shadow var(--transition), border-color var(--transition);
+}
+
+.pillar-card:hover {
+  transform: translateY(-4px);
+  box-shadow: var(--shadow-hover);
+  border-color: var(--bronze-border);
 }
 
 .pillar-num {
@@ -771,6 +797,13 @@ html[lang="en"] .project-title {
   display: flex;
   flex-direction: column;
   gap: 14px;
+  transition: transform var(--transition), box-shadow var(--transition), border-color var(--transition);
+}
+
+.process-step:hover {
+  transform: translateY(-4px);
+  box-shadow: var(--shadow-hover);
+  border-color: var(--bronze-border);
 }
 
 .step-num {
@@ -953,16 +986,21 @@ html[lang="en"] .project-title {
 /* Reveal Animation */
 .reveal {
   opacity: 0;
-  transform: translateY(16px);
-  transition: opacity 0.65s ease, transform 0.65s cubic-bezier(0.22, 1, 0.36, 1);
+  transform: translateY(24px) scale(0.98);
+  transition: opacity 0.75s ease, transform 0.75s cubic-bezier(0.22, 1, 0.36, 1);
 }
 
 .reveal.is-visible {
   opacity: 1;
-  transform: translateY(0);
+  transform: translateY(0) scale(1);
 }
 
 @media (prefers-reduced-motion: reduce) {
+  .ambient-glow,
+  .tech-telemetry .pulse-dot,
+  .scroll-line {
+    animation: none;
+  }
   .reveal {
     opacity: 1;
     transform: none;
@@ -970,6 +1008,8 @@ html[lang="en"] .project-title {
   }
   .btn,
   .project-card,
+  .pillar-card,
+  .process-step,
   .project-media img {
     transition: none;
   }
