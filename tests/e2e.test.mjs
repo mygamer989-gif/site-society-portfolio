@@ -98,7 +98,7 @@ test('SITE SOCIETY end-to-end security, SEO, and portfolio workflow', async (t) 
       const projRes = await worker.fetch('/api/projects');
       assert.equal(projRes.status, 200);
       const projJson = await projRes.json();
-      assert.deepEqual(projJson.projects, []);
+      assert.equal(projJson.projects.length, 6);
 
       const settingsRes = await worker.fetch('/api/settings');
       assert.equal(settingsRes.status, 200);
@@ -213,9 +213,9 @@ test('SITE SOCIETY end-to-end security, SEO, and portfolio workflow', async (t) 
       assert.equal(created.thumbnail_url, 'https://lh3.googleusercontent.com/d/1AbCdEfGhIjKlMnOpQrStUvWxYz');
       assert.equal(created.is_published, false);
 
-      // Should NOT appear publicly while unpublished
+      // Should NOT appear publicly while unpublished (only 6 seeded projects)
       const pubCheck1 = await (await worker.fetch('/api/projects')).json();
-      assert.equal(pubCheck1.projects.length, 0);
+      assert.equal(pubCheck1.projects.length, 6);
 
       // Publish it
       const pubRes = await worker.fetch(`/api/admin/projects/${created.id}/publish`, {
@@ -229,10 +229,10 @@ test('SITE SOCIETY end-to-end security, SEO, and portfolio workflow', async (t) 
       });
       assert.equal(pubRes.status, 200);
 
-      // Now it MUST appear publicly
+      // Now it MUST appear publicly alongside the 6 seeded projects
       const pubCheck2 = await (await worker.fetch('/api/projects')).json();
-      assert.equal(pubCheck2.projects.length, 1);
-      assert.equal(pubCheck2.projects[0].title, 'Verified Studio Case');
+      assert.equal(pubCheck2.projects.length, 7);
+      assert.ok(pubCheck2.projects.some((p) => p.title === 'Verified Studio Case'));
 
       // Contact form inquiry -> visible in Admin Inquiries
       const contactRes = await worker.fetch('/api/contact', {

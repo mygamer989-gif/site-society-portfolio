@@ -1,0 +1,14 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 750" fill="none">
+  <rect width="1200" height="750" fill="#14110F"/>
+  <circle cx="920" cy="200" r="240" fill="#C8A96A" opacity="0.15"/>
+  <rect x="80" y="70" width="1040" height="610" rx="18" fill="#1C1815" stroke="#C8A96A" stroke-opacity="0.3"/>
+  <rect x="80" y="70" width="1040" height="44" rx="18" fill="#26201C"/>
+  <text x="600" y="97" fill="#C8A96A" font-family="monospace" font-size="13" text-anchor="middle">sareng-horology-leather-atelier.mygamer989.workers.dev</text>
+  <text x="130" y="190" fill="#C8A96A" font-family="monospace" font-size="13">HOROLOGY &amp; LEATHER ATELIER</text>
+  <text x="130" y="255" fill="#F5F2EB" font-family="Georgia, serif" font-size="46">Sareng Horology &amp; Atelier</text>
+  <text x="130" y="300" fill="#A8A29E" font-family="sans-serif" font-size="20">Bespoke Timepieces &amp; Handcrafted Leather Goods</text>
+  <circle cx="310" cy="495" r="105" stroke="#C8A96A" stroke-width="2" fill="#14110F"/>
+  <circle cx="310" cy="495" r="6" fill="#C8A96A"/>
+  <path d="M310 495V435M310 495L350 515" stroke="#F5F2EB" stroke-width="2.5" stroke-linecap="round"/>
+  <rect x="470" y="385" width="600" height="220" rx="14" fill="#26201C" stroke="#C8A96A" stroke-opacity="0.2"/>
+</svg>

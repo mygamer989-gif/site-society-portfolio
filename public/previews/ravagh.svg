@@ -1,0 +1,13 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 750" fill="none">
+  <rect width="1200" height="750" fill="#F6F3EE"/>
+  <rect x="80" y="70" width="1040" height="610" rx="18" fill="#FFFFFF" stroke="#141413" stroke-opacity="0.1"/>
+  <rect x="80" y="70" width="1040" height="44" rx="18" fill="#EFEAE2"/>
+  <text x="600" y="97" fill="#58554F" font-family="monospace" font-size="13" text-anchor="middle">ravagh-architecture-studio.mygamer989.workers.dev</text>
+  <text x="130" y="190" fill="#9A7442" font-family="monospace" font-size="13">SPATIAL ARCHITECTURE PRACTICE</text>
+  <text x="130" y="255" fill="#141413" font-family="Georgia, serif" font-size="50">Ravagh Spatial Studio</text>
+  <text x="130" y="300" fill="#58554F" font-family="sans-serif" font-size="20">Contemporary Architecture &amp; Spatial Design</text>
+  <rect x="130" y="355" width="440" height="270" rx="12" fill="#EAE3D8"/>
+  <path d="M180 580L350 400L520 580H180Z" fill="#9A7442" opacity="0.28"/>
+  <rect x="610" y="355" width="460" height="124" rx="12" fill="#F6F3EE" stroke="#141413" stroke-opacity="0.08"/>
+  <rect x="610" y="501" width="460" height="124" rx="12" fill="#F6F3EE" stroke="#141413" stroke-opacity="0.08"/>
+</svg>
