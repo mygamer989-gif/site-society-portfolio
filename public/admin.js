@@ -421,6 +421,7 @@
         <div class="project-row-head">
           <div>
             <strong>${esc(q.name)}</strong> (<span dir="ltr">${esc(q.email)}</span>)
+            ${q.phone ? `· <a href="tel:${esc(q.phone.replace(/\s+/g, ''))}" dir="ltr" style="color:var(--bronze-dark);">${esc(q.phone)}</a>` : ''}
             ${q.company ? `· ${esc(q.company)}` : ''}
             ${q.service ? `· <span style="color: var(--bronze-dark);">${esc(q.service)}</span>` : ''}
           </div>

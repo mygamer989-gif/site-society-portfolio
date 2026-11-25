@@ -331,29 +331,34 @@
             </div>
             <div class="field">
               <label for="c-email" data-i18n="form_email">ایمیل</label>
-              <input id="c-email" name="email" type="email" required maxlength="160" placeholder="you@company.com" />
+              <input id="c-email" name="email" type="email" required maxlength="160" placeholder="you@company.com" dir="ltr" />
             </div>
           </div>
 
           <div class="form-row">
             <div class="field">
+              <label for="c-phone" data-i18n="form_phone">شماره تماس (اختیاری)</label>
+              <input id="c-phone" name="phone" type="tel" maxlength="40" data-i18n-placeholder="ph_phone" placeholder="+98 9..." dir="ltr" />
+            </div>
+            <div class="field">
               <label for="c-company" data-i18n="form_company">شرکت / برند (اختیاری)</label>
               <input id="c-company" name="company" type="text" maxlength="120" data-i18n-placeholder="ph_company" placeholder="نام برند یا مجموعه" />
             </div>
-            <div class="field">
-              <label for="c-service" data-i18n="form_service">موضوع خدمت</label>
-              <select id="c-service" name="service">
-                <option value="" data-i18n="opt_select">انتخاب خدمت</option>
-                <option value="Website Design" data-i18n="srv1_t">طراحی وب‌سایت</option>
-                <option value="Website Development" data-i18n="srv2_t">توسعه وب‌سایت</option>
-                <option value="Landing Page" data-i18n="srv3_t">لندینگ پیج (Landing Pages)</option>
-                <option value="Business Website" data-i18n="srv4_t">وب‌سایت‌های شرکتی و تجاری</option>
-                <option value="E-commerce Website" data-i18n="srv5_t">وب‌سایت‌های فروشگاهی</option>
-                <option value="Custom Web Application" data-i18n="srv6_t">وب‌اپلیکیشن‌های اختصاصی</option>
-                <option value="Website Optimization" data-i18n="srv7_t">بهینه‌سازی وب‌سایت</option>
-                <option value="Website Maintenance" data-i18n="srv8_t">نگهداری و پشتیبانی</option>
-              </select>
-            </div>
+          </div>
+
+          <div class="field">
+            <label for="c-service" data-i18n="form_service">موضوع خدمت</label>
+            <select id="c-service" name="service">
+              <option value="" data-i18n="opt_select">انتخاب خدمت</option>
+              <option value="Website Design" data-i18n="srv1_t">طراحی وب‌سایت</option>
+              <option value="Website Development" data-i18n="srv2_t">توسعه وب‌سایت</option>
+              <option value="Landing Page" data-i18n="srv3_t">لندینگ پیج (Landing Pages)</option>
+              <option value="Business Website" data-i18n="srv4_t">وب‌سایت‌های شرکتی و تجاری</option>
+              <option value="E-commerce Website" data-i18n="srv5_t">وب‌سایت‌های فروشگاهی</option>
+              <option value="Custom Web Application" data-i18n="srv6_t">وب‌اپلیکیشن‌های اختصاصی</option>
+              <option value="Website Optimization" data-i18n="srv7_t">بهینه‌سازی وب‌سایت</option>
+              <option value="Website Maintenance" data-i18n="srv8_t">نگهداری و پشتیبانی</option>
+            </select>
           </div>
 
           <div class="field">

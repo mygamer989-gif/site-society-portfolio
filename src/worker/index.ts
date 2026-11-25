@@ -247,6 +247,7 @@ app.post('/api/contact', async (c) => {
 
   const name = String(body.name || '').trim();
   const email = String(body.email || '').trim();
+  const phone = String(body.phone || '').trim().slice(0, 40);
   const company = String(body.company || '').trim().slice(0, 120);
   const service = String(body.service || '').trim().slice(0, 120);
   const message = String(body.message || '').trim();
@@ -282,9 +283,9 @@ app.post('/api/contact', async (c) => {
   }
 
   await c.env.DB.prepare(
-    'INSERT INTO contact_inquiries (id, name, email, company, service, message, ip_address, created_at) VALUES (?, ?, ?, ?, ?, ?, ?, ?)'
+    'INSERT INTO contact_inquiries (id, name, email, phone, company, service, message, ip_address, created_at) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)'
   )
-    .bind(crypto.randomUUID(), name, email, company, service, message, ip, new Date().toISOString())
+    .bind(crypto.randomUUID(), name, email, phone, company, service, message, ip, new Date().toISOString())
     .run();
 
   return c.json({ ok: true, message: 'Inquiry received.' }, 201);

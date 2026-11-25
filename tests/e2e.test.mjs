@@ -241,6 +241,7 @@ test('SITE SOCIETY end-to-end security, SEO, and portfolio workflow', async (t) 
         body: JSON.stringify({
           name: 'Client Test',
           email: 'client@example.com',
+          phone: '+98 9120000000',
           company: 'Test Corp',
           service: 'Website Design',
           message: 'Looking for a bespoke luxury website for our company.',
@@ -255,6 +256,7 @@ test('SITE SOCIETY end-to-end security, SEO, and portfolio workflow', async (t) 
       const inqData = await inqRes.json();
       assert.equal(inqData.inquiries.length, 1);
       assert.equal(inqData.inquiries[0].email, 'client@example.com');
+      assert.equal(inqData.inquiries[0].phone, '+98 9120000000');
     });
 
     await t.test('Logout invalidates session and one-time recovery code works once', async () => {

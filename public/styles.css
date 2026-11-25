@@ -840,24 +840,67 @@ html[lang="en"] .project-title {
 }
 
 .confirmed-details {
-  margin-top: 30px;
+  margin-top: 28px;
   display: flex;
   flex-direction: column;
+  gap: 12px;
+}
+
+.contact-channel-btn {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 14px;
+  padding: 15px 18px;
+  background: var(--bg-surface);
+  border: 1px solid var(--border-hairline);
+  border-radius: var(--radius-md);
+  box-shadow: var(--shadow-soft);
+  transition: transform var(--transition), border-color var(--transition), box-shadow var(--transition);
+}
+
+.contact-channel-btn:hover {
+  transform: translateY(-2px);
+  border-color: var(--bronze);
+  box-shadow: var(--shadow-hover);
+}
+
+.channel-left {
+  display: flex;
+  align-items: center;
   gap: 14px;
 }
 
-.detail-item {
+.channel-icon {
+  width: 40px;
+  height: 40px;
+  border-radius: 10px;
+  background: var(--bronze-soft);
+  border: 1px solid var(--bronze-border);
+  color: var(--bronze-dark);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+  transition: background var(--transition), color var(--transition);
+}
+
+.contact-channel-btn:hover .channel-icon {
+  background: var(--ink-primary);
+  border-color: var(--ink-primary);
+  color: #faf8f5;
+}
+
+.channel-meta {
   display: flex;
   flex-direction: column;
-  gap: 4px;
-  padding-bottom: 14px;
-  border-bottom: 1px solid var(--border-hairline);
+  gap: 2px;
 }
 
 .detail-label {
   font-family: var(--font-mono);
-  font-size: 0.7rem;
-  letter-spacing: 0.14em;
+  font-size: 0.68rem;
+  letter-spacing: 0.12em;
   color: var(--bronze-dark);
   text-transform: uppercase;
 }
@@ -865,6 +908,18 @@ html[lang="en"] .project-title {
 .detail-value {
   color: var(--ink-primary);
   font-size: 0.96rem;
+  font-weight: 600;
+}
+
+.channel-arrow {
+  font-size: 1rem;
+  color: var(--ink-muted);
+  transition: transform var(--transition), color var(--transition);
+}
+
+.contact-channel-btn:hover .channel-arrow {
+  color: var(--bronze-dark);
+  transform: translate(2px, -2px);
 }
 
 .contact-form {

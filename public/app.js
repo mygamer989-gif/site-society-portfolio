@@ -81,6 +81,7 @@
       contact_telegram_label: 'تلگرام',
       form_name: 'نام و نام خانوادگی',
       form_email: 'ایمیل',
+      form_phone: 'شماره تماس (اختیاری)',
       form_company: 'شرکت / برند (اختیاری)',
       form_service: 'موضوع خدمت',
       form_brief: 'توضیحات پروژه',
@@ -90,6 +91,7 @@
       form_invalid: 'لطفاً نام، ایمیل معتبر و توضیحات پروژه (حداقل ۱۰ کاراکتر) را وارد کنید.',
       opt_select: 'انتخاب خدمت',
       ph_name: 'نام شما',
+      ph_phone: '+98 9...',
       ph_company: 'نام برند یا مجموعه',
       ph_message: 'درباره پروژه، اهداف و زمان‌بندی مورد نظر بنویسید...',
       footer_tagline: 'استودیوی بین‌المللی طراحی و مهندسی وب.',
@@ -174,6 +176,7 @@
       contact_telegram_label: 'Telegram',
       form_name: 'Full Name',
       form_email: 'Email Address',
+      form_phone: 'Phone Number (Optional)',
       form_company: 'Company / Brand (Optional)',
       form_service: 'Service Focus',
       form_brief: 'Project Brief',
@@ -183,6 +186,7 @@
       form_invalid: 'Please complete your name, valid email, and a brief description.',
       opt_select: 'Select a service',
       ph_name: 'Your name',
+      ph_phone: '+98 9...',
       ph_company: 'Brand or organization',
       ph_message: 'Tell us about your project, goals, and timeline...',
       footer_tagline: 'International Website Design & Digital Engineering Studio.',
@@ -384,31 +388,53 @@
 
     const detailsEl = document.getElementById('confirmed-contact-details');
     if (detailsEl) {
+      const phoneIcon = `<svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72c.127.96.361 1.903.7 2.81a2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45c.907.339 1.85.573 2.81.7A2 2 0 0 1 22 16.92z"/></svg>`;
+      const tgIcon = `<svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="m22 2-7 20-4-9-9-4Z"/><path d="M22 2 11 13"/></svg>`;
+      const mailIcon = `<svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><rect width="20" height="16" x="2" y="4" rx="2"/><path d="m22 7-8.97 5.7a1.94 1.94 0 0 1-2.06 0L2 7"/></svg>`;
+
       const items = [];
       if (s.contact_phone) {
         const telHref = s.contact_phone.replace(/\s+/g, '');
         items.push(`
-          <div class="detail-item">
-            <span class="detail-label">${escapeHtml(t('contact_phone_label'))}</span>
-            <a class="detail-value" dir="ltr" style="display:inline-block;width:fit-content;" href="tel:${escapeHtml(telHref)}">${escapeHtml(s.contact_phone)}</a>
-          </div>
+          <a class="contact-channel-btn" href="tel:${escapeHtml(telHref)}">
+            <div class="channel-left">
+              <span class="channel-icon" aria-hidden="true">${phoneIcon}</span>
+              <div class="channel-meta">
+                <span class="detail-label">${escapeHtml(t('contact_phone_label'))}</span>
+                <span class="detail-value" dir="ltr">${escapeHtml(s.contact_phone)}</span>
+              </div>
+            </div>
+            <span class="channel-arrow" aria-hidden="true">&#8599;</span>
+          </a>
         `);
       }
       if (s.social_telegram) {
         const handle = s.social_telegram.replace(/^https?:\/\/t\.me\//i, '@');
         items.push(`
-          <div class="detail-item">
-            <span class="detail-label">${escapeHtml(t('contact_telegram_label'))}</span>
-            <a class="detail-value" dir="ltr" style="display:inline-block;width:fit-content;" href="${escapeHtml(s.social_telegram)}" target="_blank" rel="noopener noreferrer">${escapeHtml(handle)}</a>
-          </div>
+          <a class="contact-channel-btn" href="${escapeHtml(s.social_telegram)}" target="_blank" rel="noopener noreferrer">
+            <div class="channel-left">
+              <span class="channel-icon" aria-hidden="true">${tgIcon}</span>
+              <div class="channel-meta">
+                <span class="detail-label">${escapeHtml(t('contact_telegram_label'))}</span>
+                <span class="detail-value" dir="ltr">${escapeHtml(handle)}</span>
+              </div>
+            </div>
+            <span class="channel-arrow" aria-hidden="true">&#8599;</span>
+          </a>
         `);
       }
       if (s.contact_email) {
         items.push(`
-          <div class="detail-item">
-            <span class="detail-label">${escapeHtml(t('contact_email_label'))}</span>
-            <a class="detail-value" href="mailto:${escapeHtml(s.contact_email)}">${escapeHtml(s.contact_email)}</a>
-          </div>
+          <a class="contact-channel-btn" href="mailto:${escapeHtml(s.contact_email)}">
+            <div class="channel-left">
+              <span class="channel-icon" aria-hidden="true">${mailIcon}</span>
+              <div class="channel-meta">
+                <span class="detail-label">${escapeHtml(t('contact_email_label'))}</span>
+                <span class="detail-value" dir="ltr">${escapeHtml(s.contact_email)}</span>
+              </div>
+            </div>
+            <span class="channel-arrow" aria-hidden="true">&#8599;</span>
+          </a>
         `);
       }
       detailsEl.innerHTML = items.join('');
@@ -473,6 +499,7 @@
       const payload = {
         name: String(formData.get('name') || '').trim(),
         email: String(formData.get('email') || '').trim(),
+        phone: String(formData.get('phone') || '').trim(),
         company: String(formData.get('company') || '').trim(),
         service: String(formData.get('service') || '').trim(),
         message: String(formData.get('message') || '').trim(),
