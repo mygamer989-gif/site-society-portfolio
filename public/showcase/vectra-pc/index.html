@@ -292,9 +292,10 @@
     #vectra-scroll-bar { position: fixed; top: 0; left: 0; right: 0; height: 3px; background: linear-gradient(90deg, #2563EB, #22D3EE); transform-origin: left; transform: scaleX(0); z-index: 9999; pointer-events: none; }
     .vectra-anim-up { opacity: 0; transform: translateY(24px) scale(0.985); transition: opacity 0.65s cubic-bezier(0.22,1,0.36,1), transform 0.65s cubic-bezier(0.22,1,0.36,1); }
     .vectra-anim-up.is-in { opacity: 1; transform: translateY(0) scale(1); }
-    .ss-float-bar { position: fixed; bottom: 20px; left: 20px; z-index: 9998; display: flex; align-items: center; gap: 8px; padding: 8px 14px; border-radius: 999px; background: rgba(16, 21, 31, 0.9); backdrop-filter: blur(14px); border: 1px solid rgba(255,255,255,0.18); color: #F8FAFC; font-size: 12px; box-shadow: 0 12px 30px rgba(0,0,0,0.35); }
-    .ss-float-bar a { color: #22D3EE; text-decoration: none; font-weight: 600; }
-    .ss-float-bar button { background: rgba(255,255,255,0.1); border: 1px solid rgba(255,255,255,0.16); color: #fff; border-radius: 999px; padding: 3px 9px; cursor: pointer; font-weight: 600; }
+    .ss-float-bar { position: fixed; bottom: 20px; left: 20px; z-index: 9998; display: flex; flex-wrap: wrap; align-items: center; gap: 6px; padding: 8px 14px; border-radius: 999px; background: rgba(16, 21, 31, 0.92); backdrop-filter: blur(14px); border: 1px solid rgba(255,255,255,0.18); color: #F8FAFC; font-size: 12px; box-shadow: 0 12px 30px rgba(0,0,0,0.35); }
+    .ss-float-bar a { color: #22D3EE; text-decoration: none; font-weight: 600; margin-right: 4px; }
+    .ss-float-bar .sep { opacity: 0.35; margin: 0 2px; }
+    .ss-float-bar button { background: rgba(255,255,255,0.1); border: 1px solid rgba(255,255,255,0.16); color: #fff; border-radius: 999px; padding: 3px 9px; cursor: pointer; font-weight: 600; font-size: 11px; }
     .ss-float-bar button.active { background: #2563EB; border-color: #2563EB; }
     @media (prefers-reduced-motion: reduce) { .vectra-anim-up { opacity: 1; transform: none; transition: none; } }
   </style>
@@ -2270,12 +2271,21 @@
   <div id="vectra-scroll-bar"></div>
   <div class="ss-float-bar" dir="ltr">
     <a href="/" id="ss-back-link">← SITE SOCIETY</a>
-    <span>|</span>
-    <button type="button" data-vlang="fa">FA</button>
+    <span class="sep">|</span>
+    <button type="button" data-vlang="fa">فارسی</button>
     <button type="button" data-vlang="en" class="active">EN</button>
+    <span class="sep">|</span>
+    <button type="button" data-vcurr="usd" class="active">USD ($)</button>
+    <button type="button" data-vcurr="tmn">تومان</button>
+    <button type="button" data-vcurr="irr">ریال</button>
   </div>
   <script>
     (function(){
+      const TOMAN_RATE = 290000;
+      const RIAL_RATE = 2900000;
+      let currentLang = localStorage.getItem('ss_lang') === 'fa' ? 'fa' : 'en';
+      let currentCurr = currentLang === 'fa' ? 'tmn' : 'usd';
+
       var bar = document.getElementById('vectra-scroll-bar');
       window.addEventListener('scroll', function(){
         var d = document.documentElement, m = d.scrollHeight - d.clientHeight;
@@ -2300,35 +2310,96 @@
           }
         });
       }
-      setTimeout(attachScrollAnims, 120);
-      setInterval(attachScrollAnims, 1200);
 
       var faMap = {
-        'Home': 'خانه', 'Catalog': 'کاتالوگ', 'PC Builder': 'سیستم‌ساز', 'Deals': 'پیشنهادها',
+        'Home': 'خانه', 'Catalog': 'کاتالوگ محصولات', 'PC Builder': 'سیستم‌ساز', 'Deals': 'پیشنهادهای ویژه',
         'Support': 'پشتیبانی', 'Explore Catalog': 'مشاهده کاتالوگ', 'Build Custom PC': 'اسمبل اختصاصی',
-        'Add to Cart': 'افزودن به سبد', 'View Specs': 'مشخصات فنی'
+        'Add to Cart': 'افزودن به سبد', 'View Specs': 'مشخصات فنی', 'All': 'همه',
+        'GPUs': 'کارت گرافیک', 'CPUs': 'پردازنده', 'Motherboards': 'مادربرد', 'Memory': 'رم',
+        'Storage': 'حافظه SSD', 'Cooling': 'خنک‌کننده', 'Power Supplies': 'پاور', 'Cases': 'کیس',
+        'Your Cart': 'سبد خرید شما', 'Subtotal': 'جمع جزء', 'Discount': 'تخفیف', 'Total': 'مبلغ کل',
+        'Checkout': 'تکمیل سفارش', 'Clear Cart': 'پاک کردن سبد', 'Search hardware...': 'جستجوی قطعات...'
       };
       var originalTexts = new WeakMap();
-      function setLang(lang){
-        document.documentElement.lang = lang;
-        document.documentElement.dir = lang === 'fa' ? 'rtl' : 'ltr';
-        document.querySelectorAll('[data-vlang]').forEach(function(b){ b.classList.toggle('active', b.dataset.vlang === lang); });
+
+      function formatCurrency(usdAmount, curr) {
+        if (curr === 'tmn') {
+          var tmn = Math.round(usdAmount * TOMAN_RATE);
+          return tmn.toLocaleString('fa-IR') + ' تومان';
+        }
+        if (curr === 'irr') {
+          var irr = Math.round(usdAmount * RIAL_RATE);
+          return irr.toLocaleString('fa-IR') + ' ریال';
+        }
+        return '
+</html> + usdAmount.toLocaleString('en-US', { minimumFractionDigits: usdAmount % 1 === 0 ? 0 : 2, maximumFractionDigits: 2 });
+      }
+
+      var priceTextNodes = new WeakMap();
+      function updateAllPrices() {
+        var walker = document.createTreeWalker(document.body, NodeFilter.SHOW_TEXT, null);
+        var node;
+        while ((node = walker.nextNode())) {
+          if (!node.parentElement || node.parentElement.closest('.ss-float-bar') || node.parentElement.tagName === 'SCRIPT' || node.parentElement.tagName === 'STYLE') continue;
+          if (!priceTextNodes.has(node)) {
+            if (/\$\s*[\d,]+(\.\d+)?/.test(node.nodeValue)) {
+              priceTextNodes.set(node, node.nodeValue);
+            }
+          }
+          var orig = priceTextNodes.get(node);
+          if (orig) {
+            node.nodeValue = orig.replace(/(-?)\$\s*([\d,]+(?:\.\d+)?)/g, function(_, sign, numStr) {
+              var val = parseFloat(numStr.replace(/,/g, ''));
+              if (isNaN(val)) return _;
+              return sign + formatCurrency(val, currentCurr);
+            });
+          }
+        }
+      }
+
+      function setCurrency(curr) {
+        currentCurr = curr;
+        document.querySelectorAll('[data-vcurr]').forEach(function(b){ b.classList.toggle('active', b.dataset.vcurr === curr); });
+        updateAllPrices();
+      }
+
+      function setLang(lang) {
+        currentLang = lang === 'fa' ? 'fa' : 'en';
+        document.documentElement.lang = currentLang;
+        document.documentElement.dir = currentLang === 'fa' ? 'rtl' : 'ltr';
+        document.querySelectorAll('[data-vlang]').forEach(function(b){ b.classList.toggle('active', b.dataset.vlang === currentLang); });
         var back = document.getElementById('ss-back-link');
-        if(back) back.textContent = lang === 'fa' ? '← بازگشت به SITE SOCIETY' : '← SITE SOCIETY';
-        document.querySelectorAll('a, button, h1, h2, h3, span').forEach(function(el){
+        if(back) back.textContent = currentLang === 'fa' ? '← بازگشت به SITE SOCIETY' : '← SITE SOCIETY';
+
+        document.querySelectorAll('a, button, h1, h2, h3, span, p').forEach(function(el){
           if(el.closest('.ss-float-bar') || el.children.length > 0) return;
           var txt = el.textContent.trim();
           if(!originalTexts.has(el)) originalTexts.set(el, txt);
           var orig = originalTexts.get(el);
-          if(lang === 'fa' && faMap[orig]) el.textContent = faMap[orig];
-          else if(lang === 'en') el.textContent = orig;
+          if(currentLang === 'fa' && faMap[orig]) el.textContent = faMap[orig];
+          else if(currentLang === 'en') el.textContent = orig;
         });
+
+        setCurrency(currentLang === 'fa' ? 'tmn' : 'usd');
       }
+
       document.querySelectorAll('[data-vlang]').forEach(function(b){
         b.addEventListener('click', function(){ setLang(b.dataset.vlang); });
       });
-      var saved = localStorage.getItem('ss_lang');
-      if(saved === 'fa') setTimeout(function(){ setLang('fa'); }, 200);
+      document.querySelectorAll('[data-vcurr]').forEach(function(b){
+        b.addEventListener('click', function(){ setCurrency(b.dataset.vcurr); });
+      });
+
+      var mo = new MutationObserver(function(){
+        attachScrollAnims();
+        updateAllPrices();
+      });
+      mo.observe(document.body, { childList: true, subtree: true });
+
+      setTimeout(function(){
+        attachScrollAnims();
+        setLang(currentLang);
+      }, 150);
     })();
   </script>
 

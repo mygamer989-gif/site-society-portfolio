@@ -385,6 +385,11 @@
   async function loadInquiries() {
     const data = await api('/api/admin/inquiries');
     const list = data.inquiries || [];
+    const badge = document.getElementById('inquiries-badge');
+    if (badge) {
+      badge.textContent = String(list.length);
+      badge.style.display = list.length > 0 ? 'inline-block' : 'none';
+    }
     const el = document.getElementById('inquiries-list');
     if (list.length === 0) {
       el.innerHTML = '<p style="color: var(--silver);">No inquiries received yet.</p>';

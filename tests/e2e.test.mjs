@@ -235,6 +235,28 @@ test('SITE SOCIETY end-to-end security, SEO, and portfolio workflow', async (t) 
       const pubCheck2 = await (await worker.fetch('/api/projects')).json();
       assert.equal(pubCheck2.projects.length, 2);
       assert.ok(pubCheck2.projects.some((p) => p.title === 'Verified Studio Case'));
+
+      // Contact form inquiry -> visible in Admin Inquiries
+      const contactRes = await worker.fetch('/api/contact', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({
+          name: 'Client Test',
+          email: 'client@example.com',
+          company: 'Test Corp',
+          service: 'Website Design',
+          message: 'Looking for a bespoke luxury website for our company.',
+        }),
+      });
+      assert.equal(contactRes.status, 201);
+
+      const inqRes = await worker.fetch('/api/admin/inquiries', {
+        headers: { Cookie: sessionCookie },
+      });
+      assert.equal(inqRes.status, 200);
+      const inqData = await inqRes.json();
+      assert.equal(inqData.inquiries.length, 1);
+      assert.equal(inqData.inquiries[0].email, 'client@example.com');
     });
 
     await t.test('Logout invalidates session and one-time recovery code works once', async () => {
