@@ -1,41 +1,47 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="fa" dir="rtl">
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <meta name="robots" content="noindex, nofollow" />
-  <title>SITE SOCIETY — Studio Admin</title>
+  <title>SITE SOCIETY — پنل مدیریت استودیو</title>
   <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@400;500;600&family=JetBrains+Mono:wght@400;500&family=Plus+Jakarta+Sans:wght@300;400;500;600&display=swap" rel="stylesheet" />
+  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@500;600&family=JetBrains+Mono:wght@400;500&family=Plus+Jakarta+Sans:wght@400;500;600&family=Vazirmatn:wght@300;400;500;600;700&display=swap" rel="stylesheet" />
   <link rel="stylesheet" href="/styles.css" />
   <style>
-    html { font-family: var(--font-sans); }
-    .admin-shell { max-width: 1180px; margin: 0 auto; padding: 40px 24px 80px; position: relative; z-index: 1; }
-    .admin-topbar { display: flex; align-items: center; justify-content: space-between; gap: 16px; padding-bottom: 24px; border-bottom: 1px solid var(--border-hairline); margin-bottom: 36px; flex-wrap: wrap; }
-    .admin-card { background: var(--bg-surface); border: 1px solid var(--border-hairline); border-radius: var(--radius-lg); padding: 32px; margin-bottom: 28px; box-shadow: var(--shadow-soft); }
-    .auth-box { max-width: 480px; margin: 60px auto; }
-    .admin-tabs { display: flex; gap: 10px; flex-wrap: wrap; margin-bottom: 28px; }
-    .tab-btn { padding: 10px 18px; border-radius: 999px; background: var(--bg-surface); border: 1px solid var(--border-hairline); color: var(--ink-secondary); cursor: pointer; font-size: 0.85rem; }
+    html { font-family: var(--font-fa); }
+    .admin-shell { max-width: 1200px; margin: 0 auto; padding: 28px 20px 72px; position: relative; z-index: 1; }
+    .admin-topbar { display: flex; align-items: center; justify-content: space-between; gap: 14px; padding-bottom: 20px; border-bottom: 1px solid var(--border-hairline); margin-bottom: 28px; flex-wrap: wrap; }
+    .admin-card { background: var(--bg-surface); border: 1px solid var(--border-hairline); border-radius: var(--radius-lg); padding: 28px; margin-bottom: 24px; box-shadow: var(--shadow-soft); }
+    .auth-box { max-width: 480px; margin: 40px auto; }
+    .admin-tabs { display: flex; gap: 8px; flex-wrap: wrap; margin-bottom: 24px; }
+    .tab-btn { padding: 10px 18px; border-radius: 999px; background: var(--bg-surface); border: 1px solid var(--border-hairline); color: var(--ink-secondary); cursor: pointer; font-size: 0.88rem; font-family: inherit; min-height: 42px; }
     .tab-btn.active { background: var(--ink-primary); border-color: var(--ink-primary); color: #faf8f5; }
-    .admin-grid { display: grid; grid-template-columns: 1fr 1.2fr; gap: 28px; align-items: start; }
-    .project-row { display: flex; flex-direction: column; gap: 12px; padding: 20px; background: var(--bg-page); border: 1px solid var(--border-hairline); border-radius: var(--radius-md); margin-bottom: 14px; }
-    .project-row-head { display: flex; align-items: center; justify-content: space-between; gap: 12px; flex-wrap: wrap; }
+    .admin-grid { display: grid; grid-template-columns: 1fr 1.2fr; gap: 24px; align-items: start; }
+    .project-row { display: flex; flex-direction: column; gap: 10px; padding: 18px; background: var(--bg-page); border: 1px solid var(--border-hairline); border-radius: var(--radius-md); margin-bottom: 12px; }
+    .project-row-head { display: flex; align-items: center; justify-content: space-between; gap: 10px; flex-wrap: wrap; }
     .badge { font-family: var(--font-mono); font-size: 0.7rem; padding: 3px 10px; border-radius: 999px; border: 1px solid var(--border-hairline); }
     .badge-live { color: #1e7e45; border-color: rgba(30, 126, 69, 0.35); background: rgba(30, 126, 69, 0.08); }
     .badge-draft { color: var(--ink-secondary); }
     .row-actions { display: flex; gap: 8px; flex-wrap: wrap; }
     .btn-danger { background: rgba(197, 57, 41, 0.08); color: #c53929; border: 1px solid rgba(197, 57, 41, 0.3); }
-    .preview-box { margin-top: 10px; border: 1px solid var(--border-hairline); border-radius: var(--radius-sm); overflow: hidden; aspect-ratio: 16/10; background: var(--bg-linen); display: flex; align-items: center; justify-content: center; color: var(--ink-muted); font-size: 0.8rem; }
+    .preview-box { margin-top: 10px; border: 1px solid var(--border-hairline); border-radius: var(--radius-sm); overflow: hidden; aspect-ratio: 16/10; background: var(--bg-linen); display: flex; align-items: center; justify-content: center; color: var(--ink-muted); font-size: 0.82rem; }
     .preview-box img { width: 100%; height: 100%; object-fit: cover; }
-    .secret-box { padding: 14px; background: var(--bg-page); border: 1px solid var(--bronze-border); border-radius: var(--radius-sm); font-family: var(--font-mono); font-size: 0.82rem; word-break: break-all; margin: 12px 0; }
-    .recovery-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 8px; margin: 12px 0; font-family: var(--font-mono); font-size: 0.82rem; }
-    .recovery-item { padding: 8px 10px; background: var(--bg-page); border: 1px solid var(--border-hairline); border-radius: 4px; text-align: center; }
-    .modal-backdrop { position: fixed; inset: 0; background: rgba(20, 20, 19, 0.55); backdrop-filter: blur(8px); display: flex; align-items: center; justify-content: center; padding: 24px; z-index: 100; }
+    .secret-box { padding: 12px 14px; background: var(--bg-page); border: 1px solid var(--bronze-border); border-radius: var(--radius-sm); font-family: var(--font-mono); font-size: 0.82rem; word-break: break-all; direction: ltr; }
+    .recovery-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 8px; margin: 12px 0; font-family: var(--font-mono); font-size: 0.82rem; direction: ltr; }
+    .recovery-item { padding: 8px 10px; background: var(--bg-page); border: 1px solid var(--border-hairline); border-radius: 6px; text-align: center; }
+    .modal-backdrop { position: fixed; inset: 0; background: rgba(20, 20, 19, 0.55); backdrop-filter: blur(8px); display: flex; align-items: center; justify-content: center; padding: 16px; z-index: 100; }
     .modal-backdrop[hidden] { display: none; }
-    .modal-content { max-width: 620px; width: 100%; background: var(--bg-surface); border: 1px solid var(--bronze-border); border-radius: var(--radius-lg); padding: 28px; max-height: 90vh; overflow-y: auto; box-shadow: var(--shadow-hover); }
+    .modal-content { max-width: 620px; width: 100%; background: var(--bg-surface); border: 1px solid var(--bronze-border); border-radius: var(--radius-lg); padding: 24px; max-height: 90vh; overflow-y: auto; box-shadow: var(--shadow-hover); }
     @media (max-width: 900px) { .admin-grid { grid-template-columns: 1fr; } }
+    @media (max-width: 600px) {
+      .admin-card { padding: 20px; }
+      .admin-tabs { gap: 6px; }
+      .tab-btn { padding: 8px 14px; font-size: 0.82rem; }
+      .recovery-grid { grid-template-columns: 1fr; }
+    }
   </style>
 </head>
 <body>
@@ -45,89 +51,89 @@
     <header class="admin-topbar">
       <div class="brand">
         <span class="brand-mark" aria-hidden="true"></span>
-        <span class="brand-text">SITE SOCIETY // ADMIN</span>
+        <span class="brand-text">SITE SOCIETY // مدیریت</span>
       </div>
-      <div class="header-actions">
-        <a href="/" class="btn btn-ghost btn-sm" target="_blank" rel="noopener noreferrer">View Public Site &#8599;</a>
-        <button id="logout-btn" class="btn btn-gold-outline btn-sm" type="button" hidden>Sign Out</button>
+      <div class="header-actions" style="display:flex;gap:10px;flex-wrap:wrap;">
+        <a href="/" class="btn btn-ghost btn-sm" target="_blank" rel="noopener noreferrer">مشاهده سایت عمومی &#8599;</a>
+        <button id="logout-btn" class="btn btn-gold-outline btn-sm" type="button" hidden>خروج از حساب</button>
       </div>
     </header>
 
-    <div id="admin-loading" class="admin-card">Checking security status...</div>
+    <div id="admin-loading" class="admin-card">در حال بررسی وضعیت امنیتی...</div>
 
     <!-- Initial Setup View -->
     <section id="setup-view" class="admin-card auth-box" hidden>
-      <span class="section-kicker">INITIAL SECURITY SETUP</span>
-      <h1 class="section-title" style="font-size: 2rem; margin-bottom: 12px;">Create Owner Account</h1>
-      <p style="color: var(--silver); font-size: 0.9rem; margin-bottom: 22px;">
-        No administrator exists yet. Enter your one-time setup token from server secrets to initialize your account and mandatory 2FA.
+      <span class="section-kicker">راه‌اندازی امنیتی اولیه</span>
+      <h1 class="section-title" style="font-size: 1.8rem; margin-bottom: 10px;">ساخت حساب مالک استودیو</h1>
+      <p style="color: var(--ink-secondary); font-size: 0.9rem; margin-bottom: 20px;">
+        هنوز مدیری ثبت نشده است. توکن یک‌بارمصرف راه‌اندازی را وارد کنید تا حساب مالک و احراز هویت دو مرحله‌ای (2FA) ساخته شود.
       </p>
       <form id="setup-form">
         <div class="field">
-          <label for="s-token">Setup Token</label>
-          <input id="s-token" type="password" required autocomplete="off" />
+          <label for="s-token">توکن راه‌اندازی (Setup Token)</label>
+          <input id="s-token" type="password" required autocomplete="off" dir="ltr" />
         </div>
         <div class="field">
-          <label for="s-username">Username</label>
-          <input id="s-username" type="text" required minlength="3" maxlength="32" placeholder="owner" />
+          <label for="s-username">نام کاربری</label>
+          <input id="s-username" type="text" required minlength="3" maxlength="32" placeholder="owner" dir="ltr" />
         </div>
         <div class="field">
-          <label for="s-password">Password (min 12 chars)</label>
-          <input id="s-password" type="password" required minlength="12" maxlength="128" />
+          <label for="s-password">رمز عبور (حداقل ۱۲ کاراکتر)</label>
+          <input id="s-password" type="password" required minlength="12" maxlength="128" dir="ltr" />
         </div>
-        <button class="btn btn-gold-solid" type="submit" style="width: 100%;">Initialize Admin &amp; Generate 2FA</button>
+        <button class="btn btn-gold-solid" type="submit" style="width: 100%;">ساخت ادمین و تولید QR کد 2FA</button>
         <p id="setup-status" class="form-status" style="margin-top: 12px;"></p>
       </form>
 
       <div id="setup-result" hidden style="margin-top: 24px;">
-        <h2 style="font-size: 1.15rem; color: var(--bronze-dark); margin-bottom: 8px;">Scan QR Code or Copy Secret Key</h2>
+        <h2 style="font-size: 1.15rem; color: var(--bronze-dark); margin-bottom: 8px;">اسکن QR کد یا کپی کلید امنیتی</h2>
         <p style="font-size: 0.85rem; color: var(--ink-secondary); margin-bottom: 12px;">
-          Scan this QR code in Google Authenticator (generated 100% locally in your browser):
+          این QR کد را داخل Google Authenticator اسکن کنید (۱۰۰٪ داخل مرورگر تولید شده و به هیچ سرور خارجی ارسال نمی‌شود):
         </p>
         <div id="totp-qr-mount" style="display:flex;justify-content:center;padding:16px;background:#fff;border:1px solid var(--border-hairline);border-radius:12px;margin-bottom:14px;"></div>
-        <p style="font-size: 0.82rem; color: var(--ink-secondary);">Or enter this Setup Key manually (letters A–Z &amp; digits 2–7 only):</p>
+        <p style="font-size: 0.82rem; color: var(--ink-secondary);">یا این کلید را دستی وارد کنید:</p>
         <div style="display:flex;gap:8px;align-items:center;margin:8px 0 14px;">
           <div id="totp-secret-display" class="secret-box" style="margin:0;flex:1;"></div>
-          <button id="copy-secret-btn" class="btn btn-gold-outline btn-sm" type="button">Copy Key</button>
+          <button id="copy-secret-btn" class="btn btn-gold-outline btn-sm" type="button">کپی کلید</button>
         </div>
-        <p style="font-size: 0.85rem; color: var(--ink-secondary); margin-top: 12px;">One-Time Recovery Codes (shown once):</p>
+        <p style="font-size: 0.85rem; color: var(--ink-secondary); margin-top: 12px;">کدهای بازیابی یک‌بارمصرف (فقط یک‌بار نمایش داده می‌شوند):</p>
         <div id="recovery-codes-display" class="recovery-grid"></div>
-        <button id="go-login-btn" class="btn btn-gold-solid" type="button" style="width: 100%; margin-top: 12px;">I Saved These — Proceed to Sign In</button>
+        <button id="go-login-btn" class="btn btn-gold-solid" type="button" style="width: 100%; margin-top: 12px;">ذخیره کردم — ورود به پنل</button>
       </div>
     </section>
 
     <!-- Login View -->
     <section id="login-view" class="admin-card auth-box" hidden>
-      <span class="section-kicker">PRIVATE ACCESS</span>
-      <h1 class="section-title" style="font-size: 2rem; margin-bottom: 18px;">Administrator Sign In</h1>
+      <span class="section-kicker">دسترسی اختصاصی مالک</span>
+      <h1 class="section-title" style="font-size: 1.8rem; margin-bottom: 18px;">ورود به پنل مدیریت</h1>
 
       <form id="login-step1">
         <div class="field">
-          <label for="l-username">Username</label>
-          <input id="l-username" type="text" required autocomplete="username" />
+          <label for="l-username">نام کاربری</label>
+          <input id="l-username" type="text" required autocomplete="username" dir="ltr" />
         </div>
         <div class="field">
-          <label for="l-password">Password</label>
-          <input id="l-password" type="password" required autocomplete="current-password" />
+          <label for="l-password">رمز عبور</label>
+          <input id="l-password" type="password" required autocomplete="current-password" dir="ltr" />
         </div>
-        <button class="btn btn-gold-solid" type="submit" style="width: 100%;">Continue to 2FA</button>
+        <button class="btn btn-gold-solid" type="submit" style="width: 100%;">ادامه و تأیید دو مرحله‌ای</button>
       </form>
 
       <form id="login-step2" hidden>
-        <p style="color: var(--silver); font-size: 0.88rem; margin-bottom: 16px;">
-          Enter the 6-digit code from your authenticator app, or use a one-time recovery code.
+        <p style="color: var(--ink-secondary); font-size: 0.88rem; margin-bottom: 16px;">
+          کد ۶ رقمی داخل Google Authenticator را وارد کنید (یا در مواقع اضطراری از کد بازیابی استفاده نمایید).
         </p>
         <div class="field" id="totp-input-wrap">
-          <label for="l-totp">Authenticator Code (6 digits)</label>
-          <input id="l-totp" type="text" inputmode="numeric" pattern="[0-9]{6}" maxlength="6" placeholder="000000" />
+          <label for="l-totp">کد ۶ رقمی Authenticator</label>
+          <input id="l-totp" type="text" inputmode="numeric" pattern="[0-9]{6}" maxlength="6" placeholder="000000" dir="ltr" />
         </div>
         <div class="field" id="recovery-input-wrap" hidden>
-          <label for="l-recovery">One-Time Recovery Code</label>
-          <input id="l-recovery" type="text" placeholder="XXXXX-XXXXX" />
+          <label for="l-recovery">کد بازیابی یک‌بارمصرف</label>
+          <input id="l-recovery" type="text" placeholder="XXXXX-XXXXX" dir="ltr" />
         </div>
-        <button class="btn btn-gold-solid" type="submit" style="width: 100%;">Verify &amp; Enter Studio</button>
+        <button class="btn btn-gold-solid" type="submit" style="width: 100%;">تأیید و ورود به استودیو</button>
         <button id="toggle-recovery-btn" class="btn btn-ghost btn-sm" type="button" style="width: 100%; margin-top: 10px;">
-          Use Recovery Code Instead
+          استفاده از کد بازیابی یک‌بارمصرف
         </button>
       </form>
 
@@ -137,67 +143,67 @@
     <!-- Main Dashboard -->
     <main id="dashboard-view" hidden>
       <div class="admin-tabs">
-        <button class="tab-btn active" data-tab="projects" type="button">Portfolio Projects</button>
-        <button class="tab-btn" data-tab="settings" type="button">Contact &amp; SEO Settings</button>
-        <button class="tab-btn" data-tab="inquiries" type="button">Inquiries <span id="inquiries-badge" class="badge" style="margin-left:6px;display:none;">0</span></button>
-        <button class="tab-btn" data-tab="logs" type="button">Security Logs</button>
+        <button class="tab-btn active" data-tab="projects" type="button">نمونه کارها</button>
+        <button class="tab-btn" data-tab="settings" type="button">تماس و سئو</button>
+        <button class="tab-btn" data-tab="inquiries" type="button">پیام‌های مشتریان <span id="inquiries-badge" class="badge" style="margin-right:6px;display:none;">0</span></button>
+        <button class="tab-btn" data-tab="security" type="button">امنیت و دسترسی کامل</button>
       </div>
 
       <!-- Projects Tab -->
       <section id="tab-projects" class="admin-grid">
         <div class="admin-card">
-          <h2 id="form-heading" style="font-family: var(--font-serif); font-size: 1.8rem; font-weight: 400; margin-bottom: 18px;">
-            Add Portfolio Project
+          <h2 id="form-heading" style="font-size: 1.4rem; font-weight: 700; margin-bottom: 18px;">
+            افزودن پروژه جدید
           </h2>
           <form id="project-form">
             <input type="hidden" id="p-id" />
             <div class="field">
-              <label for="p-title">Project Title</label>
+              <label for="p-title">عنوان پروژه</label>
               <input id="p-title" type="text" required minlength="2" maxlength="120" />
             </div>
             <div class="form-row">
               <div class="field">
-                <label for="p-category">Category</label>
-                <input id="p-category" type="text" required minlength="2" maxlength="80" placeholder="e.g. Business Website" />
+                <label for="p-category">دسته‌بندی</label>
+                <input id="p-category" type="text" required minlength="2" maxlength="80" placeholder="مثلاً وب‌سایت شرکتی" />
               </div>
               <div class="field">
-                <label for="p-order">Display Order</label>
+                <label for="p-order">ترتیب نمایش</label>
                 <input id="p-order" type="number" value="0" />
               </div>
             </div>
             <div class="field">
-              <label for="p-desc">Verified Description</label>
+              <label for="p-desc">توضیحات تأییدشده</label>
               <textarea id="p-desc" rows="4" required minlength="10" maxlength="1000"></textarea>
             </div>
             <div class="field">
-              <label for="p-techs">Technologies (comma-separated)</label>
-              <input id="p-techs" type="text" placeholder="TypeScript, Cloudflare Workers, CSS" />
+              <label for="p-techs">تکنولوژی‌ها (با ویرگول جدا کنید)</label>
+              <input id="p-techs" type="text" placeholder="TypeScript, Cloudflare Workers, CSS" dir="ltr" />
             </div>
             <div class="field">
-              <label for="p-image">Thumbnail Image URL (HTTPS or Google Drive Share Link)</label>
-              <input id="p-image" type="url" placeholder="https://drive.google.com/file/d/.../view or https://..." />
-              <div id="p-image-preview" class="preview-box">Image preview appears here</div>
+              <label for="p-image">لینک تصویر کاور (HTTPS یا لینک گوگل درایو)</label>
+              <input id="p-image" type="url" placeholder="https://drive.google.com/file/d/.../view" dir="ltr" />
+              <div id="p-image-preview" class="preview-box">پیش‌نمایش تصویر اینجا نمایش داده می‌شود</div>
             </div>
             <div class="field">
-              <label for="p-live">Live Website URL</label>
-              <input id="p-live" type="url" placeholder="https://..." />
+              <label for="p-live">لینک وب‌سایت زنده</label>
+              <input id="p-live" type="url" placeholder="https://..." dir="ltr" />
             </div>
             <div class="field" style="flex-direction: row; align-items: center; gap: 10px;">
-              <input id="p-published" type="checkbox" style="width: auto;" />
-              <label for="p-published" style="margin: 0;">Publish on public website</label>
+              <input id="p-published" type="checkbox" style="width: auto; min-height: auto;" />
+              <label for="p-published" style="margin: 0;">انتشار در سایت عمومی</label>
             </div>
             <div class="form-actions">
-              <button class="btn btn-gold-solid btn-sm" type="submit">Save Project</button>
-              <button id="preview-btn" class="btn btn-ghost btn-sm" type="button">Preview Card</button>
-              <button id="reset-project-btn" class="btn btn-ghost btn-sm" type="button" hidden>Cancel Edit</button>
+              <button class="btn btn-gold-solid btn-sm" type="submit">ذخیره پروژه</button>
+              <button id="preview-btn" class="btn btn-ghost btn-sm" type="button">پیش‌نمایش کارت</button>
+              <button id="reset-project-btn" class="btn btn-ghost btn-sm" type="button" hidden>انصراف از ویرایش</button>
             </div>
             <p id="project-status" class="form-status" style="margin-top: 12px;"></p>
           </form>
         </div>
 
         <div class="admin-card">
-          <h2 style="font-family: var(--font-serif); font-size: 1.8rem; font-weight: 400; margin-bottom: 18px;">
-            Manage Projects
+          <h2 style="font-size: 1.4rem; font-weight: 700; margin-bottom: 18px;">
+            مدیریت پروژه‌ها
           </h2>
           <div id="admin-projects-list"></div>
         </div>
@@ -205,61 +211,96 @@
 
       <!-- Settings Tab -->
       <section id="tab-settings" class="admin-card" hidden>
-        <h2 style="font-family: var(--font-serif); font-size: 1.8rem; font-weight: 400; margin-bottom: 18px;">
-          Confirmed Contact &amp; Canonical Settings
+        <h2 style="font-size: 1.4rem; font-weight: 700; margin-bottom: 18px;">
+          تنظیمات اطلاعات تماس و سئو
         </h2>
         <form id="settings-form" style="max-width: 640px;">
           <div class="field">
-            <label for="set-email">Confirmed Contact Email</label>
-            <input id="set-email" type="email" placeholder="Leave blank to keep unpublished" />
+            <label for="set-phone">شماره تماس تأییدشده</label>
+            <input id="set-phone" type="text" placeholder="+98 9929498144" dir="ltr" />
           </div>
           <div class="field">
-            <label for="set-phone">Confirmed Phone Number</label>
-            <input id="set-phone" type="text" placeholder="+98 9929498144" />
+            <label for="set-telegram">لینک تلگرام</label>
+            <input id="set-telegram" type="url" placeholder="https://t.me/YAsiNSitee" dir="ltr" />
           </div>
           <div class="field">
-            <label for="set-telegram">Telegram URL</label>
-            <input id="set-telegram" type="url" placeholder="https://t.me/..." />
+            <label for="set-email">ایمیل رسمی (خالی بگذارید اگر نمایش داده نشود)</label>
+            <input id="set-email" type="email" placeholder="contact@yourdomain.com" dir="ltr" />
           </div>
           <div class="field">
-            <label for="set-canonical">Canonical Domain URL</label>
-            <input id="set-canonical" type="url" placeholder="https://site-society-portfolio.workers.dev" />
+            <label for="set-instagram">اینستاگرام</label>
+            <input id="set-instagram" type="url" placeholder="https://instagram.com/..." dir="ltr" />
           </div>
           <div class="field">
-            <label for="set-github">GitHub URL</label>
-            <input id="set-github" type="url" placeholder="https://github.com/..." />
+            <label for="set-canonical">دامنه اصلی (Canonical URL)</label>
+            <input id="set-canonical" type="url" placeholder="https://site-society-portfolio.mygamer989.workers.dev" dir="ltr" />
           </div>
           <div class="field">
-            <label for="set-x">X (Twitter) URL</label>
-            <input id="set-x" type="url" placeholder="https://x.com/..." />
+            <label for="set-github">گیت‌هاب</label>
+            <input id="set-github" type="url" placeholder="https://github.com/..." dir="ltr" />
           </div>
           <div class="field">
-            <label for="set-linkedin">LinkedIn URL</label>
-            <input id="set-linkedin" type="url" placeholder="https://linkedin.com/..." />
+            <label for="set-x">شبکه X (توییتر)</label>
+            <input id="set-x" type="url" placeholder="https://x.com/..." dir="ltr" />
           </div>
           <div class="field">
-            <label for="set-instagram">Instagram URL</label>
-            <input id="set-instagram" type="url" placeholder="https://instagram.com/..." />
+            <label for="set-linkedin">لینکدین</label>
+            <input id="set-linkedin" type="url" placeholder="https://linkedin.com/..." dir="ltr" />
           </div>
-          <button class="btn btn-gold-solid btn-sm" type="submit">Save Settings</button>
-          <span id="settings-status" class="form-status" style="margin-left: 12px;"></span>
+          <button class="btn btn-gold-solid btn-sm" type="submit">ذخیره تنظیمات</button>
+          <span id="settings-status" class="form-status" style="margin-right: 12px;"></span>
         </form>
       </section>
 
       <!-- Inquiries Tab -->
       <section id="tab-inquiries" class="admin-card" hidden>
-        <h2 style="font-family: var(--font-serif); font-size: 1.8rem; font-weight: 400; margin-bottom: 18px;">
-          Client Inquiries
+        <h2 style="font-size: 1.4rem; font-weight: 700; margin-bottom: 18px;">
+          پیام‌ها و درخواست‌های پروژه
         </h2>
         <div id="inquiries-list"></div>
       </section>
 
-      <!-- Security Logs Tab -->
-      <section id="tab-logs" class="admin-card" hidden>
-        <h2 style="font-family: var(--font-serif); font-size: 1.8rem; font-weight: 400; margin-bottom: 18px;">
-          Security Event Log
-        </h2>
-        <div id="logs-list"></div>
+      <!-- Security & Owner Controls Tab -->
+      <section id="tab-security" hidden>
+        <div class="admin-grid">
+          <div class="admin-card">
+            <h2 style="font-size: 1.35rem; font-weight: 700; margin-bottom: 16px;">نشست‌های فعال و کنترل دسترسی</h2>
+            <div id="sessions-list" style="margin-bottom: 14px;"></div>
+            <button id="revoke-others-btn" class="btn btn-danger btn-sm" type="button">قطع دسترسی همه دستگاه‌های دیگر</button>
+
+            <hr style="border:none;border-top:1px solid var(--border-hairline);margin:24px 0;" />
+
+            <h3 style="font-size: 1.15rem; font-weight: 600; margin-bottom: 12px;">تغییر رمز عبور</h3>
+            <form id="change-pw-form">
+              <div class="field">
+                <label for="pw-current">رمز عبور فعلی</label>
+                <input id="pw-current" type="password" required dir="ltr" />
+              </div>
+              <div class="field">
+                <label for="pw-new">رمز عبور جدید (حداقل ۱۲ کاراکتر)</label>
+                <input id="pw-new" type="password" required minlength="12" maxlength="128" dir="ltr" />
+              </div>
+              <button class="btn btn-gold-solid btn-sm" type="submit">تغییر رمز عبور</button>
+              <span id="pw-status" class="form-status" style="margin-right:10px;"></span>
+            </form>
+
+            <hr style="border:none;border-top:1px solid var(--border-hairline);margin:24px 0;" />
+
+            <div style="display:flex;gap:10px;flex-wrap:wrap;">
+              <button id="regen-recovery-btn" class="btn btn-gold-outline btn-sm" type="button">تولید ۸ کد بازیابی جدید</button>
+              <button id="download-backup-btn" class="btn btn-ghost btn-sm" type="button">دانلود پشتیبان کامل (JSON)</button>
+            </div>
+            <div id="new-recovery-mount" class="recovery-grid" style="margin-top:14px;" hidden></div>
+          </div>
+
+          <div class="admin-card">
+            <div style="display:flex;justify-content:space-between;align-items:center;gap:10px;margin-bottom:16px;flex-wrap:wrap;">
+              <h2 style="font-size: 1.35rem; font-weight: 700;">گزارش رویدادهای امنیتی</h2>
+              <button id="clear-logs-btn" class="btn btn-danger btn-sm" type="button">پاک‌سازی لاگ‌ها</button>
+            </div>
+            <div id="logs-list"></div>
+          </div>
+        </div>
       </section>
     </main>
   </div>
@@ -268,8 +309,8 @@
   <div id="preview-modal" class="modal-backdrop" hidden>
     <div class="modal-content">
       <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 18px;">
-        <span class="section-kicker" style="margin: 0;">CARD PREVIEW</span>
-        <button id="close-preview-btn" class="btn btn-ghost btn-sm" type="button">Close</button>
+        <span class="section-kicker" style="margin: 0;">پیش‌نمایش کارت</span>
+        <button id="close-preview-btn" class="btn btn-ghost btn-sm" type="button">بستن</button>
       </div>
       <div id="preview-card-mount"></div>
     </div>

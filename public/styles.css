@@ -1031,8 +1031,15 @@ html[lang="en"] .project-title {
 }
 
 @media (max-width: 768px) {
+  .container {
+    padding: 0 20px;
+  }
   .section {
-    padding: 76px 0;
+    padding: 68px 0;
+  }
+  .hero {
+    min-height: auto;
+    padding: 56px 0 84px;
   }
   .nav-desktop,
   .header-actions .btn {
@@ -1040,10 +1047,15 @@ html[lang="en"] .project-title {
   }
   .menu-toggle {
     display: flex;
+    min-width: 44px;
+    min-height: 44px;
+    align-items: center;
+    justify-content: center;
   }
   .section-header {
     flex-direction: column;
     align-items: flex-start;
+    margin-bottom: 36px;
   }
   .portfolio-grid,
   .about-pillars,
@@ -1053,6 +1065,50 @@ html[lang="en"] .project-title {
     grid-template-columns: 1fr;
   }
   .contact-form {
-    padding: 24px;
+    padding: 22px;
+  }
+  .field input,
+  .field select,
+  .field textarea {
+    font-size: 16px;
+    min-height: 44px;
+  }
+  .btn {
+    min-height: 44px;
+  }
+  .footer-inner {
+    flex-direction: column;
+    align-items: flex-start;
+  }
+}
+
+@media (max-width: 480px) {
+  .container {
+    padding: 0 16px;
+  }
+  .header-inner {
+    height: 66px;
+  }
+  .brand-text {
+    font-size: 0.76rem;
+    letter-spacing: 0.16em;
+  }
+  .hero-cta {
+    flex-direction: column;
+    width: 100%;
+  }
+  .hero-cta .btn {
+    width: 100%;
+  }
+  .tech-telemetry {
+    gap: 10px;
+    font-size: 0.66rem;
+    margin-top: 32px;
+  }
+  .project-body,
+  .pillar-card,
+  .process-step,
+  .service-card {
+    padding: 22px;
   }
 }

@@ -785,6 +785,94 @@ app.get('/api/admin/security-logs', requireAdmin, async (c) => {
   return c.json({ logs: rows.results });
 });
 
+app.delete('/api/admin/security-logs', requireAdmin, async (c) => {
+  await c.env.DB.prepare('DELETE FROM security_logs').run();
+  await logSecurityEvent(c.env.DB, 'LOGS_CLEARED', getClientIp(c.req.raw), c.req.header('User-Agent') || '');
+  return c.json({ ok: true });
+});
+
+app.get('/api/admin/sessions', requireAdmin, async (c) => {
+  const adminId = c.get('adminId');
+  const currentSessionId = c.get('sessionId');
+  const rows = await c.env.DB.prepare(
+    'SELECT id, ip_address, user_agent, expires_at, created_at FROM sessions WHERE admin_id = ? AND expires_at > ? ORDER BY created_at DESC'
+  )
+    .bind(adminId, new Date().toISOString())
+    .all<{ id: string; ip_address: string; user_agent: string; expires_at: string; created_at: string }>();
+
+  return c.json({
+    sessions: rows.results.map((s) => ({
+      id: s.id.slice(0, 10),
+      ip_address: s.ip_address,
+      user_agent: s.user_agent,
+      expires_at: s.expires_at,
+      created_at: s.created_at,
+      is_current: s.id === currentSessionId,
+    })),
+  });
+});
+
+app.post('/api/admin/sessions/revoke-others', requireAdmin, async (c) => {
+  const adminId = c.get('adminId');
+  const currentSessionId = c.get('sessionId');
+  await c.env.DB.prepare('DELETE FROM sessions WHERE admin_id = ? AND id != ?').bind(adminId, currentSessionId).run();
+  await logSecurityEvent(c.env.DB, 'OTHER_SESSIONS_REVOKED', getClientIp(c.req.raw), c.req.header('User-Agent') || '');
+  return c.json({ ok: true });
+});
+
+app.post('/api/admin/change-password', requireAdmin, async (c) => {
+  const adminId = c.get('adminId');
+  let body: { currentPassword?: string; newPassword?: string };
+  try {
+    body = await c.req.json();
+  } catch {
+    return c.json({ error: 'Invalid JSON payload.' }, 400);
+  }
+  const currentPassword = String(body.currentPassword || '');
+  const newPassword = String(body.newPassword || '');
+  if (newPassword.length < 12 || newPassword.length > 128) {
+    return c.json({ error: 'New password must be 12-128 characters.' }, 400);
+  }
+
+  const user = await c.env.DB.prepare('SELECT password_hash FROM admin_users WHERE id = ?')
+    .bind(adminId)
+    .first<{ password_hash: string }>();
+  if (!user || !(await verifyPassword(currentPassword, user.password_hash))) {
+    return c.json({ error: 'Current password is incorrect.' }, 401);
+  }
+
+  const nextHash = await hashPassword(newPassword);
+  await c.env.DB.prepare('UPDATE admin_users SET password_hash = ? WHERE id = ?').bind(nextHash, adminId).run();
+  await logSecurityEvent(c.env.DB, 'PASSWORD_CHANGED', getClientIp(c.req.raw), c.req.header('User-Agent') || '');
+  return c.json({ ok: true });
+});
+
+app.post('/api/admin/regenerate-recovery', requireAdmin, async (c) => {
+  const adminId = c.get('adminId');
+  const recoveryCodes = generateRecoveryCodes(8);
+  await c.env.DB.prepare('DELETE FROM recovery_codes WHERE admin_id = ?').bind(adminId).run();
+  for (const code of recoveryCodes) {
+    const codeHash = await sha256Hex(code);
+    await c.env.DB.prepare('INSERT INTO recovery_codes (id, admin_id, code_hash) VALUES (?, ?, ?)')
+      .bind(crypto.randomUUID(), adminId, codeHash)
+      .run();
+  }
+  await logSecurityEvent(c.env.DB, 'RECOVERY_CODES_REGENERATED', getClientIp(c.req.raw), c.req.header('User-Agent') || '');
+  return c.json({ ok: true, recoveryCodes });
+});
+
+app.get('/api/admin/backup', requireAdmin, async (c) => {
+  const projects = await c.env.DB.prepare('SELECT * FROM projects ORDER BY display_order ASC').all();
+  const settings = await getSettingsMap(c.env.DB);
+  const inquiries = await c.env.DB.prepare('SELECT * FROM contact_inquiries ORDER BY created_at DESC').all();
+  return c.json({
+    exported_at: new Date().toISOString(),
+    projects: projects.results.map((r) => mapProjectRow(r as Record<string, unknown>)),
+    settings,
+    inquiries: inquiries.results,
+  });
+});
+
 // Block direct access to internal panel folder
 app.all('/_studio_panel*', (c) => c.notFound());
 

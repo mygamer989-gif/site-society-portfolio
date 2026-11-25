@@ -43,7 +43,7 @@
     const res = await fetch(path, { ...options, headers, credentials: 'same-origin' });
     const data = await res.json().catch(() => ({}));
     if (!res.ok) {
-      throw new Error(data.error || `Request failed (${res.status})`);
+      throw new Error(data.error || `خطا در درخواست (${res.status})`);
     }
     return data;
   }
@@ -71,7 +71,7 @@
         loadAllDashboardData();
       }
     } catch (err) {
-      loadingEl.textContent = err.message || 'Failed to reach admin API.';
+      loadingEl.textContent = err.message || 'خطا در اتصال به سرور مدیریت.';
     }
   }
 
@@ -108,8 +108,8 @@
       if (copyBtn) {
         copyBtn.onclick = async () => {
           await navigator.clipboard.writeText(data.totpSecret).catch(() => {});
-          copyBtn.textContent = 'Copied!';
-          setTimeout(() => { copyBtn.textContent = 'Copy Key'; }, 1800);
+          copyBtn.textContent = 'کپی شد!';
+          setTimeout(() => { copyBtn.textContent = 'کپی کلید'; }, 1800);
         };
       }
 
@@ -156,8 +156,8 @@
     document.getElementById('totp-input-wrap').hidden = useRecovery;
     document.getElementById('recovery-input-wrap').hidden = !useRecovery;
     document.getElementById('toggle-recovery-btn').textContent = useRecovery
-      ? 'Use 6-Digit Authenticator Code'
-      : 'Use Recovery Code Instead';
+      ? 'استفاده از کد ۶ رقمی Authenticator'
+      : 'استفاده از کد بازیابی یک‌بارمصرف';
   });
 
   // Login Step 2 (2FA)
@@ -194,7 +194,7 @@
       document.querySelectorAll('.tab-btn').forEach((b) => b.classList.remove('active'));
       btn.classList.add('active');
       const tab = btn.dataset.tab;
-      ['projects', 'settings', 'inquiries', 'logs'].forEach((t) => {
+      ['projects', 'settings', 'inquiries', 'security'].forEach((t) => {
         document.getElementById(`tab-${t}`).hidden = t !== tab;
       });
     });
@@ -206,8 +206,8 @@
   imgInput?.addEventListener('input', () => {
     const url = normalizePreviewUrl(imgInput.value);
     imgPreview.innerHTML = url
-      ? `<img src="${esc(url)}" alt="Thumbnail preview" />`
-      : 'Image preview appears here';
+      ? `<img src="${esc(url)}" alt="پیش‌نمایش تصویر" />`
+      : 'پیش‌نمایش تصویر اینجا نمایش داده می‌شود';
   });
 
   // Projects CRUD
@@ -216,7 +216,7 @@
     const data = await api('/api/admin/projects');
     const projects = data.projects || [];
     if (projects.length === 0) {
-      listEl.innerHTML = '<p style="color: var(--silver);">No portfolio projects added yet.</p>';
+      listEl.innerHTML = '<p style="color: var(--ink-secondary);">هنوز پروژه‌ای ثبت نشده است.</p>';
       return;
     }
     listEl.innerHTML = projects
@@ -226,19 +226,19 @@
         <div class="project-row-head">
           <div>
             <strong>${esc(p.title)}</strong>
-            <span style="color: var(--silver); font-size: 0.82rem; margin-left: 8px;">${esc(p.category)} · Order: ${p.display_order}</span>
+            <span style="color: var(--ink-secondary); font-size: 0.82rem; margin-right: 8px;">${esc(p.category)} · ترتیب: ${p.display_order}</span>
           </div>
           <span class="badge ${p.is_published ? 'badge-live' : 'badge-draft'}">
-            ${p.is_published ? 'PUBLISHED' : 'UNPUBLISHED'}
+            ${p.is_published ? 'منتشرشده' : 'پیش‌نویس'}
           </span>
         </div>
-        <p style="color: var(--silver); font-size: 0.88rem;">${esc(p.description)}</p>
+        <p style="color: var(--ink-secondary); font-size: 0.88rem;">${esc(p.description)}</p>
         <div class="row-actions">
           <button class="btn btn-gold-outline btn-sm" data-action="toggle" data-id="${esc(p.id)}" data-pub="${p.is_published ? '1' : '0'}">
-            ${p.is_published ? 'Unpublish' : 'Publish'}
+            ${p.is_published ? 'عدم انتشار' : 'انتشار در سایت'}
           </button>
-          <button class="btn btn-ghost btn-sm" data-action="edit" data-id="${esc(p.id)}">Edit</button>
-          <button class="btn btn-danger btn-sm" data-action="delete" data-id="${esc(p.id)}">Delete</button>
+          <button class="btn btn-ghost btn-sm" data-action="edit" data-id="${esc(p.id)}">ویرایش</button>
+          <button class="btn btn-danger btn-sm" data-action="delete" data-id="${esc(p.id)}">حذف</button>
         </div>
       </div>
     `
@@ -257,7 +257,7 @@
           });
           loadProjects();
         } else if (action === 'delete') {
-          if (!confirm('Delete this project permanently?')) return;
+          if (!confirm('آیا از حذف دائمی این پروژه مطمئن هستید؟')) return;
           await api(`/api/admin/projects/${id}`, { method: 'DELETE' });
           loadProjects();
         } else if (action === 'edit') {
@@ -272,9 +272,10 @@
           document.getElementById('p-image').value = proj.thumbnail_url || '';
           document.getElementById('p-live').value = proj.live_url || '';
           document.getElementById('p-published').checked = proj.is_published;
-          document.getElementById('form-heading').textContent = 'Edit Project';
+          document.getElementById('form-heading').textContent = 'ویرایش پروژه';
           document.getElementById('reset-project-btn').hidden = false;
           imgInput.dispatchEvent(new Event('input'));
+          window.scrollTo({ top: 0, behavior: 'smooth' });
         }
       });
     });
@@ -287,9 +288,9 @@
   function resetProjectForm() {
     projectForm.reset();
     document.getElementById('p-id').value = '';
-    document.getElementById('form-heading').textContent = 'Add Portfolio Project';
+    document.getElementById('form-heading').textContent = 'افزودن پروژه جدید';
     resetProjectBtn.hidden = true;
-    imgPreview.innerHTML = 'Image preview appears here';
+    imgPreview.innerHTML = 'پیش‌نمایش تصویر اینجا نمایش داده می‌شود';
   }
 
   resetProjectBtn?.addEventListener('click', resetProjectForm);
@@ -315,7 +316,7 @@
         await api('/api/admin/projects', { method: 'POST', body: JSON.stringify(payload) });
       }
       resetProjectForm();
-      projectStatus.textContent = 'Project saved.';
+      projectStatus.textContent = 'پروژه با موفقیت ذخیره شد.';
       projectStatus.className = 'form-status success';
       loadProjects();
     } catch (err) {
@@ -327,9 +328,9 @@
   // Preview Modal
   const previewModal = document.getElementById('preview-modal');
   document.getElementById('preview-btn')?.addEventListener('click', () => {
-    const title = document.getElementById('p-title').value || 'Untitled Project';
-    const category = document.getElementById('p-category').value || 'Category';
-    const desc = document.getElementById('p-desc').value || 'Project description preview.';
+    const title = document.getElementById('p-title').value || 'پروژه بدون عنوان';
+    const category = document.getElementById('p-category').value || 'دسته‌بندی';
+    const desc = document.getElementById('p-desc').value || 'پیش‌نمایش توضیحات پروژه.';
     const imgUrl = normalizePreviewUrl(document.getElementById('p-image').value);
     const liveUrl = document.getElementById('p-live').value;
     const techs = document
@@ -341,14 +342,14 @@
     document.getElementById('preview-card-mount').innerHTML = `
       <article class="project-card">
         <div class="project-media">
-          ${imgUrl ? `<img src="${esc(imgUrl)}" alt="${esc(title)}" />` : '<div class="project-media-placeholder">PREVIEW PENDING</div>'}
+          ${imgUrl ? `<img src="${esc(imgUrl)}" alt="${esc(title)}" />` : '<div class="project-media-placeholder">بدون تصویر</div>'}
         </div>
         <div class="project-body">
           <div class="project-meta"><span class="project-category">${esc(category)}</span></div>
           <h3 class="project-title">${esc(title)}</h3>
           <p class="project-desc">${esc(desc)}</p>
           <div class="project-techs">${techs.map((t) => `<span class="tech-pill">${esc(t)}</span>`).join('')}</div>
-          ${liveUrl ? `<a href="${esc(liveUrl)}" target="_blank" rel="noopener noreferrer" class="btn btn-gold-outline btn-sm">View Live Website &#8599;</a>` : ''}
+          ${liveUrl ? `<a href="${esc(liveUrl)}" target="_blank" rel="noopener noreferrer" class="btn btn-gold-outline btn-sm">مشاهده وب‌سایت زنده &#8599;</a>` : ''}
         </div>
       </article>
     `;
@@ -391,7 +392,7 @@
           social_instagram: document.getElementById('set-instagram').value,
         }),
       });
-      status.textContent = 'Settings updated.';
+      status.textContent = 'تنظیمات با موفقیت ذخیره شد.';
       status.className = 'form-status success';
     } catch (err) {
       status.textContent = err.message;
@@ -410,7 +411,7 @@
     }
     const el = document.getElementById('inquiries-list');
     if (list.length === 0) {
-      el.innerHTML = '<p style="color: var(--silver);">No inquiries received yet.</p>';
+      el.innerHTML = '<p style="color: var(--ink-secondary);">هنوز پیامی از طرف مشتریان ثبت نشده است.</p>';
       return;
     }
     el.innerHTML = list
@@ -419,15 +420,16 @@
       <div class="project-row">
         <div class="project-row-head">
           <div>
-            <strong>${esc(q.name)}</strong> (${esc(q.email)})
+            <strong>${esc(q.name)}</strong> (<span dir="ltr">${esc(q.email)}</span>)
             ${q.company ? `· ${esc(q.company)}` : ''}
-            ${q.service ? `· <span style="color: var(--gold);">${esc(q.service)}</span>` : ''}
+            ${q.service ? `· <span style="color: var(--bronze-dark);">${esc(q.service)}</span>` : ''}
           </div>
-          <span style="color: var(--silver-dim); font-size: 0.78rem;">${esc(q.created_at)}</span>
+          <span style="color: var(--ink-muted); font-size: 0.78rem;" dir="ltr">${esc(q.created_at)}</span>
         </div>
-        <p style="color: var(--silver); font-size: 0.9rem;">${esc(q.message)}</p>
-        <div>
-          <button class="btn btn-danger btn-sm" data-del-inq="${esc(q.id)}">Delete</button>
+        <p style="color: var(--ink-secondary); font-size: 0.9rem;">${esc(q.message)}</p>
+        <div class="row-actions">
+          <a class="btn btn-gold-outline btn-sm" href="mailto:${esc(q.email)}">پاسخ با ایمیل</a>
+          <button class="btn btn-danger btn-sm" data-del-inq="${esc(q.id)}">حذف</button>
         </div>
       </div>
     `
@@ -442,34 +444,110 @@
     });
   }
 
-  // Security Logs
-  async function loadLogs() {
-    const data = await api('/api/admin/security-logs');
-    const logs = data.logs || [];
-    const el = document.getElementById('logs-list');
-    if (logs.length === 0) {
-      el.innerHTML = '<p style="color: var(--silver);">No security events logged yet.</p>';
-      return;
-    }
-    el.innerHTML = logs
+  // Sessions & Owner Controls
+  async function loadSessions() {
+    const data = await api('/api/admin/sessions');
+    const list = data.sessions || [];
+    const el = document.getElementById('sessions-list');
+    if (!el) return;
+    el.innerHTML = list
       .map(
-        (l) => `
-      <div class="project-row" style="padding: 12px 16px;">
+        (s) => `
+      <div class="project-row" style="padding:12px 14px;">
         <div class="project-row-head">
-          <span style="font-family: var(--font-mono); font-size: 0.8rem; color: var(--gold);">${esc(l.event)}</span>
-          <span style="font-family: var(--font-mono); font-size: 0.74rem; color: var(--silver-dim);">${esc(l.created_at)} · ${esc(l.ip_address)}</span>
+          <span style="font-family:var(--font-mono);font-size:0.78rem;" dir="ltr">${esc(s.ip_address)} · ${esc(s.id)}</span>
+          ${s.is_current ? '<span class="badge badge-live">نشست فعلی</span>' : '<span class="badge badge-draft">سایر دستگاه‌ها</span>'}
         </div>
-        ${l.details ? `<div style="font-size: 0.8rem; color: var(--silver);">${esc(l.details)}</div>` : ''}
+        <div style="font-size:0.76rem;color:var(--ink-muted);" dir="ltr">${esc(s.user_agent)}</div>
       </div>
     `
       )
       .join('');
   }
 
+  document.getElementById('revoke-others-btn')?.addEventListener('click', async () => {
+    await api('/api/admin/sessions/revoke-others', { method: 'POST' });
+    loadSessions();
+    loadLogs();
+  });
+
+  document.getElementById('change-pw-form')?.addEventListener('submit', async (e) => {
+    e.preventDefault();
+    const st = document.getElementById('pw-status');
+    st.textContent = '';
+    try {
+      await api('/api/admin/change-password', {
+        method: 'POST',
+        body: JSON.stringify({
+          currentPassword: document.getElementById('pw-current').value,
+          newPassword: document.getElementById('pw-new').value,
+        }),
+      });
+      e.target.reset();
+      st.textContent = 'رمز عبور تغییر کرد.';
+      st.className = 'form-status success';
+      loadLogs();
+    } catch (err) {
+      st.textContent = err.message;
+      st.className = 'form-status error';
+    }
+  });
+
+  document.getElementById('regen-recovery-btn')?.addEventListener('click', async () => {
+    if (!confirm('کدهای بازیابی قبلی باطل و ۸ کد جدید ساخته می‌شوند. ادامه می‌دهید؟')) return;
+    const data = await api('/api/admin/regenerate-recovery', { method: 'POST' });
+    const mount = document.getElementById('new-recovery-mount');
+    mount.innerHTML = data.recoveryCodes.map((c) => `<div class="recovery-item">${esc(c)}</div>`).join('');
+    mount.hidden = false;
+    loadLogs();
+  });
+
+  document.getElementById('download-backup-btn')?.addEventListener('click', async () => {
+    const data = await api('/api/admin/backup');
+    const blob = new Blob([JSON.stringify(data, null, 2)], { type: 'application/json' });
+    const url = URL.createObjectURL(blob);
+    const a = document.createElement('a');
+    a.href = url;
+    a.download = `site-society-backup-${new Date().toISOString().slice(0, 10)}.json`;
+    a.click();
+    URL.revokeObjectURL(url);
+  });
+
+  // Security Logs
+  async function loadLogs() {
+    const data = await api('/api/admin/security-logs');
+    const logs = data.logs || [];
+    const el = document.getElementById('logs-list');
+    if (logs.length === 0) {
+      el.innerHTML = '<p style="color: var(--ink-secondary);">رویداد امنیتی ثبت نشده است.</p>';
+      return;
+    }
+    el.innerHTML = logs
+      .map(
+        (l) => `
+      <div class="project-row" style="padding: 12px 14px;">
+        <div class="project-row-head">
+          <span style="font-family: var(--font-mono); font-size: 0.78rem; color: var(--bronze-dark);" dir="ltr">${esc(l.event)}</span>
+          <span style="font-family: var(--font-mono); font-size: 0.72rem; color: var(--ink-muted);" dir="ltr">${esc(l.created_at)} · ${esc(l.ip_address)}</span>
+        </div>
+        ${l.details ? `<div style="font-size: 0.78rem; color: var(--ink-secondary);" dir="ltr">${esc(l.details)}</div>` : ''}
+      </div>
+    `
+      )
+      .join('');
+  }
+
+  document.getElementById('clear-logs-btn')?.addEventListener('click', async () => {
+    if (!confirm('لاگ‌های امنیتی پاک شوند؟')) return;
+    await api('/api/admin/security-logs', { method: 'DELETE' });
+    loadLogs();
+  });
+
   function loadAllDashboardData() {
     loadProjects();
     loadSettings();
     loadInquiries();
+    loadSessions();
     loadLogs();
   }
 
