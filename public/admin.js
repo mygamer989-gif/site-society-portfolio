@@ -93,8 +93,26 @@
       });
       setupForm.hidden = true;
       setupResult.hidden = false;
-      document.getElementById('totp-secret-display').textContent =
-        `Secret: ${data.totpSecret}\nURI: ${data.otpauthUri}`;
+      const secretEl = document.getElementById('totp-secret-display');
+      secretEl.textContent = data.totpSecret;
+
+      const qrMount = document.getElementById('totp-qr-mount');
+      if (qrMount && typeof window.qrcode === 'function') {
+        const qr = window.qrcode(0, 'M');
+        qr.addData(data.otpauthUri);
+        qr.make();
+        qrMount.innerHTML = qr.createSvgTag({ cellSize: 5, margin: 2 });
+      }
+
+      const copyBtn = document.getElementById('copy-secret-btn');
+      if (copyBtn) {
+        copyBtn.onclick = async () => {
+          await navigator.clipboard.writeText(data.totpSecret).catch(() => {});
+          copyBtn.textContent = 'Copied!';
+          setTimeout(() => { copyBtn.textContent = 'Copy Key'; }, 1800);
+        };
+      }
+
       document.getElementById('recovery-codes-display').innerHTML = data.recoveryCodes
         .map((c) => `<div class="recovery-item">${esc(c)}</div>`)
         .join('');
