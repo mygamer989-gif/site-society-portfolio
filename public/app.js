@@ -217,6 +217,227 @@
   const yearEl = document.getElementById('year');
   if (yearEl) yearEl.textContent = String(new Date().getFullYear());
 
+  const reducedMotion = window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+
+  // 1. Studio Entrance Preloader
+  const preloader = document.getElementById('studio-preloader');
+  if (preloader) {
+    if (reducedMotion) {
+      preloader.remove();
+    } else {
+      window.addEventListener('load', () => {
+        setTimeout(() => {
+          preloader.classList.add('is-done');
+          setTimeout(() => preloader.remove(), 750);
+        }, 720);
+      });
+      // Safety fallback
+      setTimeout(() => {
+        if (document.body.contains(preloader)) {
+          preloader.classList.add('is-done');
+          setTimeout(() => preloader.remove(), 750);
+        }
+      }, 2200);
+    }
+  }
+
+  // 2. Real-Time 3D Geodesic Sculpture + Orbiting Nodes on Hero Canvas
+  function initHero3D() {
+    const canvas = document.getElementById('hero-3d-canvas');
+    if (!canvas || reducedMotion) return;
+    const ctx = canvas.getContext('2d');
+    if (!ctx) return;
+
+    let w = 0;
+    let h = 0;
+    let dpr = Math.min(window.devicePixelRatio || 1, 2);
+    let mouseX = 0;
+    let mouseY = 0;
+    let targetRotX = 0.35;
+    let targetRotY = 0.45;
+
+    function resize() {
+      const rect = canvas.parentElement.getBoundingClientRect();
+      w = rect.width;
+      h = Math.min(540, Math.max(380, rect.height));
+      canvas.width = w * dpr;
+      canvas.height = h * dpr;
+      canvas.style.width = `${w}px`;
+      canvas.style.height = `${h}px`;
+      ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
+    }
+    resize();
+    window.addEventListener('resize', resize);
+
+    window.addEventListener(
+      'pointermove',
+      (e) => {
+        mouseX = (e.clientX / window.innerWidth - 0.5) * 2;
+        mouseY = (e.clientY / window.innerHeight - 0.5) * 2;
+      },
+      { passive: true }
+    );
+
+    // Icosahedron vertices & edges
+    const phi = (1 + Math.sqrt(5)) / 2;
+    const rawVerts = [
+      [-1, phi, 0], [1, phi, 0], [-1, -phi, 0], [1, -phi, 0],
+      [0, -1, phi], [0, 1, phi], [0, -1, -phi], [0, 1, -phi],
+      [phi, 0, -1], [phi, 0, 1], [-phi, 0, -1], [-phi, 0, 1],
+    ].map(([x, y, z]) => {
+      const len = Math.hypot(x, y, z);
+      return [x / len, y / len, z / len];
+    });
+
+    const edges = [];
+    for (let i = 0; i < rawVerts.length; i++) {
+      for (let j = i + 1; j < rawVerts.length; j++) {
+        const d = Math.hypot(
+          rawVerts[i][0] - rawVerts[j][0],
+          rawVerts[i][1] - rawVerts[j][1],
+          rawVerts[i][2] - rawVerts[j][2]
+        );
+        if (d < 1.15) edges.push([i, j]);
+      }
+    }
+
+    const particles = Array.from({ length: 36 }, (_, i) => ({
+      theta: (i / 36) * Math.PI * 2,
+      phi: Math.acos(2 * ((i * 0.6180339887) % 1) - 1),
+      r: 1.35 + (i % 5) * 0.14,
+      color: i % 3 === 0 ? 'rgba(22, 91, 76, 0.55)' : i % 3 === 1 ? 'rgba(154, 116, 66, 0.55)' : 'rgba(31, 58, 95, 0.45)',
+      size: 1.8 + (i % 3),
+    }));
+
+    let angleY = 0;
+    let angleX = 0.25;
+
+    function project([x, y, z], cx, cy, scale) {
+      const cosY = Math.cos(angleY);
+      const sinY = Math.sin(angleY);
+      const x1 = x * cosY - z * sinY;
+      const z1 = z * cosY + x * sinY;
+
+      const cosX = Math.cos(angleX);
+      const sinX = Math.sin(angleX);
+      const y2 = y * cosX - z1 * sinX;
+      const z2 = z1 * cosX + y * sinX;
+
+      const fov = 3.4;
+      const depth = fov / (fov + z2);
+      return {
+        sx: cx + x1 * scale * depth,
+        sy: cy + y2 * scale * depth,
+        depth,
+        z: z2,
+      };
+    }
+
+    function frame() {
+      if (activeTab === 'home') {
+        ctx.clearRect(0, 0, w, h);
+        targetRotY += 0.0045;
+        angleY += (targetRotY + mouseX * 0.45 - angleY) * 0.06;
+        angleX += (targetRotX + mouseY * 0.35 - angleX) * 0.06;
+
+        const isMobile = w < 768;
+        const cx = isMobile ? w * 0.78 : document.documentElement.dir === 'rtl' ? w * 0.22 : w * 0.78;
+        const cy = isMobile ? h * 0.36 : h * 0.46;
+        const scale = isMobile ? 95 : 145;
+
+        const projectedVerts = rawVerts.map((v) => project(v, cx, cy, scale));
+
+        // Draw 3D edges
+        ctx.lineWidth = 1.1;
+        for (const [a, b] of edges) {
+          const pa = projectedVerts[a];
+          const pb = projectedVerts[b];
+          const alpha = Math.max(0.08, Math.min(0.38, (pa.depth + pb.depth) * 0.16));
+          ctx.strokeStyle = `rgba(154, 116, 66, ${alpha.toFixed(3)})`;
+          ctx.beginPath();
+          ctx.moveTo(pa.sx, pa.sy);
+          ctx.lineTo(pb.sx, pb.sy);
+          ctx.stroke();
+        }
+
+        // Draw inner secondary ring
+        for (const p of projectedVerts) {
+          ctx.fillStyle = p.z < 0 ? 'rgba(22, 91, 76, 0.75)' : 'rgba(154, 116, 66, 0.35)';
+          ctx.beginPath();
+          ctx.arc(p.sx, p.sy, 2.8 * p.depth, 0, Math.PI * 2);
+          ctx.fill();
+        }
+
+        // Draw orbiting 3D particles
+        for (const pt of particles) {
+          const px = pt.r * Math.sin(pt.phi) * Math.cos(pt.theta + angleY * 0.6);
+          const py = pt.r * Math.cos(pt.phi);
+          const pz = pt.r * Math.sin(pt.phi) * Math.sin(pt.theta + angleY * 0.6);
+          const proj = project([px, py, pz], cx, cy, scale);
+          ctx.fillStyle = pt.color;
+          ctx.beginPath();
+          ctx.arc(proj.sx, proj.sy, pt.size * proj.depth, 0, Math.PI * 2);
+          ctx.fill();
+        }
+      }
+      requestAnimationFrame(frame);
+    }
+
+    requestAnimationFrame(frame);
+  }
+
+  // 3. 3D Tilt + Specular Glare + Magnetic Buttons
+  function bind3DMotion() {
+    if (reducedMotion) return;
+    document.querySelectorAll('.project-card, .pillar-card, .service-card, .process-step, .contact-channel-btn').forEach((card) => {
+      if (card.dataset.tiltBound) return;
+      card.dataset.tiltBound = '1';
+      card.classList.add('tilt-card');
+
+      card.addEventListener('pointermove', (e) => {
+        const rect = card.getBoundingClientRect();
+        const x = (e.clientX - rect.left) / rect.width;
+        const y = (e.clientY - rect.top) / rect.height;
+        const rotY = (x - 0.5) * 9;
+        const rotX = (0.5 - y) * 9;
+        card.style.setProperty('--mx', `${(x * 100).toFixed(1)}%`);
+        card.style.setProperty('--my', `${(y * 100).toFixed(1)}%`);
+        card.style.transform = `perspective(900px) rotateX(${rotX.toFixed(2)}deg) rotateY(${rotY.toFixed(2)}deg) translateY(-4px)`;
+      });
+
+      card.addEventListener('pointerleave', () => {
+        card.style.transform = '';
+      });
+    });
+
+    document.querySelectorAll('.btn-gold-solid, .btn-emerald-outline').forEach((btn) => {
+      if (btn.dataset.magBound) return;
+      btn.dataset.magBound = '1';
+      btn.addEventListener('pointermove', (e) => {
+        const rect = btn.getBoundingClientRect();
+        const dx = (e.clientX - rect.left - rect.width / 2) * 0.18;
+        const dy = (e.clientY - rect.top - rect.height / 2) * 0.18;
+        btn.style.transform = `translate(${dx.toFixed(1)}px, ${dy.toFixed(1)}px)`;
+      });
+      btn.addEventListener('pointerleave', () => {
+        btn.style.transform = '';
+      });
+    });
+  }
+
+  function runCascade(panel) {
+    if (!panel || reducedMotion) return;
+    const items = panel.querySelectorAll('.pillar-card, .service-card, .process-step, .contact-channel-btn, .contact-form, .project-card');
+    items.forEach((el, idx) => {
+      el.classList.remove('is-in');
+      el.classList.add('cascade-item');
+      el.style.transitionDelay = `${Math.min(idx * 55, 380)}ms`;
+      requestAnimationFrame(() => {
+        requestAnimationFrame(() => el.classList.add('is-in'));
+      });
+    });
+  }
+
   function t(key) {
     return (DICT[currentLang] && DICT[currentLang][key]) || DICT.en[key] || key;
   }
@@ -240,6 +461,7 @@
       const isMatch = panel.getAttribute('data-tab-panel') === target;
       panel.hidden = !isMatch;
       panel.classList.toggle('active', isMatch);
+      if (isMatch) runCascade(panel);
     });
 
     document.querySelectorAll('[data-tab-link]').forEach((btn) => {
@@ -430,6 +652,9 @@
         `;
       })
       .join('');
+    bind3DMotion();
+    const workPanel = document.querySelector('[data-tab-panel="work"]');
+    if (workPanel && !workPanel.hidden) runCascade(workPanel);
   }
 
   // Portfolio Horizontal List: Smooth 60fps Ping-Pong Glide ("برن و بیان")
@@ -611,6 +836,7 @@
         `);
       }
       detailsEl.innerHTML = items.join('');
+      bind3DMotion();
     }
 
     const footerSocials = document.getElementById('footer-socials');
@@ -714,6 +940,8 @@
   const initialHash = window.location.hash.replace('#', '');
   if (initialHash) switchTab(initialHash, false);
   applyLanguage(currentLang);
+  initHero3D();
+  bind3DMotion();
   loadPortfolio();
   loadSettings();
 })();

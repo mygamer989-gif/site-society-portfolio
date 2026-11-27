@@ -52,6 +52,15 @@
   </script>
 </head>
 <body>
+  <!-- Studio Entrance Preloader -->
+  <div id="studio-preloader" class="studio-preloader" aria-hidden="true">
+    <div class="preloader-inner">
+      <div class="preloader-mark"></div>
+      <div class="preloader-wordmark">SITE SOCIETY</div>
+      <div class="preloader-bar"><span class="preloader-fill"></span></div>
+    </div>
+  </div>
+
   <div class="ambient-grid" aria-hidden="true"></div>
   <div class="ambient-glow ambient-glow-bronze" aria-hidden="true"></div>
   <div class="ambient-glow ambient-glow-emerald" aria-hidden="true"></div>
@@ -96,6 +105,7 @@
   <main class="tab-stage">
     <!-- TAB 1: HOME -->
     <section class="tab-panel active" data-tab-panel="home">
+      <canvas id="hero-3d-canvas" class="hero-3d-canvas" aria-hidden="true"></canvas>
       <div class="container hero-inner">
         <div class="hero-eyebrow">
           <span class="eyebrow-dot"></span>
