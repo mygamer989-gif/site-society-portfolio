@@ -305,16 +305,69 @@
     btn.addEventListener('click', () => applyLanguage(btn.dataset.lang));
   });
 
+  const LOCALIZED_PROJECTS = {
+    'corebench-pc-hardware': {
+      faTitle: 'آزمایشگاه سخت‌افزار کوربنچ',
+      faCategory: 'فروشگاه و پنل مدیریت',
+      faDesc: 'فروشگاه دوزبانه سخت‌افزار کامپیوتر و پلتفرم بنچمارک مبتنی بر Cloudflare Workers و D1.',
+    },
+    'ravagh-architecture-studio': {
+      faTitle: 'آتلیه معماری رواق',
+      faCategory: 'استودیو معماری',
+      faDesc: 'وب‌سایت دوزبانه آتلیه معماری رواق با نمایش پروژه‌های فضایی و سیستم ثبت درخواست.',
+    },
+    'kohan-roastery-bakery': {
+      faTitle: 'برشته‌کاری و نانوایی کهن‌دانه',
+      faCategory: 'برند و فروشگاه آنلاین',
+      faDesc: 'وب‌سایت دوزبانه برشته‌کاری قهوه تخصصی و نانوایی کهن‌دانه با کاتالوگ محصولات و پنل مدیریت.',
+    },
+    'mina-dental-clinic': {
+      faTitle: 'کلینیک تخصصی دندانپزشکی مینا',
+      faCategory: 'پزشکی و نوبت‌دهی',
+      faDesc: 'وب‌سایت دوزبانه مرکز تخصصی دندانپزشکی و ایمپلنت با معرفی خدمات، رزرو نوبت و پنل مدیریت.',
+    },
+    'tracedock-edge-telemetry': {
+      faTitle: 'ترس‌داک | رصد و تلِمتری لبه',
+      faCategory: 'پلتفرم ابری (SaaS)',
+      faDesc: 'پلتفرم دوزبانه SaaS برای رصد و تلمتری در لبه شبکه روی Cloudflare Workers و D1.',
+    },
+    'sareng-horology-leather-atelier': {
+      faTitle: 'آتلیه ساعت و چرم سارنگ',
+      faCategory: 'آتلیه لوکس',
+      faDesc: 'وب‌سایت دوزبانه آتلیه ساعت‌سازی و چرم دست‌دوز سارنگ با Hono SSR و پنل مدیریت React.',
+    },
+  };
+
+  function getLocalizedProject(p) {
+    const meta = LOCALIZED_PROJECTS[p.slug] || null;
+    const title = currentLang === 'fa' && meta ? meta.faTitle : p.title;
+    const category = currentLang === 'fa' && meta ? meta.faCategory : p.category;
+    const description = currentLang === 'fa' && meta ? meta.faDesc : p.description;
+
+    let thumbnail = p.thumbnail_url || '';
+    if (/^\/previews\/[a-z0-9-]+\.png$/i.test(thumbnail)) {
+      thumbnail = thumbnail.replace(/\.png$/i, `-${currentLang}.png`);
+    }
+
+    let liveUrl = p.live_url || '';
+    if (liveUrl && /^https:\/\/[a-z0-9-]+\.mygamer989\.workers\.dev\/?$/i.test(liveUrl)) {
+      liveUrl = liveUrl.replace(/\/$/, '') + `/${currentLang}`;
+    }
+
+    return { ...p, title, category, description, thumbnail_url: thumbnail, live_url: liveUrl };
+  }
+
   // Portfolio Rendering + Home Marquee + Auto-Sliding List
   function renderProjects(projects) {
     const grid = document.getElementById('portfolio-grid');
     const marqueeTrack = document.getElementById('home-marquee-track');
+    const localizedList = projects.map(getLocalizedProject);
 
     if (marqueeTrack) {
-      if (projects.length === 0) {
+      if (localizedList.length === 0) {
         marqueeTrack.innerHTML = '';
       } else {
-        const itemsHtml = projects
+        const itemsHtml = localizedList
           .map(
             (p) => `
           <a class="marquee-item" href="${escapeHtml(p.live_url || '#work')}" ${p.live_url ? 'target="_blank" rel="noopener noreferrer"' : ''}>
@@ -334,7 +387,7 @@
 
     if (!grid) return;
 
-    if (projects.length === 0) {
+    if (localizedList.length === 0) {
       grid.innerHTML = `
         <div class="portfolio-empty">
           <h3>${escapeHtml(t('work_empty_t'))}</h3>
@@ -344,7 +397,7 @@
       return;
     }
 
-    grid.innerHTML = projects
+    grid.innerHTML = localizedList
       .map((p, idx) => {
         const mediaHtml = p.thumbnail_url
           ? `<img src="${escapeHtml(p.thumbnail_url)}" alt="${escapeHtml(p.title)} preview" loading="lazy" />`
