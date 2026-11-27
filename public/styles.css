@@ -672,6 +672,11 @@ html[lang="fa"] .section-title em {
   scrollbar-color: var(--bronze-border) transparent;
 }
 
+.portfolio-grid.is-auto-gliding {
+  scroll-snap-type: none;
+  scroll-behavior: auto;
+}
+
 .portfolio-loading,
 .portfolio-empty {
   width: 100%;

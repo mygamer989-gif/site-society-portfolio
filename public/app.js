@@ -379,48 +379,84 @@
       .join('');
   }
 
-  // Portfolio Horizontal List Auto-Slide & Controls
+  // Portfolio Horizontal List: Smooth 60fps Ping-Pong Glide ("برن و بیان")
+  let slideDir = 1;
+  let slidePaused = false;
+  let lastFrameTime = 0;
+
+  function glideStep(timestamp) {
+    if (!autoSlideEnabled) {
+      autoSlideTimer = null;
+      return;
+    }
+    const grid = document.getElementById('portfolio-grid');
+    if (grid && activeTab === 'work' && !slidePaused) {
+      const maxScroll = grid.scrollWidth - grid.clientWidth;
+      if (maxScroll > 10) {
+        if (!lastFrameTime) lastFrameTime = timestamp;
+        const dt = Math.min(48, timestamp - lastFrameTime);
+        lastFrameTime = timestamp;
+
+        const speedPxPerMs = 0.065; // Smooth luxury glide (~65px/sec)
+        const isRtl = document.documentElement.dir === 'rtl';
+        const delta = speedPxPerMs * dt * slideDir * (isRtl ? -1 : 1);
+        grid.scrollLeft += delta;
+
+        const absPos = Math.abs(grid.scrollLeft);
+        if (absPos >= maxScroll - 2) {
+          slideDir = -1;
+        } else if (absPos <= 2) {
+          slideDir = 1;
+        }
+      }
+    } else {
+      lastFrameTime = 0;
+    }
+    autoSlideTimer = requestAnimationFrame(glideStep);
+  }
+
   function startAutoSlide() {
     stopAutoSlide();
-    if (!autoSlideEnabled) return;
     const grid = document.getElementById('portfolio-grid');
-    if (!grid) return;
-    autoSlideTimer = setInterval(() => {
-      if (activeTab !== 'work') return;
-      const step = Math.max(320, grid.clientWidth * 0.52);
-      const maxScroll = grid.scrollWidth - grid.clientWidth;
-      if (maxScroll <= 10) return;
-      if (Math.abs(grid.scrollLeft) >= maxScroll - 20) {
-        grid.scrollTo({ left: 0, behavior: 'smooth' });
-      } else {
-        grid.scrollBy({ left: document.documentElement.dir === 'rtl' ? -step : step, behavior: 'smooth' });
-      }
-    }, 3400);
+    if (!autoSlideEnabled || !grid) return;
+    grid.classList.add('is-auto-gliding');
+    lastFrameTime = 0;
+    autoSlideTimer = requestAnimationFrame(glideStep);
   }
 
   function stopAutoSlide() {
     if (autoSlideTimer) {
-      clearInterval(autoSlideTimer);
+      cancelAnimationFrame(autoSlideTimer);
       autoSlideTimer = null;
     }
+    const grid = document.getElementById('portfolio-grid');
+    if (grid) grid.classList.remove('is-auto-gliding');
   }
 
   const prevBtn = document.getElementById('carousel-prev');
   const nextBtn = document.getElementById('carousel-next');
   const toggleSlideBtn = document.getElementById('toggle-view-btn');
 
-  prevBtn?.addEventListener('click', () => {
+  function manualNudge(direction) {
     const grid = document.getElementById('portfolio-grid');
     if (!grid) return;
+    slidePaused = true;
+    grid.classList.remove('is-auto-gliding');
     const step = Math.max(320, grid.clientWidth * 0.52);
-    grid.scrollBy({ left: document.documentElement.dir === 'rtl' ? step : -step, behavior: 'smooth' });
+    grid.scrollBy({ left: step * direction, behavior: 'smooth' });
+    setTimeout(() => {
+      if (autoSlideEnabled) grid.classList.add('is-auto-gliding');
+      slidePaused = false;
+      lastFrameTime = 0;
+    }, 800);
+  }
+
+  prevBtn?.addEventListener('click', () => {
+    manualNudge(document.documentElement.dir === 'rtl' ? 1 : -1);
   });
 
   nextBtn?.addEventListener('click', () => {
-    const grid = document.getElementById('portfolio-grid');
-    if (!grid) return;
-    const step = Math.max(320, grid.clientWidth * 0.52);
-    grid.scrollBy({ left: document.documentElement.dir === 'rtl' ? -step : step, behavior: 'smooth' });
+    manualNudge(document.documentElement.dir === 'rtl' ? -1 : 1);
   });
 
   toggleSlideBtn?.addEventListener('click', () => {
@@ -431,8 +467,12 @@
   });
 
   const gridHover = document.getElementById('portfolio-grid');
-  gridHover?.addEventListener('mouseenter', stopAutoSlide);
-  gridHover?.addEventListener('mouseleave', startAutoSlide);
+  gridHover?.addEventListener('mouseenter', () => { slidePaused = true; });
+  gridHover?.addEventListener('mouseleave', () => { slidePaused = false; lastFrameTime = 0; });
+  gridHover?.addEventListener('touchstart', () => { slidePaused = true; }, { passive: true });
+  gridHover?.addEventListener('touchend', () => {
+    setTimeout(() => { slidePaused = false; lastFrameTime = 0; }, 1200);
+  }, { passive: true });
 
   async function loadPortfolio() {
     const grid = document.getElementById('portfolio-grid');
