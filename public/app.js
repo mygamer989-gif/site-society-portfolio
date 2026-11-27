@@ -2,103 +2,6 @@
   'use strict';
 
   const DICT = {
-    fa: {
-      page_title: 'SITE SOCIETY — استودیوی طراحی و مهندسی وب',
-      nav_home: 'خانه',
-      nav_work: 'نمونه کارها',
-      nav_about: 'درباره ما',
-      nav_services: 'خدمات',
-      nav_process: 'فرآیند کار',
-      nav_contact: 'تماس',
-      nav_cta: 'شروع پروژه',
-      hero_eyebrow: 'استودیوی طراحی و مهندسی تجربه‌های دیجیتال',
-      hero_title: 'معماری دیجیتال <em>اختصاصی</em><br />برای برندهای پیشرو.',
-      hero_subtitle:
-        'SITE SOCIETY وب‌سایت‌های متمایز، تجربه‌های دیجیتال دقیق و اپلیکیشن‌های تحت وب مدرن را با تمرکز بر وضوح، سرعت و کیفیت ماندگار طراحی و پیاده‌سازی می‌کند.',
-      hero_cta_primary: 'مشاهده نمونه کارها',
-      hero_cta_secondary: 'ثبت درخواست پروژه',
-      work_kicker: '01 / آثار منتخب',
-      work_title: 'نمونه کارها',
-      work_lead: 'پروژه‌های واقعی و منتشرشده که توسط SITE SOCIETY طراحی، مهندسی و مستقر شده‌اند.',
-      work_notice:
-        'بیشتر نمونه کارهای این بخش حالت نمایشی ساده برای آشنایی شما با سبک و ساختار کار ما دارند؛ وب‌سایت اختصاصی شما ۱۰۰٪ با کیفیت، جزئیات و استاندارد بسیار بالاتری تولید خواهد شد.',
-      work_loading: 'در حال بارگذاری آثار منتخب...',
-      work_empty_t: 'آثار منتخب',
-      work_empty_d: 'نمونه کارهای پورتفولیو در حال آماده‌سازی هستند و پس از تأیید نهایی در این بخش منتشر می‌شوند.',
-      work_error_t: 'خطا در بارگذاری نمونه کارها',
-      work_error_d: 'لطفاً صفحه را مجدداً بارگذاری کنید.',
-      work_view_live: 'مشاهده وب‌سایت زنده ↗',
-      work_preview_pending: 'پیش‌نمایش در انتظار ثبت',
-      about_kicker: '02 / درباره استودیو',
-      about_title: 'جایی که ظرافت طراحی با <em>مهندسی مدرن</em> پیوند می‌خورد.',
-      about_copy:
-        'تمرکز SITE SOCIETY بر ساخت وب‌سایت‌هایی است که هویت برند شما را متمایز نشان دهند، بدون نقص عمل کنند و مستقیماً در خدمت اهداف تجاری شما باشند. هر چیدمان، انتخاب تایپوگرافی و خط کد با دقت و وسواس حرفه‌ای اجرا می‌شود.',
-      pillar1_t: 'دقت در طراحی',
-      pillar1_d: 'سیستم بصری منسجم، فضای سفید متعادل و سلسله‌مراتب تایپوگرافی دقیق متناسب با هر برند.',
-      pillar2_t: 'توسعه مدرن',
-      pillar2_d: 'معماری تمیز، معنایی و آماده استقرار در لبه شبکه برای سرعت بالا و پایداری طولانی‌مدت.',
-      pillar3_t: 'اجرای کسب‌وکارمحور',
-      pillar3_d: 'هر رابط کاربری طوری ساختاردهی می‌شود که ارزش برند را شفاف منتقل و مخاطب را هدایت کند.',
-      pillar4_t: 'کیفیت و امنیت',
-      pillar4_d: 'توجه دقیق به ریسپانسیو بودن، دسترس‌پذیری، سئوی فنی و استانداردهای سخت‌گیرانه امنیتی.',
-      services_kicker: '03 / توانمندی‌ها',
-      services_title: 'خدمات',
-      services_lead: 'خدمات تخصصی طراحی و مهندسی وب متناسب با نیاز کسب‌وکارها و محصولات دیجیتال.',
-      srv1_t: 'طراحی وب‌سایت',
-      srv1_d: 'خلق هویت بصری اختصاصی، معماری UI/UX و طراحی ریسپانسیو از پایه.',
-      srv2_t: 'توسعه وب‌سایت',
-      srv2_d: 'پیاده‌سازی فرانت‌اند و بک‌اند استاندارد با کدنویسی تمیز و انیمیشن‌های سبک.',
-      srv3_t: 'لندینگ پیج (Landing Pages)',
-      srv3_d: 'صفحات معرفی محصول و کمپین با وضوح پیام بالا و ساختار حرفه‌ای.',
-      srv4_t: 'وب‌سایت‌های شرکتی و تجاری',
-      srv4_d: 'پایگاه دیجیتال جامع برای شرکت‌هایی که به دنبال حضوری معتبر و ماندگار هستند.',
-      srv5_t: 'وب‌سایت‌های فروشگاهی',
-      srv5_d: 'فروشگاه‌های اینترنتی با تمرکز بر نمایش زیبای محصول، ناوبری روان و اعتمادسازی.',
-      srv6_t: 'وب‌اپلیکیشن‌های اختصاصی',
-      srv6_d: 'پلتفرم‌های تعاملی، داشبوردها و ابزارهای تحت وب سفارشی مطابق فرآیند کاری شما.',
-      srv7_t: 'بهینه‌سازی وب‌سایت',
-      srv7_d: 'بهبود Core Web Vitals، بهینه‌سازی دارایی‌ها و ارتقای سئوی فنی برای سرعت بیشتر.',
-      srv8_t: 'نگهداری و پشتیبانی',
-      srv8_d: 'به‌روزرسانی مداوم، تقویت امنیت، پایش و توسعه تدریجی برای پایداری همیشگی سایت.',
-      process_kicker: '04 / متدولوژی',
-      process_title: 'فرآیند اجرا',
-      process_lead: 'ساختار شش‌مرحله‌ای شفاف از نخستین گفتگو تا استقرار نهایی پروژه.',
-      proc1_t: 'کشف و شناخت (Discovery)',
-      proc1_d: 'شناخت دقیق اهداف، مخاطبان، جایگاه برند و نیازمندی‌های فنی پروژه.',
-      proc2_t: 'برنامه‌ریزی (Planning)',
-      proc2_d: 'تدوین معماری اطلاعات، محدوده کار، پشته فناوری و ساختار وایرفریم‌ها.',
-      proc3_t: 'طراحی (Design)',
-      proc3_d: 'طراحی تایپوگرافی، پالت رنگی، کامپوننت‌های رابط کاربری و چیدمان ریسپانسیو.',
-      proc4_t: 'توسعه (Development)',
-      proc4_d: 'پیاده‌سازی فرانت‌اند تمیز، APIهای امن بک‌اند و اتصال به پایگاه داده.',
-      proc5_t: 'آزمون (Testing)',
-      proc5_d: 'بررسی ریسپانسیو در دستگاه‌های مختلف، کنترل‌های امنیتی، متادیتای سئو و کارایی.',
-      proc6_t: 'استقرار (Deployment)',
-      proc6_d: 'راه‌اندازی روی زیرساخت ابری با گواهی SSL، تنظیمات DNS و پایش پس از انتشار.',
-      contact_kicker: '05 / ارتباط با ما',
-      contact_title: 'گفتگو را <em>آغاز کنید.</em>',
-      contact_lead: 'محدوده پروژه، زمان‌بندی یا پرسش‌های خود را بنویسید. تمام پیام‌ها مستقیماً بررسی می‌شوند.',
-      contact_email_label: 'ایمیل مستقیم',
-      contact_phone_label: 'شماره تماس',
-      contact_telegram_label: 'تلگرام',
-      form_name: 'نام و نام خانوادگی',
-      form_email: 'ایمیل',
-      form_phone: 'شماره تماس (اختیاری)',
-      form_company: 'شرکت / برند (اختیاری)',
-      form_service: 'موضوع خدمت',
-      form_brief: 'توضیحات پروژه',
-      form_submit: 'ارسال درخواست',
-      form_sending: 'در حال ارسال...',
-      form_sent: 'سپاسگزاریم. درخواست شما با موفقیت ثبت شد.',
-      form_invalid: 'لطفاً نام، ایمیل معتبر و توضیحات پروژه (حداقل ۱۰ کاراکتر) را وارد کنید.',
-      opt_select: 'انتخاب خدمت',
-      ph_name: 'نام شما',
-      ph_phone: '+98 9...',
-      ph_company: 'نام برند یا مجموعه',
-      ph_message: 'درباره پروژه، اهداف و زمان‌بندی مورد نظر بنویسید...',
-      footer_tagline: 'استودیوی بین‌المللی طراحی و مهندسی وب.',
-      footer_rights: 'تمامی حقوق محفوظ است.',
-    },
     en: {
       page_title: 'SITE SOCIETY — Bespoke Web Design & Digital Engineering Studio',
       nav_home: 'Home',
@@ -114,11 +17,15 @@
         'SITE SOCIETY designs and engineers refined websites, editorial digital experiences, and custom web applications — built for clarity, speed, and enduring craft.',
       hero_cta_primary: 'Explore Selected Work',
       hero_cta_secondary: 'Initiate an Inquiry',
+      home_strip_label: 'SELECTED SHOWCASES',
+      home_strip_cta: 'View All Projects ↗',
       work_kicker: '01 / SELECTED WORK',
       work_title: 'Portfolio',
       work_lead: 'Verified digital products and websites designed, engineered, and deployed by SITE SOCIETY.',
       work_notice:
         'Most showcased projects here are simplified demonstration builds to introduce our design direction and structure; your custom website will be engineered with 100% higher craft, depth, and production quality.',
+      work_toggle_on: 'Auto-Slide: ON',
+      work_toggle_off: 'Auto-Slide: OFF',
       work_loading: 'Loading curated works...',
       work_empty_t: 'Selected Works',
       work_empty_d: 'Portfolio entries are currently being curated and will be published here once verified.',
@@ -196,11 +103,116 @@
       footer_tagline: 'International Website Design & Digital Engineering Studio.',
       footer_rights: 'All rights reserved.',
     },
+    fa: {
+      page_title: 'SITE SOCIETY — استودیوی طراحی و مهندسی وب',
+      nav_home: 'خانه',
+      nav_work: 'نمونه کارها',
+      nav_about: 'درباره ما',
+      nav_services: 'خدمات',
+      nav_process: 'فرآیند کار',
+      nav_contact: 'تماس',
+      nav_cta: 'شروع پروژه',
+      hero_eyebrow: 'استودیوی طراحی و مهندسی تجربه‌های دیجیتال',
+      hero_title: 'معماری دیجیتال <em>اختصاصی</em><br />برای برندهای پیشرو.',
+      hero_subtitle:
+        'SITE SOCIETY وب‌سایت‌های متمایز، تجربه‌های دیجیتال دقیق و اپلیکیشن‌های تحت وب مدرن را با تمرکز بر وضوح، سرعت و کیفیت ماندگار طراحی و پیاده‌سازی می‌کند.',
+      hero_cta_primary: 'مشاهده نمونه کارها',
+      hero_cta_secondary: 'ثبت درخواست پروژه',
+      home_strip_label: 'آثار منتخب',
+      home_strip_cta: 'مشاهده همه پروژه‌ها ↗',
+      work_kicker: '01 / آثار منتخب',
+      work_title: 'نمونه کارها',
+      work_lead: 'پروژه‌های واقعی و منتشرشده که توسط SITE SOCIETY طراحی، مهندسی و مستقر شده‌اند.',
+      work_notice:
+        'بیشتر نمونه کارهای این بخش حالت نمایشی ساده برای آشنایی شما با سبک و ساختار کار ما دارند؛ وب‌سایت اختصاصی شما ۱۰۰٪ با کیفیت، جزئیات و استاندارد بسیار بالاتری تولید خواهد شد.',
+      work_toggle_on: 'حرکت خودکار: روشن',
+      work_toggle_off: 'حرکت خودکار: خاموش',
+      work_loading: 'در حال بارگذاری آثار منتخب...',
+      work_empty_t: 'آثار منتخب',
+      work_empty_d: 'نمونه کارهای پورتفولیو در حال آماده‌سازی هستند و پس از تأیید نهایی در این بخش منتشر می‌شوند.',
+      work_error_t: 'خطا در بارگذاری نمونه کارها',
+      work_error_d: 'لطفاً صفحه را مجدداً بارگذاری کنید.',
+      work_view_live: 'مشاهده وب‌سایت زنده ↗',
+      work_preview_pending: 'پیش‌نمایش در انتظار ثبت',
+      about_kicker: '02 / درباره استودیو',
+      about_title: 'جایی که ظرافت طراحی با <em>مهندسی مدرن</em> پیوند می‌خورد.',
+      about_copy:
+        'تمرکز SITE SOCIETY بر ساخت وب‌سایت‌هایی است که هویت برند شما را متمایز نشان دهند، بدون نقص عمل کنند و مستقیماً در خدمت اهداف تجاری شما باشند. هر چیدمان، انتخاب تایپوگرافی و خط کد با دقت و وسواس حرفه‌ای اجرا می‌شود.',
+      pillar1_t: 'دقت در طراحی',
+      pillar1_d: 'سیستم بصری منسجم، فضای سفید متعادل و سلسله‌مراتب تایپوگرافی دقیق متناسب با هر برند.',
+      pillar2_t: 'توسعه مدرن',
+      pillar2_d: 'معماری تمیز، معنایی و آماده استقرار در لبه شبکه برای سرعت بالا و پایداری طولانی‌مدت.',
+      pillar3_t: 'اجرای کسب‌وکارمحور',
+      pillar3_d: 'هر رابط کاربری طوری ساختاردهی می‌شود که ارزش برند را شفاف منتقل و مخاطب را هدایت کند.',
+      pillar4_t: 'کیفیت و امنیت',
+      pillar4_d: 'توجه دقیق به ریسپانسیو بودن، دسترس‌پذیری، سئوی فنی و استانداردهای سخت‌گیرانه امنیتی.',
+      services_kicker: '03 / توانمندی‌ها',
+      services_title: 'خدمات',
+      services_lead: 'خدمات تخصصی طراحی و مهندسی وب متناسب با نیاز کسب‌وکارها و محصولات دیجیتال.',
+      srv1_t: 'طراحی وب‌سایت',
+      srv1_d: 'خلق هویت بصری اختصاصی، معماری UI/UX و طراحی ریسپانسیو از پایه.',
+      srv2_t: 'توسعه وب‌سایت',
+      srv2_d: 'پیاده‌سازی فرانت‌اند و بک‌اند استاندارد با کدنویسی تمیز و انیمیشن‌های سبک.',
+      srv3_t: 'لندینگ پیج (Landing Pages)',
+      srv3_d: 'صفحات معرفی محصول و کمپین با وضوح پیام بالا و ساختار حرفه‌ای.',
+      srv4_t: 'وب‌سایت‌های شرکتی و تجاری',
+      srv4_d: 'پایگاه دیجیتال جامع برای شرکت‌هایی که به دنبال حضوری معتبر و ماندگار هستند.',
+      srv5_t: 'وب‌سایت‌های فروشگاهی',
+      srv5_d: 'فروشگاه‌های اینترنتی با تمرکز بر نمایش زیبای محصول، ناوبری روان و اعتمادسازی.',
+      srv6_t: 'وب‌اپلیکیشن‌های اختصاصی',
+      srv6_d: 'پلتفرم‌های تعاملی، داشبوردها و ابزارهای تحت وب سفارشی مطابق فرآیند کاری شما.',
+      srv7_t: 'بهینه‌سازی وب‌سایت',
+      srv7_d: 'بهبود Core Web Vitals، بهینه‌سازی دارایی‌ها و ارتقای سئوی فنی برای سرعت بیشتر.',
+      srv8_t: 'نگهداری و پشتیبانی',
+      srv8_d: 'به‌روزرسانی مداوم، تقویت امنیت، پایش و توسعه تدریجی برای پایداری همیشگی سایت.',
+      process_kicker: '04 / متدولوژی',
+      process_title: 'فرآیند اجرا',
+      process_lead: 'ساختار شش‌مرحله‌ای شفاف از نخستین گفتگو تا استقرار نهایی پروژه.',
+      proc1_t: 'کشف و شناخت (Discovery)',
+      proc1_d: 'شناخت دقیق اهداف، مخاطبان، جایگاه برند و نیازمندی‌های فنی پروژه.',
+      proc2_t: 'برنامه‌ریزی (Planning)',
+      proc2_d: 'تدوین معماری اطلاعات، محدوده کار، پشته فناوری و ساختار وایرفریم‌ها.',
+      proc3_t: 'طراحی (Design)',
+      proc3_d: 'طراحی تایپوگرافی، پالت رنگی، کامپوننت‌های رابط کاربری و چیدمان ریسپانسیو.',
+      proc4_t: 'توسعه (Development)',
+      proc4_d: 'پیاده‌سازی فرانت‌اند تمیز، APIهای امن بک‌اند و اتصال به پایگاه داده.',
+      proc5_t: 'آزمون (Testing)',
+      proc5_d: 'بررسی ریسپانسیو در دستگاه‌های مختلف، کنترل‌های امنیتی، متادیتای سئو و کارایی.',
+      proc6_t: 'استقرار (Deployment)',
+      proc6_d: 'راه‌اندازی روی زیرساخت ابری با گواهی SSL، تنظیمات DNS و پایش پس از انتشار.',
+      contact_kicker: '05 / ارتباط با ما',
+      contact_title: 'گفتگو را <em>آغاز کنید.</em>',
+      contact_lead: 'محدوده پروژه، زمان‌بندی یا پرسش‌های خود را بنویسید. تمام پیام‌ها مستقیماً بررسی می‌شوند.',
+      contact_email_label: 'ایمیل مستقیم',
+      contact_phone_label: 'شماره تماس',
+      contact_telegram_label: 'تلگرام',
+      form_name: 'نام و نام خانوادگی',
+      form_email: 'ایمیل',
+      form_phone: 'شماره تماس (اختیاری)',
+      form_company: 'شرکت / برند (اختیاری)',
+      form_service: 'موضوع خدمت',
+      form_brief: 'توضیحات پروژه',
+      form_submit: 'ارسال درخواست',
+      form_sending: 'در حال ارسال...',
+      form_sent: 'سپاسگزاریم. درخواست شما با موفقیت ثبت شد.',
+      form_invalid: 'لطفاً نام، ایمیل معتبر و توضیحات پروژه (حداقل ۱۰ کاراکتر) را وارد کنید.',
+      opt_select: 'انتخاب خدمت',
+      ph_name: 'نام شما',
+      ph_phone: '+98 9...',
+      ph_company: 'نام برند یا مجموعه',
+      ph_message: 'درباره پروژه، اهداف و زمان‌بندی مورد نظر بنویسید...',
+      footer_tagline: 'استودیوی بین‌المللی طراحی و مهندسی وب.',
+      footer_rights: 'تمامی حقوق محفوظ است.',
+    },
   };
 
-  let currentLang = localStorage.getItem('ss_lang') === 'en' ? 'en' : 'fa';
+  // Default to English ('en') on first visit
+  let currentLang = localStorage.getItem('ss_lang') === 'fa' ? 'fa' : 'en';
+  let activeTab = 'home';
   let cachedProjects = null;
   let cachedSettings = null;
+  let autoSlideEnabled = true;
+  let autoSlideTimer = null;
 
   const yearEl = document.getElementById('year');
   if (yearEl) yearEl.textContent = String(new Date().getFullYear());
@@ -209,8 +221,53 @@
     return (DICT[currentLang] && DICT[currentLang][key]) || DICT.en[key] || key;
   }
 
+  function escapeHtml(str) {
+    return String(str)
+      .replace(/&/g, '&amp;')
+      .replace(/</g, '&lt;')
+      .replace(/>/g, '&gt;')
+      .replace(/"/g, '&quot;')
+      .replace(/'/g, '&#39;');
+  }
+
+  // Tab Switching
+  function switchTab(tabName, updateHash = true) {
+    const validTabs = ['home', 'work', 'about', 'services', 'process', 'contact'];
+    const target = validTabs.includes(tabName) ? tabName : 'home';
+    activeTab = target;
+
+    document.querySelectorAll('[data-tab-panel]').forEach((panel) => {
+      const isMatch = panel.getAttribute('data-tab-panel') === target;
+      panel.hidden = !isMatch;
+      panel.classList.toggle('active', isMatch);
+    });
+
+    document.querySelectorAll('[data-tab-link]').forEach((btn) => {
+      if (btn.classList.contains('nav-tab') || btn.classList.contains('m-tab')) {
+        btn.classList.toggle('active', btn.getAttribute('data-tab-link') === target);
+      }
+    });
+
+    if (updateHash) {
+      history.replaceState(null, '', target === 'home' ? '#home' : `#${target}`);
+    }
+    window.scrollTo({ top: 0, behavior: 'smooth' });
+  }
+
+  document.querySelectorAll('[data-tab-link]').forEach((el) => {
+    el.addEventListener('click', (e) => {
+      e.preventDefault();
+      switchTab(el.getAttribute('data-tab-link'));
+    });
+  });
+
+  window.addEventListener('hashchange', () => {
+    const h = window.location.hash.replace('#', '');
+    if (h) switchTab(h, false);
+  });
+
   function applyLanguage(lang) {
-    currentLang = lang === 'en' ? 'en' : 'fa';
+    currentLang = lang === 'fa' ? 'fa' : 'en';
     localStorage.setItem('ss_lang', currentLang);
     document.documentElement.lang = currentLang;
     document.documentElement.dir = currentLang === 'fa' ? 'rtl' : 'ltr';
@@ -235,6 +292,11 @@
       if (key) el.setAttribute('placeholder', t(key));
     });
 
+    const toggleBtn = document.getElementById('toggle-view-btn');
+    if (toggleBtn) {
+      toggleBtn.textContent = autoSlideEnabled ? t('work_toggle_on') : t('work_toggle_off');
+    }
+
     if (cachedProjects !== null) renderProjects(cachedProjects);
     if (cachedSettings !== null) renderSettings(cachedSettings);
   }
@@ -243,75 +305,33 @@
     btn.addEventListener('click', () => applyLanguage(btn.dataset.lang));
   });
 
-  // Mobile Menu
-  const menuToggle = document.getElementById('menu-toggle');
-  const navMobile = document.getElementById('nav-mobile');
-  if (menuToggle && navMobile) {
-    menuToggle.addEventListener('click', () => {
-      const isHidden = navMobile.hasAttribute('hidden');
-      if (isHidden) {
-        navMobile.removeAttribute('hidden');
-        menuToggle.setAttribute('aria-expanded', 'true');
-      } else {
-        navMobile.setAttribute('hidden', '');
-        menuToggle.setAttribute('aria-expanded', 'false');
-      }
-    });
-
-    navMobile.querySelectorAll('a').forEach((link) => {
-      link.addEventListener('click', () => {
-        navMobile.setAttribute('hidden', '');
-        menuToggle.setAttribute('aria-expanded', 'false');
-      });
-    });
-  }
-
-  // Scroll Progress Bar
-  const progressBar = document.getElementById('scroll-progress');
-  if (progressBar) {
-    window.addEventListener(
-      'scroll',
-      () => {
-        const doc = document.documentElement;
-        const max = doc.scrollHeight - doc.clientHeight;
-        const ratio = max > 0 ? Math.min(1, Math.max(0, window.scrollY / max)) : 0;
-        progressBar.style.transform = `scaleX(${ratio})`;
-      },
-      { passive: true }
-    );
-  }
-
-  // Scroll Reveal with subtle stagger
-  const reveals = document.querySelectorAll('.reveal');
-  if ('IntersectionObserver' in window) {
-    const observer = new IntersectionObserver(
-      (entries) => {
-        entries.forEach((entry, idx) => {
-          if (entry.isIntersecting) {
-            entry.target.style.transitionDelay = `${Math.min(idx * 60, 240)}ms`;
-            entry.target.classList.add('is-visible');
-            observer.unobserve(entry.target);
-          }
-        });
-      },
-      { threshold: 0.1 }
-    );
-    reveals.forEach((el) => observer.observe(el));
-  } else {
-    reveals.forEach((el) => el.classList.add('is-visible'));
-  }
-
-  function escapeHtml(str) {
-    return String(str)
-      .replace(/&/g, '&amp;')
-      .replace(/</g, '&lt;')
-      .replace(/>/g, '&gt;')
-      .replace(/"/g, '&quot;')
-      .replace(/'/g, '&#39;');
-  }
-
+  // Portfolio Rendering + Home Marquee + Auto-Sliding List
   function renderProjects(projects) {
     const grid = document.getElementById('portfolio-grid');
+    const marqueeTrack = document.getElementById('home-marquee-track');
+
+    if (marqueeTrack) {
+      if (projects.length === 0) {
+        marqueeTrack.innerHTML = '';
+      } else {
+        const itemsHtml = projects
+          .map(
+            (p) => `
+          <a class="marquee-item" href="${escapeHtml(p.live_url || '#work')}" ${p.live_url ? 'target="_blank" rel="noopener noreferrer"' : ''}>
+            ${p.thumbnail_url ? `<img src="${escapeHtml(p.thumbnail_url)}" alt="${escapeHtml(p.title)}" loading="lazy" />` : ''}
+            <div class="marquee-item-body">
+              <span class="marquee-item-title">${escapeHtml(p.title)}</span>
+              <span class="marquee-item-cat">${escapeHtml(p.category)}</span>
+            </div>
+          </a>
+        `
+          )
+          .join('');
+        // Duplicate track for seamless infinite marquee motion
+        marqueeTrack.innerHTML = itemsHtml + itemsHtml;
+      }
+    }
+
     if (!grid) return;
 
     if (projects.length === 0) {
@@ -325,7 +345,7 @@
     }
 
     grid.innerHTML = projects
-      .map((p) => {
+      .map((p, idx) => {
         const mediaHtml = p.thumbnail_url
           ? `<img src="${escapeHtml(p.thumbnail_url)}" alt="${escapeHtml(p.title)} preview" loading="lazy" />`
           : `<div class="project-media-placeholder">${escapeHtml(t('work_preview_pending'))}</div>`;
@@ -342,7 +362,7 @@
           : '';
 
         return `
-          <article class="project-card">
+          <article class="project-card" style="animation-delay:${idx * 90}ms">
             <div class="project-media">${mediaHtml}</div>
             <div class="project-body">
               <div class="project-meta">
@@ -359,6 +379,61 @@
       .join('');
   }
 
+  // Portfolio Horizontal List Auto-Slide & Controls
+  function startAutoSlide() {
+    stopAutoSlide();
+    if (!autoSlideEnabled) return;
+    const grid = document.getElementById('portfolio-grid');
+    if (!grid) return;
+    autoSlideTimer = setInterval(() => {
+      if (activeTab !== 'work') return;
+      const step = Math.max(320, grid.clientWidth * 0.52);
+      const maxScroll = grid.scrollWidth - grid.clientWidth;
+      if (maxScroll <= 10) return;
+      if (Math.abs(grid.scrollLeft) >= maxScroll - 20) {
+        grid.scrollTo({ left: 0, behavior: 'smooth' });
+      } else {
+        grid.scrollBy({ left: document.documentElement.dir === 'rtl' ? -step : step, behavior: 'smooth' });
+      }
+    }, 3400);
+  }
+
+  function stopAutoSlide() {
+    if (autoSlideTimer) {
+      clearInterval(autoSlideTimer);
+      autoSlideTimer = null;
+    }
+  }
+
+  const prevBtn = document.getElementById('carousel-prev');
+  const nextBtn = document.getElementById('carousel-next');
+  const toggleSlideBtn = document.getElementById('toggle-view-btn');
+
+  prevBtn?.addEventListener('click', () => {
+    const grid = document.getElementById('portfolio-grid');
+    if (!grid) return;
+    const step = Math.max(320, grid.clientWidth * 0.52);
+    grid.scrollBy({ left: document.documentElement.dir === 'rtl' ? step : -step, behavior: 'smooth' });
+  });
+
+  nextBtn?.addEventListener('click', () => {
+    const grid = document.getElementById('portfolio-grid');
+    if (!grid) return;
+    const step = Math.max(320, grid.clientWidth * 0.52);
+    grid.scrollBy({ left: document.documentElement.dir === 'rtl' ? -step : step, behavior: 'smooth' });
+  });
+
+  toggleSlideBtn?.addEventListener('click', () => {
+    autoSlideEnabled = !autoSlideEnabled;
+    toggleSlideBtn.textContent = autoSlideEnabled ? t('work_toggle_on') : t('work_toggle_off');
+    if (autoSlideEnabled) startAutoSlide();
+    else stopAutoSlide();
+  });
+
+  const gridHover = document.getElementById('portfolio-grid');
+  gridHover?.addEventListener('mouseenter', stopAutoSlide);
+  gridHover?.addEventListener('mouseleave', startAutoSlide);
+
   async function loadPortfolio() {
     const grid = document.getElementById('portfolio-grid');
     if (!grid) return;
@@ -368,6 +443,7 @@
       const data = await res.json();
       cachedProjects = Array.isArray(data.projects) ? data.projects : [];
       renderProjects(cachedProjects);
+      startAutoSlide();
     } catch {
       grid.innerHTML = `
         <div class="portfolio-empty">
@@ -488,7 +564,6 @@
     }
   }
 
-  // Contact Form
   const contactForm = document.getElementById('contact-form');
   const contactStatus = document.getElementById('contact-status');
   const contactSubmit = document.getElementById('contact-submit');
@@ -543,6 +618,8 @@
     });
   }
 
+  const initialHash = window.location.hash.replace('#', '');
+  if (initialHash) switchTab(initialHash, false);
   applyLanguage(currentLang);
   loadPortfolio();
   loadSettings();

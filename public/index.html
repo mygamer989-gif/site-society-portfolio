@@ -1,34 +1,34 @@
 <!DOCTYPE html>
-<html lang="fa" dir="rtl" class="scroll-smooth">
+<html lang="en" dir="ltr">
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>SITE SOCIETY — استودیوی طراحی و مهندسی وب</title>
-  <meta name="description" content="SITE SOCIETY یک استودیوی بین‌المللی طراحی و توسعه وب است که تجربه‌های دیجیتال، وب‌سایت‌های تجاری و اپلیکیشن‌های تحت وب اختصاصی خلق می‌کند." />
+  <title>SITE SOCIETY — Bespoke Web Design &amp; Digital Engineering Studio</title>
+  <meta name="description" content="SITE SOCIETY is an international website design and development studio crafting refined digital experiences, business websites, and custom web applications." />
   <meta name="robots" content="index, follow, max-image-preview:large" />
   <meta name="author" content="SITE SOCIETY" />
   <meta name="theme-color" content="#FAF8F5" />
   <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
-  <link rel="canonical" id="canonical-link" href="https://site-society-portfolio.workers.dev/" />
+  <link rel="canonical" id="canonical-link" href="https://site-society-portfolio.mygamer989.workers.dev/" />
 
   <!-- Open Graph -->
   <meta property="og:type" content="website" />
-  <meta property="og:locale" content="fa_IR" />
-  <meta property="og:locale:alternate" content="en_US" />
+  <meta property="og:locale" content="en_US" />
+  <meta property="og:locale:alternate" content="fa_IR" />
   <meta property="og:site_name" content="SITE SOCIETY" />
-  <meta property="og:title" content="SITE SOCIETY — استودیوی طراحی و مهندسی وب" />
-  <meta property="og:description" content="طراحی و مهندسی وب‌سایت‌های لوکس، تجربه‌های دیجیتال و اپلیکیشن‌های تحت وب مدرن با دقت و کیفیت بالا." />
-  <meta property="og:url" id="og-url" content="https://site-society-portfolio.workers.dev/" />
+  <meta property="og:title" content="SITE SOCIETY — Bespoke Web Design &amp; Digital Engineering Studio" />
+  <meta property="og:description" content="Refined digital experiences, bespoke websites, and modern web engineering crafted with precision." />
+  <meta property="og:url" id="og-url" content="https://site-society-portfolio.mygamer989.workers.dev/" />
 
   <!-- Twitter / X -->
   <meta name="twitter:card" content="summary_large_image" />
   <meta name="twitter:title" content="SITE SOCIETY — Bespoke Web Design &amp; Digital Engineering Studio" />
   <meta name="twitter:description" content="Refined digital experiences, bespoke websites, and modern web engineering crafted with precision." />
 
-  <!-- Fonts: Vazirmatn (FA) + Cormorant Garamond & Plus Jakarta Sans (EN) -->
+  <!-- Fonts -->
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,500;0,600;1,400;1,500&family=JetBrains+Mono:wght@400;500&family=Plus+Jakarta+Sans:wght@400;500;600&family=Vazirmatn:wght@300;400;500;600;700&display=swap" rel="stylesheet" />
+  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,500;0,600;1,400;1,500&family=JetBrains+Mono:wght@400;500&family=Plus+Jakarta+Sans:wght@400;500;600;700&family=Vazirmatn:wght@300;400;500;600;700&display=swap" rel="stylesheet" />
 
   <link rel="stylesheet" href="/styles.css" />
 
@@ -52,331 +52,336 @@
   </script>
 </head>
 <body>
-  <div id="scroll-progress" class="scroll-progress" aria-hidden="true"></div>
   <div class="ambient-grid" aria-hidden="true"></div>
-  <div class="ambient-glow" aria-hidden="true"></div>
+  <div class="ambient-glow ambient-glow-bronze" aria-hidden="true"></div>
+  <div class="ambient-glow ambient-glow-emerald" aria-hidden="true"></div>
 
-  <!-- Navigation -->
-  <header class="site-header" id="top">
+  <!-- Top Navigation -->
+  <header class="site-header">
     <div class="container header-inner">
-      <a href="#top" class="brand" aria-label="SITE SOCIETY Home">
+      <a href="#home" class="brand" data-tab-link="home" aria-label="SITE SOCIETY Home">
         <span class="brand-mark" aria-hidden="true"></span>
         <span class="brand-text">SITE SOCIETY</span>
       </a>
 
       <nav class="nav-desktop" aria-label="Primary Navigation">
-        <a href="#top" data-i18n="nav_home">خانه</a>
-        <a href="#work" data-i18n="nav_work">نمونه کارها</a>
-        <a href="#about" data-i18n="nav_about">درباره ما</a>
-        <a href="#services" data-i18n="nav_services">خدمات</a>
-        <a href="#process" data-i18n="nav_process">فرآیند کار</a>
-        <a href="#contact" data-i18n="nav_contact">تماس</a>
+        <button type="button" class="nav-tab active" data-tab-link="home" data-i18n="nav_home">Home</button>
+        <button type="button" class="nav-tab" data-tab-link="work" data-i18n="nav_work">Work</button>
+        <button type="button" class="nav-tab" data-tab-link="about" data-i18n="nav_about">About</button>
+        <button type="button" class="nav-tab" data-tab-link="services" data-i18n="nav_services">Services</button>
+        <button type="button" class="nav-tab" data-tab-link="process" data-i18n="nav_process">Process</button>
+        <button type="button" class="nav-tab" data-tab-link="contact" data-i18n="nav_contact">Contact</button>
       </nav>
 
       <div class="header-actions">
         <div class="lang-switch" role="group" aria-label="Language switcher">
-          <button type="button" class="lang-btn active" data-lang="fa">FA</button>
-          <button type="button" class="lang-btn" data-lang="en">EN</button>
+          <button type="button" class="lang-btn active" data-lang="en">EN</button>
+          <button type="button" class="lang-btn" data-lang="fa">FA</button>
         </div>
-        <a href="#contact" class="btn btn-gold-outline btn-sm" data-i18n="nav_cta">شروع پروژه</a>
-        <button class="menu-toggle" id="menu-toggle" type="button" aria-label="Toggle navigation menu" aria-expanded="false">
-          <span></span>
-          <span></span>
-        </button>
+        <button type="button" class="btn btn-gold-outline btn-sm" data-tab-link="contact" data-i18n="nav_cta">Start a Project</button>
       </div>
     </div>
 
-    <nav class="nav-mobile" id="nav-mobile" aria-label="Mobile Navigation" hidden>
-      <a href="#top" data-i18n="nav_home">خانه</a>
-      <a href="#work" data-i18n="nav_work">نمونه کارها</a>
-      <a href="#about" data-i18n="nav_about">درباره ما</a>
-      <a href="#services" data-i18n="nav_services">خدمات</a>
-      <a href="#process" data-i18n="nav_process">فرآیند کار</a>
-      <a href="#contact" data-i18n="nav_contact">تماس</a>
-      <a href="#contact" class="btn btn-gold-solid" data-i18n="nav_cta">شروع پروژه</a>
+    <!-- Mobile App-Style Tab Bar -->
+    <nav class="mobile-tab-bar" aria-label="Mobile Tabs">
+      <button type="button" class="m-tab active" data-tab-link="home" data-i18n="nav_home">Home</button>
+      <button type="button" class="m-tab" data-tab-link="work" data-i18n="nav_work">Work</button>
+      <button type="button" class="m-tab" data-tab-link="about" data-i18n="nav_about">About</button>
+      <button type="button" class="m-tab" data-tab-link="services" data-i18n="nav_services">Services</button>
+      <button type="button" class="m-tab" data-tab-link="process" data-i18n="nav_process">Process</button>
+      <button type="button" class="m-tab" data-tab-link="contact" data-i18n="nav_contact">Contact</button>
     </nav>
   </header>
 
-  <main>
-    <!-- Hero Section -->
-    <section class="hero section">
+  <main class="tab-stage">
+    <!-- TAB 1: HOME -->
+    <section class="tab-panel active" data-tab-panel="home">
       <div class="container hero-inner">
-        <div class="hero-eyebrow reveal">
+        <div class="hero-eyebrow">
           <span class="eyebrow-dot"></span>
-          <span data-i18n="hero_eyebrow">استودیوی طراحی و مهندسی تجربه‌های دیجیتال</span>
+          <span data-i18n="hero_eyebrow">DIGITAL DESIGN &amp; ENGINEERING STUDIO</span>
         </div>
 
-        <h1 class="hero-title reveal" data-i18n-html="hero_title">
-          معماری دیجیتال <em>اختصاصی</em><br />
-          برای برندهای پیشرو.
+        <h1 class="hero-title" data-i18n-html="hero_title">
+          Bespoke Digital <br />
+          <em>Architecture</em> for <br />
+          Discerning Brands.
         </h1>
 
-        <p class="hero-subtitle reveal" data-i18n="hero_subtitle">
-          SITE SOCIETY وب‌سایت‌های متمایز، تجربه‌های دیجیتال دقیق و اپلیکیشن‌های تحت وب مدرن را با تمرکز بر وضوح، سرعت و کیفیت ماندگار طراحی و پیاده‌سازی می‌کند.
+        <p class="hero-subtitle" data-i18n="hero_subtitle">
+          SITE SOCIETY designs and engineers refined websites, editorial digital experiences, and custom web applications — built for clarity, speed, and enduring craft.
         </p>
 
-        <div class="hero-cta reveal">
-          <a href="#work" class="btn btn-gold-solid" data-i18n="hero_cta_primary">مشاهده نمونه کارها</a>
-          <a href="#contact" class="btn btn-ghost" data-i18n="hero_cta_secondary">ثبت درخواست پروژه</a>
+        <div class="hero-cta">
+          <button type="button" class="btn btn-gold-solid" data-tab-link="work" data-i18n="hero_cta_primary">Explore Selected Work</button>
+          <button type="button" class="btn btn-emerald-outline" data-tab-link="contact" data-i18n="hero_cta_secondary">Initiate an Inquiry</button>
         </div>
 
-        <div class="tech-telemetry reveal" aria-hidden="true">
-          <span><i class="pulse-dot"></i> EDGE // CLOUDFLARE WORKERS</span>
-          <span>STACK // TYPESCRIPT · D1 · SECURE AUTH</span>
-          <span>ARCHITECTURE // BILINGUAL · RTL/LTR</span>
+        <!-- Animated Live Portfolio Marquee Strip on Home -->
+        <div class="home-marquee-wrap" aria-label="Selected Works Preview">
+          <div class="home-marquee-head">
+            <span class="marquee-kicker" data-i18n="home_strip_label">SELECTED SHOWCASES</span>
+            <button type="button" class="marquee-all-btn" data-tab-link="work" data-i18n="home_strip_cta">View All Projects &#8599;</button>
+          </div>
+          <div class="marquee-viewport">
+            <div id="home-marquee-track" class="marquee-track"></div>
+          </div>
         </div>
-      </div>
-
-      <div class="hero-scroll" aria-hidden="true">
-        <span class="scroll-line"></span>
-        <span class="scroll-label">SCROLL</span>
       </div>
     </section>
 
-    <!-- Portfolio Section -->
-    <section id="work" class="section section-border">
-      <div class="container">
-        <div class="section-header reveal">
+    <!-- TAB 2: WORK / PORTFOLIO -->
+    <section class="tab-panel" data-tab-panel="work" hidden>
+      <div class="container panel-pad">
+        <div class="section-header">
           <div>
-            <span class="section-kicker" data-i18n="work_kicker">01 / آثار منتخب</span>
-            <h2 class="section-title" data-i18n="work_title">نمونه کارها</h2>
+            <span class="section-kicker" data-i18n="work_kicker">01 / SELECTED WORK</span>
+            <h2 class="section-title" data-i18n="work_title">Portfolio</h2>
           </div>
           <p class="section-lead" data-i18n="work_lead">
-            پروژه‌های واقعی و منتشرشده که توسط SITE SOCIETY طراحی، مهندسی و مستقر شده‌اند.
+            Verified digital products and websites designed, engineered, and deployed by SITE SOCIETY.
           </p>
         </div>
 
-        <div class="portfolio-notice reveal">
-          <span class="notice-badge" aria-hidden="true">✦</span>
+        <div class="portfolio-notice">
+          <span class="notice-badge" aria-hidden="true">&#10022;</span>
           <p data-i18n="work_notice">
-            بیشتر نمونه کارهای این بخش حالت نمایشی ساده برای آشنایی شما با سبک و ساختار کار ما دارند؛ وب‌سایت اختصاصی شما ۱۰۰٪ با کیفیت، جزئیات و استاندارد بسیار بالاتری تولید خواهد شد.
+            Most showcased projects here are simplified demonstration builds to introduce our design direction and structure; your custom website will be engineered with 100% higher craft, depth, and production quality.
           </p>
+        </div>
+
+        <div class="portfolio-toolbar">
+          <div class="portfolio-controls">
+            <button type="button" class="btn btn-ghost btn-sm" id="carousel-prev" aria-label="Previous project">&#8592;</button>
+            <button type="button" class="btn btn-ghost btn-sm" id="carousel-next" aria-label="Next project">&#8594;</button>
+            <button type="button" class="btn btn-emerald-outline btn-sm" id="toggle-view-btn" data-i18n="work_toggle_slider">Auto-Slide: ON</button>
+          </div>
         </div>
 
         <div id="portfolio-grid" class="portfolio-grid" aria-live="polite">
-          <div class="portfolio-loading" data-i18n="work_loading">در حال بارگذاری آثار منتخب...</div>
+          <div class="portfolio-loading" data-i18n="work_loading">Loading curated works...</div>
         </div>
       </div>
     </section>
 
-    <!-- About Section -->
-    <section id="about" class="section section-border">
-      <div class="container about-grid">
-        <div class="about-intro reveal">
-          <span class="section-kicker" data-i18n="about_kicker">02 / درباره استودیو</span>
+    <!-- TAB 3: ABOUT -->
+    <section class="tab-panel" data-tab-panel="about" hidden>
+      <div class="container panel-pad about-grid">
+        <div class="about-intro">
+          <span class="section-kicker" data-i18n="about_kicker">02 / THE STUDIO</span>
           <h2 class="section-title" data-i18n-html="about_title">
-            جایی که ظرافت طراحی با <em>مهندسی مدرن</em> پیوند می‌خورد.
+            Where Editorial Taste Meets <em>Modern Engineering.</em>
           </h2>
           <p class="about-copy" data-i18n="about_copy">
-            تمرکز SITE SOCIETY بر ساخت وب‌سایت‌هایی است که هویت برند شما را متمایز نشان دهند، بدون نقص عمل کنند و مستقیماً در خدمت اهداف تجاری شما باشند. هر چیدمان، انتخاب تایپوگرافی و خط کد با دقت و وسواس حرفه‌ای اجرا می‌شود.
+            SITE SOCIETY is built around a singular focus: creating websites that feel unmistakable, perform effortlessly, and serve clear business objectives. Every layout, typographic decision, and line of code is crafted with deliberate restraint and attention to detail.
           </p>
         </div>
 
         <div class="about-pillars">
-          <article class="pillar-card reveal">
+          <article class="pillar-card accent-bronze">
             <span class="pillar-num">01</span>
-            <h3 data-i18n="pillar1_t">دقت در طراحی</h3>
-            <p data-i18n="pillar1_d">سیستم بصری منسجم، فضای سفید متعادل و سلسله‌مراتب تایپوگرافی دقیق متناسب با هر برند.</p>
+            <h3 data-i18n="pillar1_t">Design Precision</h3>
+            <p data-i18n="pillar1_d">Coherent visual systems, balanced whitespace, and Swiss-inspired typographic hierarchy tailored to each brand.</p>
           </article>
-          <article class="pillar-card reveal">
+          <article class="pillar-card accent-emerald">
             <span class="pillar-num">02</span>
-            <h3 data-i18n="pillar2_t">توسعه مدرن</h3>
-            <p data-i18n="pillar2_d">معماری تمیز، معنایی و آماده استقرار در لبه شبکه برای سرعت بالا و پایداری طولانی‌مدت.</p>
+            <h3 data-i18n="pillar2_t">Modern Development</h3>
+            <p data-i18n="pillar2_d">Clean, semantic, edge-ready architecture engineered for reliability, maintainability, and fast global delivery.</p>
           </article>
-          <article class="pillar-card reveal">
+          <article class="pillar-card accent-sapphire">
             <span class="pillar-num">03</span>
-            <h3 data-i18n="pillar3_t">اجرای کسب‌وکارمحور</h3>
-            <p data-i18n="pillar3_d">هر رابط کاربری طوری ساختاردهی می‌شود که ارزش برند را شفاف منتقل و مخاطب را هدایت کند.</p>
+            <h3 data-i18n="pillar3_t">Business-Focused Execution</h3>
+            <p data-i18n="pillar3_d">Every interface is structured to communicate value clearly and guide visitors toward meaningful action.</p>
           </article>
-          <article class="pillar-card reveal">
+          <article class="pillar-card accent-amber">
             <span class="pillar-num">04</span>
-            <h3 data-i18n="pillar4_t">کیفیت و امنیت</h3>
-            <p data-i18n="pillar4_d">توجه دقیق به ریسپانسیو بودن، دسترس‌پذیری، سئوی فنی و استانداردهای سخت‌گیرانه امنیتی.</p>
+            <h3 data-i18n="pillar4_t">Quality &amp; Security</h3>
+            <p data-i18n="pillar4_d">Rigorous attention to accessibility, responsive behavior, technical SEO, and hardened server-side practices.</p>
           </article>
         </div>
       </div>
     </section>
 
-    <!-- Services Section -->
-    <section id="services" class="section section-border">
-      <div class="container">
-        <div class="section-header reveal">
+    <!-- TAB 4: SERVICES -->
+    <section class="tab-panel" data-tab-panel="services" hidden>
+      <div class="container panel-pad">
+        <div class="section-header">
           <div>
-            <span class="section-kicker" data-i18n="services_kicker">03 / توانمندی‌ها</span>
-            <h2 class="section-title" data-i18n="services_title">خدمات</h2>
+            <span class="section-kicker" data-i18n="services_kicker">03 / CAPABILITIES</span>
+            <h2 class="section-title" data-i18n="services_title">Services</h2>
           </div>
           <p class="section-lead" data-i18n="services_lead">
-            خدمات تخصصی طراحی و مهندسی وب متناسب با نیاز کسب‌وکارها و محصولات دیجیتال.
+            Focused web design and engineering offerings tailored to ambitious businesses and digital products.
           </p>
         </div>
 
         <div class="services-grid">
-          <article class="service-card reveal">
+          <article class="service-card">
             <span class="service-index">01</span>
-            <h3 data-i18n="srv1_t">طراحی وب‌سایت</h3>
-            <p data-i18n="srv1_d">خلق هویت بصری اختصاصی، معماری UI/UX و طراحی ریسپانسیو از پایه.</p>
+            <h3 data-i18n="srv1_t">Website Design</h3>
+            <p data-i18n="srv1_d">Bespoke visual direction, UI/UX architecture, and responsive design systems crafted from first principles.</p>
           </article>
-          <article class="service-card reveal">
+          <article class="service-card">
             <span class="service-index">02</span>
-            <h3 data-i18n="srv2_t">توسعه وب‌سایت</h3>
-            <p data-i18n="srv2_d">پیاده‌سازی فرانت‌اند و بک‌اند استاندارد با کدنویسی تمیز و انیمیشن‌های سبک.</p>
+            <h3 data-i18n="srv2_t">Website Development</h3>
+            <p data-i18n="srv2_d">Production-grade frontend and backend implementation with clean code, smooth motion, and strict standards.</p>
           </article>
-          <article class="service-card reveal">
+          <article class="service-card">
             <span class="service-index">03</span>
-            <h3 data-i18n="srv3_t">لندینگ پیج (Landing Pages)</h3>
-            <p data-i18n="srv3_d">صفحات معرفی محصول و کمپین با وضوح پیام بالا و ساختار حرفه‌ای.</p>
+            <h3 data-i18n="srv3_t">Landing Pages</h3>
+            <p data-i18n="srv3_d">High-clarity campaign and product pages designed to present your offering with authority and precision.</p>
           </article>
-          <article class="service-card reveal">
+          <article class="service-card">
             <span class="service-index">04</span>
-            <h3 data-i18n="srv4_t">وب‌سایت‌های شرکتی و تجاری</h3>
-            <p data-i18n="srv4_d">پایگاه دیجیتال جامع برای شرکت‌هایی که به دنبال حضوری معتبر و ماندگار هستند.</p>
+            <h3 data-i18n="srv4_t">Business Websites</h3>
+            <p data-i18n="srv4_d">Complete digital flagships for companies seeking a credible, refined, and memorable online presence.</p>
           </article>
-          <article class="service-card reveal">
+          <article class="service-card">
             <span class="service-index">05</span>
-            <h3 data-i18n="srv5_t">وب‌سایت‌های فروشگاهی</h3>
-            <p data-i18n="srv5_d">فروشگاه‌های اینترنتی با تمرکز بر نمایش زیبای محصول، ناوبری روان و اعتمادسازی.</p>
+            <h3 data-i18n="srv5_t">E-commerce Websites</h3>
+            <p data-i18n="srv5_d">Thoughtfully structured storefronts focused on product presentation, intuitive navigation, and trust.</p>
           </article>
-          <article class="service-card reveal">
+          <article class="service-card">
             <span class="service-index">06</span>
-            <h3 data-i18n="srv6_t">وب‌اپلیکیشن‌های اختصاصی</h3>
-            <p data-i18n="srv6_d">پلتفرم‌های تعاملی، داشبوردها و ابزارهای تحت وب سفارشی مطابق فرآیند کاری شما.</p>
+            <h3 data-i18n="srv6_t">Custom Web Applications</h3>
+            <p data-i18n="srv6_d">Tailored interactive platforms, dashboards, and full-stack web tools built around your exact workflow.</p>
           </article>
-          <article class="service-card reveal">
+          <article class="service-card">
             <span class="service-index">07</span>
-            <h3 data-i18n="srv7_t">بهینه‌سازی وب‌سایت</h3>
-            <p data-i18n="srv7_d">بهبود Core Web Vitals، بهینه‌سازی دارایی‌ها و ارتقای سئوی فنی برای سرعت بیشتر.</p>
+            <h3 data-i18n="srv7_t">Website Optimization</h3>
+            <p data-i18n="srv7_d">Core Web Vitals tuning, asset optimization, and technical SEO improvements for faster, cleaner delivery.</p>
           </article>
-          <article class="service-card reveal">
+          <article class="service-card">
             <span class="service-index">08</span>
-            <h3 data-i18n="srv8_t">نگهداری و پشتیبانی</h3>
-            <p data-i18n="srv8_d">به‌روزرسانی مداوم، تقویت امنیت، پایش و توسعه تدریجی برای پایداری همیشگی سایت.</p>
+            <h3 data-i18n="srv8_t">Website Maintenance</h3>
+            <p data-i18n="srv8_d">Ongoing updates, security hardening, monitoring, and careful iteration to keep your site dependable.</p>
           </article>
         </div>
       </div>
     </section>
 
-    <!-- Process Section -->
-    <section id="process" class="section section-border">
-      <div class="container">
-        <div class="section-header reveal">
+    <!-- TAB 5: PROCESS -->
+    <section class="tab-panel" data-tab-panel="process" hidden>
+      <div class="container panel-pad">
+        <div class="section-header">
           <div>
-            <span class="section-kicker" data-i18n="process_kicker">04 / متدولوژی</span>
-            <h2 class="section-title" data-i18n="process_title">فرآیند اجرا</h2>
+            <span class="section-kicker" data-i18n="process_kicker">04 / METHODOLOGY</span>
+            <h2 class="section-title" data-i18n="process_title">Process</h2>
           </div>
           <p class="section-lead" data-i18n="process_lead">
-            ساختار شش‌مرحله‌ای شفاف از نخستین گفتگو تا استقرار نهایی پروژه.
+            A structured six-stage workflow ensuring clarity from initial conversation to production launch.
           </p>
         </div>
 
         <ol class="process-timeline">
-          <li class="process-step reveal">
+          <li class="process-step">
             <span class="step-num">01</span>
             <div class="step-body">
-              <h3 data-i18n="proc1_t">کشف و شناخت (Discovery)</h3>
-              <p data-i18n="proc1_d">شناخت دقیق اهداف، مخاطبان، جایگاه برند و نیازمندی‌های فنی پروژه.</p>
+              <h3 data-i18n="proc1_t">Discovery</h3>
+              <p data-i18n="proc1_d">Understanding your goals, audience, brand positioning, and technical requirements.</p>
             </div>
           </li>
-          <li class="process-step reveal">
+          <li class="process-step">
             <span class="step-num">02</span>
             <div class="step-body">
-              <h3 data-i18n="proc2_t">برنامه‌ریزی (Planning)</h3>
-              <p data-i18n="proc2_d">تدوین معماری اطلاعات، محدوده کار، پشته فناوری و ساختار وایرفریم‌ها.</p>
+              <h3 data-i18n="proc2_t">Planning</h3>
+              <p data-i18n="proc2_d">Defining information architecture, scope, technical stack, and structural wireframes.</p>
             </div>
           </li>
-          <li class="process-step reveal">
+          <li class="process-step">
             <span class="step-num">03</span>
             <div class="step-body">
-              <h3 data-i18n="proc3_t">طراحی (Design)</h3>
-              <p data-i18n="proc3_d">طراحی تایپوگرافی، پالت رنگی، کامپوننت‌های رابط کاربری و چیدمان ریسپانسیو.</p>
+              <h3 data-i18n="proc3_t">Design</h3>
+              <p data-i18n="proc3_d">Crafting typography, color systems, interface components, and responsive layouts.</p>
             </div>
           </li>
-          <li class="process-step reveal">
+          <li class="process-step">
             <span class="step-num">04</span>
             <div class="step-body">
-              <h3 data-i18n="proc4_t">توسعه (Development)</h3>
-              <p data-i18n="proc4_d">پیاده‌سازی فرانت‌اند تمیز، APIهای امن بک‌اند و اتصال به پایگاه داده.</p>
+              <h3 data-i18n="proc4_t">Development</h3>
+              <p data-i18n="proc4_d">Engineering clean frontend interfaces, secure backend APIs, and database integrations.</p>
             </div>
           </li>
-          <li class="process-step reveal">
+          <li class="process-step">
             <span class="step-num">05</span>
             <div class="step-body">
-              <h3 data-i18n="proc5_t">آزمون (Testing)</h3>
-              <p data-i18n="proc5_d">بررسی ریسپانسیو در دستگاه‌های مختلف، کنترل‌های امنیتی، متادیتای سئو و کارایی.</p>
+              <h3 data-i18n="proc5_t">Testing</h3>
+              <p data-i18n="proc5_d">Verifying cross-device responsiveness, security controls, SEO metadata, and performance.</p>
             </div>
           </li>
-          <li class="process-step reveal">
+          <li class="process-step">
             <span class="step-num">06</span>
             <div class="step-body">
-              <h3 data-i18n="proc6_t">استقرار (Deployment)</h3>
-              <p data-i18n="proc6_d">راه‌اندازی روی زیرساخت ابری با گواهی SSL، تنظیمات DNS و پایش پس از انتشار.</p>
+              <h3 data-i18n="proc6_t">Deployment</h3>
+              <p data-i18n="proc6_d">Launching on edge infrastructure with SSL, DNS configuration, and post-launch verification.</p>
             </div>
           </li>
         </ol>
       </div>
     </section>
 
-    <!-- Contact Section -->
-    <section id="contact" class="section section-border">
-      <div class="container contact-grid">
-        <div class="contact-info reveal">
-          <span class="section-kicker" data-i18n="contact_kicker">05 / ارتباط با ما</span>
+    <!-- TAB 6: CONTACT -->
+    <section class="tab-panel" data-tab-panel="contact" hidden>
+      <div class="container panel-pad contact-grid">
+        <div class="contact-info">
+          <span class="section-kicker" data-i18n="contact_kicker">05 / CONTACT</span>
           <h2 class="section-title" data-i18n-html="contact_title">
-            گفتگو را <em>آغاز کنید.</em>
+            Begin a <em>Conversation.</em>
           </h2>
           <p class="contact-lead" data-i18n="contact_lead">
-            محدوده پروژه، زمان‌بندی یا پرسش‌های خود را بنویسید. تمام پیام‌ها مستقیماً بررسی می‌شوند.
+            Share your project scope, timeline, or questions. Every inquiry is reviewed directly.
           </p>
 
           <div id="confirmed-contact-details" class="confirmed-details"></div>
         </div>
 
-        <form id="contact-form" class="contact-form reveal" novalidate>
+        <form id="contact-form" class="contact-form" novalidate>
           <div class="form-row">
             <div class="field">
-              <label for="c-name" data-i18n="form_name">نام و نام خانوادگی</label>
-              <input id="c-name" name="name" type="text" required minlength="2" maxlength="100" data-i18n-placeholder="ph_name" placeholder="نام شما" />
+              <label for="c-name" data-i18n="form_name">Full Name</label>
+              <input id="c-name" name="name" type="text" required minlength="2" maxlength="100" data-i18n-placeholder="ph_name" placeholder="Your name" />
             </div>
             <div class="field">
-              <label for="c-email" data-i18n="form_email">ایمیل</label>
+              <label for="c-email" data-i18n="form_email">Email Address</label>
               <input id="c-email" name="email" type="email" required maxlength="160" placeholder="you@company.com" dir="ltr" />
             </div>
           </div>
 
           <div class="form-row">
             <div class="field">
-              <label for="c-phone" data-i18n="form_phone">شماره تماس (اختیاری)</label>
+              <label for="c-phone" data-i18n="form_phone">Phone Number (Optional)</label>
               <input id="c-phone" name="phone" type="tel" maxlength="40" data-i18n-placeholder="ph_phone" placeholder="+98 9..." dir="ltr" />
             </div>
             <div class="field">
-              <label for="c-company" data-i18n="form_company">شرکت / برند (اختیاری)</label>
-              <input id="c-company" name="company" type="text" maxlength="120" data-i18n-placeholder="ph_company" placeholder="نام برند یا مجموعه" />
+              <label for="c-company" data-i18n="form_company">Company / Brand (Optional)</label>
+              <input id="c-company" name="company" type="text" maxlength="120" data-i18n-placeholder="ph_company" placeholder="Brand or organization" />
             </div>
           </div>
 
           <div class="field">
-            <label for="c-service" data-i18n="form_service">موضوع خدمت</label>
+            <label for="c-service" data-i18n="form_service">Service Focus</label>
             <select id="c-service" name="service">
-              <option value="" data-i18n="opt_select">انتخاب خدمت</option>
-              <option value="Website Design" data-i18n="srv1_t">طراحی وب‌سایت</option>
-              <option value="Website Development" data-i18n="srv2_t">توسعه وب‌سایت</option>
-              <option value="Landing Page" data-i18n="srv3_t">لندینگ پیج (Landing Pages)</option>
-              <option value="Business Website" data-i18n="srv4_t">وب‌سایت‌های شرکتی و تجاری</option>
-              <option value="E-commerce Website" data-i18n="srv5_t">وب‌سایت‌های فروشگاهی</option>
-              <option value="Custom Web Application" data-i18n="srv6_t">وب‌اپلیکیشن‌های اختصاصی</option>
-              <option value="Website Optimization" data-i18n="srv7_t">بهینه‌سازی وب‌سایت</option>
-              <option value="Website Maintenance" data-i18n="srv8_t">نگهداری و پشتیبانی</option>
+              <option value="" data-i18n="opt_select">Select a service</option>
+              <option value="Website Design" data-i18n="srv1_t">Website Design</option>
+              <option value="Website Development" data-i18n="srv2_t">Website Development</option>
+              <option value="Landing Page" data-i18n="srv3_t">Landing Pages</option>
+              <option value="Business Website" data-i18n="srv4_t">Business Websites</option>
+              <option value="E-commerce Website" data-i18n="srv5_t">E-commerce Websites</option>
+              <option value="Custom Web Application" data-i18n="srv6_t">Custom Web Applications</option>
+              <option value="Website Optimization" data-i18n="srv7_t">Website Optimization</option>
+              <option value="Website Maintenance" data-i18n="srv8_t">Website Maintenance</option>
             </select>
           </div>
 
           <div class="field">
-            <label for="c-message" data-i18n="form_brief">توضیحات پروژه</label>
-            <textarea id="c-message" name="message" rows="5" required minlength="10" maxlength="3000" data-i18n-placeholder="ph_message" placeholder="درباره پروژه، اهداف و زمان‌بندی مورد نظر بنویسید..."></textarea>
+            <label for="c-message" data-i18n="form_brief">Project Brief</label>
+            <textarea id="c-message" name="message" rows="4" required minlength="10" maxlength="3000" data-i18n-placeholder="ph_message" placeholder="Tell us about your project, goals, and timeline..."></textarea>
           </div>
 
           <div id="turnstile-container" class="turnstile-slot"></div>
 
           <div class="form-actions">
-            <button type="submit" class="btn btn-gold-solid" id="contact-submit" data-i18n="form_submit">ارسال درخواست</button>
+            <button type="submit" class="btn btn-gold-solid" id="contact-submit" data-i18n="form_submit">Send Inquiry</button>
             <span id="contact-status" class="form-status" role="status" aria-live="polite"></span>
           </div>
         </form>
@@ -384,27 +389,18 @@
     </section>
   </main>
 
-  <!-- Footer -->
+  <!-- Compact Footer -->
   <footer class="site-footer">
     <div class="container footer-inner">
       <div class="footer-brand">
         <span class="brand-text">SITE SOCIETY</span>
-        <p class="footer-tagline" data-i18n="footer_tagline">استودیوی بین‌المللی طراحی و مهندسی وب.</p>
-      </div>
-
-      <div class="footer-links">
-        <a href="#top" data-i18n="nav_home">خانه</a>
-        <a href="#work" data-i18n="nav_work">نمونه کارها</a>
-        <a href="#about" data-i18n="nav_about">درباره ما</a>
-        <a href="#services" data-i18n="nav_services">خدمات</a>
-        <a href="#process" data-i18n="nav_process">فرآیند کار</a>
-        <a href="#contact" data-i18n="nav_contact">تماس</a>
+        <p class="footer-tagline" data-i18n="footer_tagline">International Website Design &amp; Digital Engineering Studio.</p>
       </div>
 
       <div id="footer-socials" class="footer-socials"></div>
     </div>
     <div class="container footer-bottom">
-      <p>&copy; <span id="year">2026</span> SITE SOCIETY. <span data-i18n="footer_rights">تمامی حقوق محفوظ است.</span></p>
+      <p>&copy; <span id="year">2026</span> SITE SOCIETY. <span data-i18n="footer_rights">All rights reserved.</span></p>
     </div>
   </footer>
 
