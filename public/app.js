@@ -558,6 +558,11 @@
       faCategory: 'آتلیه لوکس',
       faDesc: 'وب‌سایت دوزبانه آتلیه ساعت‌سازی و چرم دست‌دوز سارنگ با Hono SSR و پنل مدیریت React.',
     },
+    'soroush-online-academy': {
+      faTitle: 'آکادمی آموزش آنلاین سروش',
+      faCategory: 'پلتفرم آموزش آنلاین',
+      faDesc: 'پلتفرم دوزبانه آکادمی آموزش آنلاین با کاتالوگ دوره‌ها، رابط کاربری مدرن و بک‌اند Cloudflare Workers و D1.',
+    },
   };
 
   function getLocalizedProject(p) {
