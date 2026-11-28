@@ -12,7 +12,8 @@
       nav_contact: 'Contact',
       nav_cta: 'Start a Project',
       hero_eyebrow: 'DIGITAL DESIGN & ENGINEERING STUDIO',
-      hero_title: 'Bespoke Digital <br /><em>Architecture</em> for <br />Discerning Brands.',
+      hero_title:
+        'Bespoke Digital <br /><span class="bloom-wrap"><em>Architecture</em><em class="bloom-halo" aria-hidden="true">Architecture</em></span> for <br />Discerning Brands.',
       hero_subtitle:
         'SITE SOCIETY designs and engineers refined websites, editorial digital experiences, and custom web applications — built for clarity, speed, and enduring craft.',
       hero_cta_primary: 'Explore Selected Work',
@@ -113,7 +114,8 @@
       nav_contact: 'تماس',
       nav_cta: 'شروع پروژه',
       hero_eyebrow: 'استودیوی طراحی و مهندسی تجربه‌های دیجیتال',
-      hero_title: 'معماری دیجیتال <em>اختصاصی</em><br />برای برندهای پیشرو.',
+      hero_title:
+        'معماری دیجیتال <span class="bloom-wrap"><em>اختصاصی</em><em class="bloom-halo" aria-hidden="true">اختصاصی</em></span><br />برای برندهای پیشرو.',
       hero_subtitle:
         'SITE SOCIETY وب‌سایت‌های متمایز، تجربه‌های دیجیتال دقیق و اپلیکیشن‌های تحت وب مدرن را با تمرکز بر وضوح، سرعت و کیفیت ماندگار طراحی و پیاده‌سازی می‌کند.',
       hero_cta_primary: 'مشاهده نمونه کارها',
@@ -301,13 +303,15 @@
       }
     }
 
-    const particles = Array.from({ length: 36 }, (_, i) => ({
-      theta: (i / 36) * Math.PI * 2,
+    const particles = Array.from({ length: 56 }, (_, i) => ({
+      theta: (i / 56) * Math.PI * 2,
       phi: Math.acos(2 * ((i * 0.6180339887) % 1) - 1),
-      r: 1.35 + (i % 5) * 0.14,
-      color: i % 3 === 0 ? 'rgba(22, 91, 76, 0.55)' : i % 3 === 1 ? 'rgba(154, 116, 66, 0.55)' : 'rgba(31, 58, 95, 0.45)',
-      size: 1.8 + (i % 3),
+      r: 1.28 + (i % 6) * 0.14,
+      color: i % 3 === 0 ? 'rgba(22, 91, 76, 0.58)' : i % 3 === 1 ? 'rgba(154, 116, 66, 0.58)' : 'rgba(31, 58, 95, 0.48)',
+      size: 1.6 + (i % 3) * 0.8,
     }));
+
+    const ringNodes = Array.from({ length: 24 }, (_, i) => (i / 24) * Math.PI * 2);
 
     let angleY = 0;
     let angleX = 0.25;
@@ -348,11 +352,11 @@
         const projectedVerts = rawVerts.map((v) => project(v, cx, cy, scale));
 
         // Draw 3D edges
-        ctx.lineWidth = 1.1;
+        ctx.lineWidth = 1.15;
         for (const [a, b] of edges) {
           const pa = projectedVerts[a];
           const pb = projectedVerts[b];
-          const alpha = Math.max(0.08, Math.min(0.38, (pa.depth + pb.depth) * 0.16));
+          const alpha = Math.max(0.08, Math.min(0.42, (pa.depth + pb.depth) * 0.17));
           ctx.strokeStyle = `rgba(154, 116, 66, ${alpha.toFixed(3)})`;
           ctx.beginPath();
           ctx.moveTo(pa.sx, pa.sy);
@@ -360,15 +364,30 @@
           ctx.stroke();
         }
 
-        // Draw inner secondary ring
+        // Draw counter-rotating 3D orbital ring
+        ctx.lineWidth = 0.9;
+        ctx.strokeStyle = 'rgba(22, 91, 76, 0.24)';
+        ctx.beginPath();
+        ringNodes.forEach((ang, idx) => {
+          const rx = 1.48 * Math.cos(ang - angleY * 0.45);
+          const ry = 0.42 * Math.sin(ang - angleY * 0.45);
+          const rz = 1.48 * Math.sin(ang - angleY * 0.45);
+          const p = project([rx, ry, rz], cx, cy, scale);
+          if (idx === 0) ctx.moveTo(p.sx, p.sy);
+          else ctx.lineTo(p.sx, p.sy);
+        });
+        ctx.closePath();
+        ctx.stroke();
+
+        // Draw vertices
         for (const p of projectedVerts) {
-          ctx.fillStyle = p.z < 0 ? 'rgba(22, 91, 76, 0.75)' : 'rgba(154, 116, 66, 0.35)';
+          ctx.fillStyle = p.z < 0 ? 'rgba(22, 91, 76, 0.8)' : 'rgba(154, 116, 66, 0.4)';
           ctx.beginPath();
           ctx.arc(p.sx, p.sy, 2.8 * p.depth, 0, Math.PI * 2);
           ctx.fill();
         }
 
-        // Draw orbiting 3D particles
+        // Draw orbiting 3D particles with HUD parallax
         for (const pt of particles) {
           const px = pt.r * Math.sin(pt.phi) * Math.cos(pt.theta + angleY * 0.6);
           const py = pt.r * Math.cos(pt.phi);
@@ -379,6 +398,11 @@
           ctx.arc(proj.sx, proj.sy, pt.size * proj.depth, 0, Math.PI * 2);
           ctx.fill();
         }
+
+        document.querySelectorAll('.hud-pill[data-parallax]').forEach((el) => {
+          const strength = Number(el.getAttribute('data-parallax') || 12);
+          el.style.transform = `translate3d(${(mouseX * strength).toFixed(1)}px, ${(mouseY * strength * 0.6).toFixed(1)}px, 0)`;
+        });
       }
       requestAnimationFrame(frame);
     }
@@ -530,13 +554,17 @@
   // Portfolio Rendering + Home Marquee + Auto-Sliding List
   function renderProjects(projects) {
     const grid = document.getElementById('portfolio-grid');
+    const marqueeWrap = document.getElementById('home-marquee-wrap');
     const marqueeTrack = document.getElementById('home-marquee-track');
+    const toolbar = document.getElementById('portfolio-toolbar');
     const localizedList = projects;
 
-    if (marqueeTrack) {
+    if (marqueeWrap && marqueeTrack) {
       if (localizedList.length === 0) {
+        marqueeWrap.hidden = true;
         marqueeTrack.innerHTML = '';
       } else {
+        marqueeWrap.hidden = false;
         const itemsHtml = localizedList
           .map(
             (p) => `
@@ -553,6 +581,10 @@
         // Duplicate track for seamless infinite marquee motion
         marqueeTrack.innerHTML = itemsHtml + itemsHtml;
       }
+    }
+
+    if (toolbar) {
+      toolbar.hidden = localizedList.length === 0;
     }
 
     if (!grid) return;

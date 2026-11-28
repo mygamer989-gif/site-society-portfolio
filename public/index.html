@@ -114,7 +114,7 @@
 
         <h1 class="hero-title" data-i18n-html="hero_title">
           Bespoke Digital <br />
-          <em>Architecture</em> for <br />
+          <span class="bloom-wrap"><em>Architecture</em><em class="bloom-halo" aria-hidden="true">Architecture</em></span> for <br />
           Discerning Brands.
         </h1>
 
@@ -123,12 +123,24 @@
         </p>
 
         <div class="hero-cta">
-          <button type="button" class="btn btn-gold-solid" data-tab-link="work" data-i18n="hero_cta_primary">Explore Selected Work</button>
-          <button type="button" class="btn btn-emerald-outline" data-tab-link="contact" data-i18n="hero_cta_secondary">Initiate an Inquiry</button>
+          <button type="button" class="btn btn-gold-solid btn-lit" data-tab-link="work" data-i18n="hero_cta_primary">Explore Selected Work</button>
+          <button type="button" class="btn btn-emerald-outline btn-lit" data-tab-link="contact" data-i18n="hero_cta_secondary">Initiate an Inquiry</button>
         </div>
 
-        <!-- Animated Live Portfolio Marquee Strip on Home -->
-        <div class="home-marquee-wrap" aria-label="Selected Works Preview">
+        <!-- Floating 3D Spatial HUD Callouts (MotionSites-inspired) -->
+        <div class="hero-hud-layer" aria-hidden="true">
+          <div class="hud-pill hud-pill-1" data-parallax="18">
+            <span class="hud-idx">01</span>
+            <span>3D SPATIAL INTERACTION</span>
+          </div>
+          <div class="hud-pill hud-pill-2" data-parallax="-14">
+            <span class="hud-idx">02</span>
+            <span>EDGE PERFORMANCE</span>
+          </div>
+        </div>
+
+        <!-- Animated Live Portfolio Marquee Strip (auto-hidden when empty) -->
+        <div id="home-marquee-wrap" class="home-marquee-wrap" aria-label="Selected Works Preview" hidden>
           <div class="home-marquee-head">
             <span class="marquee-kicker" data-i18n="home_strip_label">SELECTED SHOWCASES</span>
             <button type="button" class="marquee-all-btn" data-tab-link="work" data-i18n="home_strip_cta">View All Projects &#8599;</button>
@@ -153,14 +165,7 @@
           </p>
         </div>
 
-        <div class="portfolio-notice">
-          <span class="notice-badge" aria-hidden="true">&#10022;</span>
-          <p data-i18n="work_notice">
-            Most showcased projects here are simplified demonstration builds to introduce our design direction and structure; your custom website will be engineered with 100% higher craft, depth, and production quality.
-          </p>
-        </div>
-
-        <div class="portfolio-toolbar">
+        <div class="portfolio-toolbar" id="portfolio-toolbar" hidden>
           <div class="portfolio-controls">
             <button type="button" class="btn btn-ghost btn-sm" id="carousel-prev" aria-label="Previous project">&#8592;</button>
             <button type="button" class="btn btn-ghost btn-sm" id="carousel-next" aria-label="Next project">&#8594;</button>
